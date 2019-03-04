@@ -5,7 +5,7 @@ Created on Mon Mar  4 17:00:04 2019
 @author: mathi
 """
 from Constants import *
-
+import scipy as sp
 def ss_sym():
     
     C1 = np.matrix([[-2*muc*c/V0, 0.,0.,0.],
@@ -29,4 +29,4 @@ def ss_sym():
     As = -np.linalg.inv(C1)*C2
     Bs = -np.linalg.inv(C1)*C3
     
-    sys1 = c.ss(As,Bs,Cs,Ds)
+    sys1 = sp.ss(As,Bs,Cs,Ds)
