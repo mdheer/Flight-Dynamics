@@ -33,6 +33,7 @@ B = np.dot(-la.inv(C1), C3)
 C = np.matrix([[1, 1, 1, 1]])
 D = np.matrix([[0, 0]])
 
+eig_as = la.eig(A) #eigenvalues of the A matrix (asymmetric)
 sys_as = c.ss(A,B,C,D)
 
 #t = np.arange(0,20.01,0.01)
