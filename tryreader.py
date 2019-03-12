@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Mar 12 16:54:57 2019
+
+@author: mathi
+"""
+
 # Citation 550 - Linear simulation
 
 # xcg = 0.25 * c
@@ -5,6 +12,11 @@
 import numpy as np
 from math import *
 # Stationary flight condition
+
+hp0    =   1.    	      # pressure altitude in the stationary flight condition [m]
+V0     =    59.9         # true airspeed in the stationary flight condition [m/sec]
+alpha0 =    1.         # angle of attack in the stationary flight condition [rad]
+th0    =     1.        # pitch angle in the stationary flight condition [rad]
 
 # Aircraft mass
 m      =      4547.8       # mass [kg]
