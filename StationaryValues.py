@@ -12,7 +12,7 @@ def StationaryValues(hp, llambda, h, T0, g, R, rho0, gamma, p0, Tm, Vc, m, S, c,
     rho = rho0 * pow(((1+(llambda * hp / T0))), (-((g / (llambda*R)) + 1)))
     M = sqrt((2/(gamma -1))* ((1 + (p0/p)*((1 + ((gamma -1)/(2 *gamma)) * (rho0/p0)* Vc**2)**(gamma/(gamma -1)) -1))**((gamma -1)/gamma) -1))
     T = Tm/(1 + ((gamma - 1)/2)* M**2)
-    W      = m * g
+    W = m * g
     muc = m / (rho * S * c)
     mub = m / (rho * S * b)
     a = sqrt(gamma * R * T)

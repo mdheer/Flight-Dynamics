@@ -35,20 +35,20 @@ ih     = -2 * pi / 180   # stabiliser angle of incidence [rad]
 # Constant values concerning atmosphere and gravity
 
 rho0   = 1.2250          # air density at sea level [kg/m^3] 
-llambda = -0.0065         # temperature gradient in ISA [K/m]
-T0  = 288.15          # temperature at sea level in ISA [K]
+llambda= -0.0065         # temperature gradient in ISA [K/m]
+T0     = 288.15          # temperature at sea level in ISA [K]
 R      = 287.05          # specific gas constant [m^2/sec^2K]
 g      = 9.81            # [m/sec^2] (gravity constant)
 gamma  = 1.4             # Specific heat ratio
-
+p0     = 1013
 # air density [kg/m^3]  
 ######rho    = rho0 * pow( ((1+(llambda * hp0 / Temp0))), (-((g / (llambda*R)) + 1)))   
 ######W      = m * g            # [N]       (aircraft weight)
 
 # Constant values concerning aircraft inertia
 
-muc    = m / (rho * S * c)
-mub    = m / (rho * S * b)
+#muc    = m / (rho * S * c)
+#mub    = m / (rho * S * b)
 KX2    = 0.019
 KZ2    = 0.042
 KXZ    = 0.002
@@ -68,14 +68,14 @@ depsda = 4 / (A + 2)            # Downwash gradient [ ]
 
 # Stabiblity derivatives
 
-CX0    = W * sin(th0) / (0.5 * rho * V0 ** 2 * S)
+#CX0    = W * sin(th0) / (0.5 * rho * V0 ** 2 * S)
 CXu    = -0.02792
 CXa    = -0.47966
 CXadot = +0.08330
 CXq    = -0.28170
 CXde   = -0.03728
 
-CZ0    = -W * cos(th0) / (0.5 * rho * V0 ** 2 * S)
+#CZ0    = -W * cos(th0) / (0.5 * rho * V0 ** 2 * S)
 CZu    = -0.37616
 CZa    = -5.74340
 CZadot = -0.00350
