@@ -30,4 +30,5 @@ def CL_alpha():
     alpha0 = np.roots(p)
     C_L_alpha = (z[0])
     plt.show()
+    return 
     
