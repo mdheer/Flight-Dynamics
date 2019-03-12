@@ -24,4 +24,4 @@ m      =      1.       # mass [kg]
 
 #Get Stationary Values
 
-p, rho, M, Temp, W, muc, mub, CX0, CZ0, V_TAS, Ve = StationaryValues(hp, llambda, h, Temp0, g, R, rho0, gamma, p, Tm, Vc, m, S, c, b, th)
+p, rho, M, Temp, W, muc, mub, CX0, CZ0, V_TAS, Ve = StationaryValues(hp, llambda, h, T0, g, R, rho0, gamma, p, Tm, Vc, m, S, c, b, th)
