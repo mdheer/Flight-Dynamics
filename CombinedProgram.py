@@ -10,18 +10,17 @@ from StationaryValues import *
 #from ss_sym import * 
 #from asymm_SS import * 
 
-p0 = 2
-Tm = 1
-hp0    =   1.    	   # pressure altitude in the stationary flight condition [m]
-V0     =    1.         # true airspeed in the stationary flight condition [m/sec]
-alpha0 =    1.         # angle of attack in the stationary flight condition [rad]
-th0    =     1.        # pitch angle in the stationary flight condition [rad]
-h = 5000 #added
-Vc = 5.  #added
+p0 = 2                  
+Tm = 1                 # (given)
+hp0    =   1.    	   # pressure altitude in the stationary flight condition [m] (given)
+alpha0 =    1.         # angle of attack in the stationary flight condition [rad] (given)
+th0    =     1.        # pitch angle in the stationary flight condition [rad] (given)
+h = 5000               #added (given)
+Vc = 5.                #added (given)
 
 
 # Aircraft mass
 m      =      1.       # mass [kg]
 
-#Get Output Constants
-p, rho, M, Temp, W, muc, mub, CX0, CZ0, Vt, Ve = StationaryValues(hp0, llambda, h, Temp0, g, R, rho0, gamma, p0, Tm, Vc, m, S, c, b, th0, V0)
+#Get Stationary Values
+p, rho, M, Temp, W, muc, mub, CX0, CZ0, V0, Ve = StationaryValues(hp0, llambda, h, Temp0, g, R, rho0, gamma, p0, Tm, Vc, m, S, c, b, th0)
