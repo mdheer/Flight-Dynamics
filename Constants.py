@@ -1,7 +1,7 @@
 # Citation 550 - Linear simulation
 
 # xcg = 0.25 * c
-import control.matlab as control
+#import control.matlab as control
 import numpy as np
 from math import *
 # Stationary flight condition
@@ -13,7 +13,6 @@ th0    =     1.        # pitch angle in the stationary flight condition [rad]
 
 # Aircraft mass
 m      =      4547.8       # mass [kg]
-
 # aerodynamic properties
 e      =       1.      # Oswald factor [ ]
 CD0    =        1.     # Zero lift drag coefficient [ ]
@@ -45,14 +44,15 @@ llambda = -0.0065         # temperature gradient in ISA [K/m]
 Temp0  = 288.15          # temperature at sea level in ISA [K]
 R      = 287.05          # specific gas constant [m^2/sec^2K]
 g      = 9.81            # [m/sec^2] (gravity constant)
+gamma  = 1.4             # Specific heat ratio
 
 # air density [kg/m^3]  
-rho    = rho0 * pow( ((1+(llambda * hp0 / Temp0))), (-((g / (llambda*R)) + 1)))   
-W      = m * g            # [N]       (aircraft weight)
+######rho    = rho0 * pow( ((1+(llambda * hp0 / Temp0))), (-((g / (llambda*R)) + 1)))   
+######W      = m * g            # [N]       (aircraft weight)
 
 # Constant values concerning aircraft inertia
 
-muc    = 102.7#m / (rho * S * c)
+muc    = m / (rho * S * c)
 mub    = m / (rho * S * b)
 KX2    = 0.019
 KZ2    = 0.042
@@ -68,24 +68,24 @@ depsda = 4 / (A + 2)            # Downwash gradient [ ]
 
 # Lift and drag coefficient
 
-CL = 2 * W / (rho * V0 ** 2 * S)              # Lift coefficient [ ]
-CD = CD0 + (CLa * alpha0) ** 2 / (pi * A * e) # Drag coefficient [ ]
+#####CL = 2 * W / (rho * V0 ** 2 * S)              # Lift coefficient [ ]
+#####CD = CD0 + (CLa * alpha0) ** 2 / (pi * A * e) # Drag coefficient [ ]
 
 # Stabiblity derivatives
 
-CX0    = 0#W * sin(th0) / (0.5 * rho * V0 ** 2 * S)
-CXu    = -0.2199#-0.02792
-CXa    = 0.4653#-0.47966
-CXadot = 0#+0.08330
-CXq    = 0#-0.28170
-CXde   = 0#-0.03728
+CX0    = W * sin(th0) / (0.5 * rho * V0 ** 2 * S)
+CXu    = -0.02792
+CXa    = -0.47966
+CXadot = +0.08330
+CXq    = -0.28170
+CXde   = -0.03728
 
-CZ0    = -1.1360#-W * cos(th0) / (0.5 * rho * V0 ** 2 * S)
-CZu    = -2.2720#-0.37616
-CZa    = -5.1600#-5.74340
-CZadot = -1.43#-0.00350
-CZq    = -3.86#-5.66290
-CZde   = -0.6238#-0.69612
+CZ0    = -W * cos(th0) / (0.5 * rho * V0 ** 2 * S)
+CZu    = -0.37616
+CZa    = -5.74340
+CZadot = -0.00350
+CZq    = -5.66290
+CZde   = -0.69612
 
 Cmu    = 0#+0.06990
 Cmadot = -3.7#+0.17800
