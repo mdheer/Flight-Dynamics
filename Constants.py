@@ -40,7 +40,7 @@ T0     = 288.15          # temperature at sea level in ISA [K]
 R      = 287.05          # specific gas constant [m^2/sec^2K]
 g      = 9.81            # [m/sec^2] (gravity constant)
 gamma  = 1.4             # Specific heat ratio
-p0     = 1013
+p0     = 101.325 * 10**3 #
 # air density [kg/m^3]  
 ######rho    = rho0 * pow( ((1+(llambda * hp0 / Temp0))), (-((g / (llambda*R)) + 1)))   
 ######W      = m * g            # [N]       (aircraft weight)
