@@ -30,6 +30,9 @@ def StationaryValues(hp, Tm, Vc, m, th):
     
     return p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a
 
+def pressure(hp,T0):
+    
+
 
 def Ve_thilde(Ve, Ws, W):
     Ve_red = Ve * math.sqrt(Ws/W)

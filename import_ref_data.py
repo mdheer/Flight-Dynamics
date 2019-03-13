@@ -221,6 +221,7 @@ eigenmotion_times[3][1] = excel_data[83][6]
 eigenmotion_times[4][1] = excel_data[82][9]
 eigenmotion_times[5][1] = excel_data[83][9]
 
+
 # Printing intructions when running
 #print()
 #print()
@@ -240,9 +241,6 @@ eigenmotion_times[5][1] = excel_data[83][9]
 #print()
 #print('\033[0;30m')
     
-print(stat_1_conv[2][1])
-
-""" =============== PART III: SOME FUNCTIONS =============== """
 
 """ =============== PART III: THRUST DATA =============== """
 filethrust = open("thrust.dat", "r") 
@@ -256,7 +254,7 @@ filethrust.close()
 
 
 
-
+""" =============== PART IV: SOME FUNCTIONS =============== """
 
 def show_eigmot_names():
     for i in range(len(eigenmotion_times)):
