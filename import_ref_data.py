@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.io as sio
+from StationaryValues import DynamicValues
 
 """ =============== PART I: MATLAB DATA =============== """
 
@@ -61,16 +62,15 @@ for i in range(len(flight_data[0][0])):
 
 # Calling a certain line from the ref_data to get its values in an array
 def get_data(i):
-    print('Parameter =',ref_data[i][0])
     return ref_data[i][2]
 
 # Printing intructions when running
-print()
-print("\033[1;31;43mINSTRUCTIONS MATLAB:")
-print('1. Type "print_pars_w_index()" to get indices of each parameter for next function.')
-print('2. Type get_data(i) with desired i from the given indices to get the data of the chosen parameter in an array.')
-print('NOTE: must have matlab.mat file in same folder.')
-print('NOTE2: matlab units have not been converted to SI units as yet.')
+#print()
+#print("\033[1;31;43mINSTRUCTIONS MATLAB:")
+#print('1. Type "print_pars_w_index()" to get indices of each parameter for next function.')
+#print('2. Type get_data(i) with desired i from the given indices to get the data of the chosen parameter in an array.')
+#print('NOTE: must have matlab.mat file in same folder.')
+#print('NOTE2: matlab units have not been converted to SI units as yet.')
 
 
 
@@ -78,6 +78,7 @@ print('NOTE2: matlab units have not been converted to SI units as yet.')
 
 # Importing excel data from excel file
 # NOTE: Please save file as .csv instead of .xlsx
+# IMPORTANT: must have Numpy version 1.15+
 filename = 'REFERENCE_Post_Flight_Datasheet_Flight.csv'
 excel_data = np.genfromtxt(filename,delimiter=',',dtype='str')
 
@@ -96,12 +97,12 @@ weight_names.append(excel_data[17][0][:-7])
 weight_names.append('BEM')
 
 weight_vals.append(float(excel_data[17][3])*0.453592)     # fuel weight [kg]
-weight_vals.append(0.0)                                    # BEM weight, STILL NEEDS TO BE COMPUTED
+weight_vals.append(4157.17)                                    # BEM weight [kg]
 
 weights[0][0] = weight_names
 weights[1][0] = weight_vals
 
-total_starting_weight = sum(weights[1][0])                  # [kg]
+total_starting_mass = sum(weights[1][0])                  # [kg]
 
 
 # ======= B) 1st stationary measurements =======
@@ -115,6 +116,9 @@ for i in range(len(stat_1)):
     stat_1[i][0] = excel_data[24][i+3]+' '+excel_data[25][i+3]
     temp = excel_data[27:33,i+3:i+4]
     stat_1[i][1] = temp.astype(dtype='float')
+    
+    stat_1_conv[i][0] = stat_1[i][0]
+    stat_1_conv[i][1] = stat_1[i][1]
    
 # Converted names (to SI units)
 stat_1_conv[0][0] = stat_1[0][0][:-4]+'[m]'
@@ -130,7 +134,7 @@ stat_1_conv[1][1] = stat_1[1][1]*0.514444           # kts    => m/s
 stat_1_conv[3][1] = stat_1[3][1]*0.000125998        # lbs/hr => kg/s
 stat_1_conv[4][1] = stat_1[4][1]*0.000125998        # lbs/hr => kg/s
 stat_1_conv[5][1] = stat_1[5][1]*0.453592           # lbs    => kg
-stat_1_conv[6][1] = stat_1[6][1]+273                # °C     => K
+stat_1_conv[6][1] = stat_1[6][1]+273.15             # °C     => K
 
 
 # ======= C) 2nd stationary measurements =======
@@ -144,6 +148,9 @@ for i in range(len(stat_2)):
     stat_2[i][0] = excel_data[55][i+3]+' '+excel_data[56][i+3]
     temp = excel_data[58:65,i+3:i+4] 
     stat_2[i][1] = temp.astype(dtype='float')
+    
+    stat_2_conv[i][0] = stat_2[i][0]
+    stat_2_conv[i][1] = stat_2[i][1]
 
 # Converted names (to SI units)  
 stat_2_conv[0][0] = stat_2[0][0][:-4]+'[m]'
@@ -159,7 +166,7 @@ stat_2_conv[1][1] = stat_2[1][1]*0.514444           # kts    => m/s
 stat_2_conv[6][1] = stat_2[6][1]*0.000125998        # lbs/hr => kg/s
 stat_2_conv[7][1] = stat_2[7][1]*0.000125998        # lbs/hr => kg/s
 stat_2_conv[8][1] = stat_2[8][1]*0.453592           # lbs    => kg
-stat_2_conv[9][1] = stat_2[9][1]+273                # °C     => K
+stat_2_conv[9][1] = stat_2[9][1]+273.15             # °C     => K
 
 
 # ======= D) Xcg shift =======
@@ -173,6 +180,9 @@ for i in range(len(stat_xcg)):
     stat_xcg[i][0] = excel_data[72][i+3]+' '+excel_data[73][i+3]
     temp = excel_data[74:76,i+3:i+4] 
     stat_xcg[i][1] = temp.astype(dtype='float')
+    
+    stat_xcg_conv[i][0] = stat_xcg[i][0]
+    stat_xcg_conv[i][1] = stat_xcg[i][1]
     
 # Converted names (to SI units)  
 stat_xcg_conv[0][0] = stat_xcg[0][0][:-4]+'[m]'
@@ -188,7 +198,7 @@ stat_xcg_conv[1][1] = stat_xcg[1][1]*0.514444           # kts    => m/s
 stat_xcg_conv[6][1] = stat_xcg[6][1]*0.000125998        # lbs/hr => kg/s
 stat_xcg_conv[7][1] = stat_xcg[7][1]*0.000125998        # lbs/hr => kg/s
 stat_xcg_conv[8][1] = stat_xcg[8][1]*0.453592           # lbs    => kg
-stat_xcg_conv[9][1] = stat_xcg[9][1]+273                # °C     => K
+stat_xcg_conv[9][1] = stat_xcg[9][1]+273.15             # °C     => K
 
 
 # ======= E) Eigenmotion times =======
@@ -211,20 +221,80 @@ eigenmotion_times[3][1] = excel_data[83][6]
 eigenmotion_times[4][1] = excel_data[82][9]
 eigenmotion_times[5][1] = excel_data[83][9]
 
+
 # Printing intructions when running
-print()
-print()
-print()
-print('INSTRUCTIONS EXCEL:')
-print('NOTE: please have file REFERENCE_Post_Flight_Datasheet_Flight.csv in same folder and saved in .csv format!')
-print('Constructed arrrays are (converted to SI units):')
-print('1. 1st stationary measurements array = stat_1_conv')
-print('2. 2nd stationary measurements array = stat_2_conv')
-print('3. Xcg shift array = stat_xcg_conv')
-print()
-print('How to extract the data: Example for stat_1_conv')
-print('a) stat_1_conv[0] gives first measured parameter.')
-print('b) stat_1_conv[0][0] gives the name of this parameter.')   
-print('c) stat_1_conv[0][1] gives the actual measured data.')
+#print()
+#print()
+#print()
+#print('INSTRUCTIONS EXCEL:')
+#print('NOTE: please have file REFERENCE_Post_Flight_Datasheet_Flight.csv in same folder and saved in .csv format!')
+#print('Constructed arrrays are (converted to SI units):')
+#print('1. 1st stationary measurements array = stat_1_conv')
+#print('2. 2nd stationary measurements array = stat_2_conv')
+#print('3. Xcg shift array = stat_xcg_conv')
+#print()
+#print('How to extract the data: Example for stat_1_conv')
+#print('a) stat_1_conv[0] gives first measured parameter.')
+#print('b) stat_1_conv[0][0] gives the name of this parameter.')   
+#print('c) stat_1_conv[0][1] gives the actual measured data.')
+#print('You can remove these print statements once you have read the instructions :)')
+#print()
+#print('\033[0;30m')
     
 
+#""" =============== PART III: THRUST DATA =============== """
+#filethrust = open("thrust.dat", "r") 
+#
+#lines=filethrust.readlines()
+#Thrustresult=[]
+#for x in lines:
+#    Thrustresult.append(x.split()[0])
+#    Thrustresult.append(x.split()[1])
+#filethrust.close()
+
+
+
+""" =============== PART IV: SOME FUNCTIONS =============== """
+
+def show_eigmot_names():
+    for i in range(len(eigenmotion_times)):
+        print(eigenmotion_times[i][0])
+
+def get_eigmot(name):
+    
+    for i in range(len(eigenmotion_times)):
+        if name == eigenmotion_times[i][0]:
+            print(name)
+        index = i
+    
+    time = eigenmotion_times[index][1]
+    
+    seconds = float(time[-2:])
+    minutes = float(time[-5:-3])
+    
+    if len(time)>5:
+        hours = float(time[-7:-6])
+    else:
+        hours = 0.
+    
+    total_time = seconds+minutes*60+hours*3600
+    
+    time_data = get_data(48)[0]
+    
+    for j,t in enumerate(time_data):
+        if t == total_time:
+            jndex = j
+    
+    V_TAS = get_data(42)[jndex][0]
+    
+    mass = total_starting_mass - get_data(14)[jndex][0] - get_data(15)[jndex][0]
+    
+    hp = get_data(37)[jndex][0]
+    Tm = get_data(36)[jndex][0]
+    V_IAS = get_data(41)[jndex][0]
+    rho = DynamicValues(hp,Tm,V_IAS)[2]
+    
+    pitch = get_data(22)[jndex][0]
+    
+    print('Output: V_TAS,mass,rho,pitch')
+    return V_TAS,mass,rho,pitch

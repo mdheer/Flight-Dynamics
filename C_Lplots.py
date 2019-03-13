@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 
 
 
+
 def CL_CD(T, rho, V_TAS, W, alpha):
       
     C_L = []
