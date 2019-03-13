@@ -8,9 +8,9 @@ Created on Tue Mar 12 15:55:35 2019
 from Constants import * 
 from StationaryValues import * 
 from ss_sym import * 
+import sys, string, os
 #from asymm_SS import * 
-
-GeneralThrust = False
+ThrustUpdate = False
 
 """################################################Parameters defined################################################"""
 datalength = 6
@@ -31,6 +31,10 @@ TISA1 = []
 TISA2 = []
 Tempdiff1 = []
 Tempdiff2 = []
+ThrustStat1FD = []
+ThurstStat2FD = []
+ThurstStat1G = []
+ThrustStat2G = []
 
 th   =  [1.8, 2.5, 3.3, 5.2, 8., 10.5]                  # pitch angle in the stationary flight condition [rad] (given)
 #TISA = [246.20300399999996, 244.22281599999997, 242.92281599999995, 240.94262799999996, 239.52281599999998, 238.52281599999998] #Temperature Corrected
@@ -43,27 +47,16 @@ hpstat1 = stat_1_conv[0]
 Vcstat1 = stat_1_conv[1]
 Alpha1 = stat_1_conv[2]
 Tstat1 = stat_1_conv[6]
-
-if GeneralThrust == True: 
-    print("General Thrust Activated")
-    FFLstat1 = FFRstat1 =  [0.048,0.048,0.048,0.048,0.048,0.048]
-else:
-    FFLstat1 = stat_1_conv[3]
-    FFRstat1 = stat_1_conv[4]
+FFLstat1 = stat_1_conv[3]
+FFRstat1 = stat_1_conv[4]
+FFFLstat1 = FFFRstat1 = FFFLstat2 = FFFRstat2 = [0.048,0.048,0.048,0.048,0.048,0.048]
     
 hpstat2 = stat_2_conv[0]
 Vcstat2 = stat_2_conv[1]
 Alpha2 = stat_2_conv[2]
 Tstat2 = stat_2_conv[9]
-
-if GeneralThrust == True: 
-    FFLstat2 = FFRstat2 =  [0.048,0.048,0.048,0.048,0.048,0.048]
-else:
-    FFLstat2 = stat_2_conv[6]
-    FFRstat2 = stat_2_conv[7]
-
-
-
+FFLstat2 = stat_2_conv[6]
+FFRstat2 = stat_2_conv[7]
 
 
 """################################################Get the stationary values and make lists################################################"""
@@ -115,30 +108,57 @@ for i in range(6):
     file.write( str(hpstat1[1][i][0]) + " " )
     file.write( str(Mlist[i]) + " " )
     file.write( str(Tempdiff1[i]) + " " )
-    if GeneralThrust == True:
-        file.write(str(FFLstat1[i]) + " " )
-        file.write(str(FFRstat1[i]) + "\n" )
-    else:
-        file.write( str(FFLstat1[1][i][0]) + " " )
-        file.write( str(FFRstat1[1][i][0]) + "\n" )
+    file.write( str(FFLstat1[1][i][0]) + " " )
+    file.write( str(FFRstat1[1][i][0]) + "\n" )
 #Prints the second 6 lines for the second test.
 
 for i in range(6):  
     file.write( str(hpstat2[1][i][0]) + " " )
     file.write( str(Mlist[i+4]) + " " )
     file.write( str(Tempdiff2[i]) + " " )
-    if GeneralThrust == True:
-        file.write(str(FFLstat2[i]) + " " )
-        file.write(str(FFRstat2[i]) + "\n" )
-    else:
-        file.write( str(FFLstat2[1][i][0]) + " " )
-        file.write( str(FFRstat2[1][i][0]) + "\n" )
+    file.write( str(FFLstat2[1][i][0]) + " " )
+    file.write( str(FFRstat2[1][i][0]) + "\n" )
  
+    
+#Prints the first 6 lines for the first test with the fixed fuelflow.
+for i in range(6):  
+    file.write( str(hpstat1[1][i][0]) + " " )
+    file.write( str(Mlist[i]) + " " )
+    file.write( str(Tempdiff1[i]) + " " )
+    file.write(str(FFFLstat1[i]) + " " )
+    file.write(str(FFFRstat1[i]) + "\n" )
+#Prints the second 6 lines for the second test with the fixed fuel flow.
+
+for i in range(6):  
+    file.write( str(hpstat2[1][i][0]) + " " )
+    file.write( str(Mlist[i+4]) + " " )
+    file.write( str(Tempdiff2[i]) + " " )
+    file.write(str(FFFLstat2[i]) + " " )
+    file.write(str(FFFRstat2[i]) + "\n" )
+    
+    
+    
+    
 file.close()
+#Update Thrust File
+if ThrustUpdate == True :
+    os.startfile("thrust(1).exe")
 
-"""################################################Take the thrust file################################################"""
+"""################################################Take the thrust file and put the values in a list################################################"""
 
-print(Thrustresult)
+filethrust = open("thrust.dat", "r") 
+lines=filethrust.readlines()
+Thrustresult=[]
+for x in lines:
+    Thrustresult.append(x.split()[0])
+    Thrustresult.append(x.split()[1])
+filethrust.close()
+
+for i in range(12):
+    ThrustStat1FD.append(Thrustresult[i])
+    ThurstStat2FD.append(Thrustresult[i + 12])
+    ThurstStat1G.append(Thrustresult[i + 24])
+    ThrustStat2G.append(Thrustresult[i + 36])
 
 """################################################Get output State Space Symmetric################################################"""
 #ss_sym(muclist[0], c, V_TASlist[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)

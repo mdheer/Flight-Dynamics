@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.io as sio
 
+
 """ =============== PART I: MATLAB DATA =============== """
 
 # Importing matlab file
@@ -244,15 +245,17 @@ eigenmotion_times[5][1] = excel_data[83][9]
 
 
 """ =============== PART III: THRUST DATA =============== """
-filethrust = open("thrust.dat", "r") 
 
-lines=filethrust.readlines()
-Thrustresult=[]
-for x in lines:
-    Thrustresult.append(x.split()[0])
-    Thrustresult.append(x.split()[1])
-filethrust.close()
+#def OpenThrust():
+#    filethrust = open("thrust.dat", "r") 
+#    lines=filethrust.readlines()
+#    Thrustresult=[]
+#    for x in lines:
+#        Thrustresult.append(x.split()[0])
+#        Thrustresult.append(x.split()[1])
+#    filethrust.close()
+#    return Thrustresult
 
 
-
+    
 
