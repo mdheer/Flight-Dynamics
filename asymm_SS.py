@@ -5,12 +5,12 @@ Created on Mon Mar  4 15:50:11 2019
 
 @author: willemvolker
 """
-
+from Constants import *
 import numpy as np
 import numpy.linalg as la
 import control.matlab as c
 import matplotlib.pyplot as plt
-from Constants import *
+
 
 ##test values from reader
 #V0 = 59.9
