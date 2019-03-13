@@ -37,7 +37,7 @@ m = [4000.,4000.,4000.,4000.,4000.,4000.]       # mass [kg]
 
 #Get Stationary Values
 for i in range(datalength): 
-    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hp[i], llambda, T0, g, R, rho0, gamma, p0, Tm[i], Vc[i], m[i], S, c, b, th[i])
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hp[i], Tm[i], Vc[i], m[i], th[i])
     plist.append(p)
     rholist.append(rho)
     Mlist.append(M)
@@ -52,5 +52,5 @@ for i in range(datalength):
     alist.append(a)
 
 #Get output State system Symmetric
-ss_sym(muclist[0], c, V_TASlist[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
+#ss_sym(muclist[0], c, V_TASlist[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
 

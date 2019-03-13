@@ -6,7 +6,6 @@ Created on Mon Mar  4 15:50:11 2019
 @author: willemvolker
 """
 from Constants import *
-
 import numpy as np
 import numpy.linalg as la
 import control.matlab as c
@@ -71,7 +70,7 @@ V = V_TAS = 3.
 mub = 19.
 CL = 5.
 
-
+def assym_SS (V, b, CYb, mub, CL, CYp, CYr, CYda, CYdr, Clb, KZ2, Cnb, KXZ, KX2, Cnp)
 yb = V/b * CYb / (2*mub)
 yphi = V/b * CL / (2*mub)
 yp = V/b * CYp / (2*mub)
