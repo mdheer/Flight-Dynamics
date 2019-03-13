@@ -43,9 +43,9 @@ def Fe_star(Ws, W, Fmeas):
     Fe_red = Fmeas * (Ws/W)
     return Fe_red  
 
-def StationaryWeight(Fused):
+def stat_mass(Fused):
     """ Fused = the array with fuel used, of the desired measurement. """
-    """ returns an array for we"""
+    """ Returns an array for total mass at that measurement moment.   """
     return total_starting_mass - Fused
 
 # Ws = standard aircraft weight
