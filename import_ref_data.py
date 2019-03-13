@@ -65,12 +65,12 @@ def get_data(i):
     return ref_data[i][2]
 
 # Printing intructions when running
-print()
-print("\033[1;31;43mINSTRUCTIONS MATLAB:")
-print('1. Type "print_pars_w_index()" to get indices of each parameter for next function.')
-print('2. Type get_data(i) with desired i from the given indices to get the data of the chosen parameter in an array.')
-print('NOTE: must have matlab.mat file in same folder.')
-print('NOTE2: matlab units have not been converted to SI units as yet.')
+#print()
+#print("\033[1;31;43mINSTRUCTIONS MATLAB:")
+#print('1. Type "print_pars_w_index()" to get indices of each parameter for next function.')
+#print('2. Type get_data(i) with desired i from the given indices to get the data of the chosen parameter in an array.')
+#print('NOTE: must have matlab.mat file in same folder.')
+#print('NOTE2: matlab units have not been converted to SI units as yet.')
 
 
 
@@ -222,23 +222,23 @@ eigenmotion_times[4][1] = excel_data[82][9]
 eigenmotion_times[5][1] = excel_data[83][9]
 
 # Printing intructions when running
-print()
-print()
-print()
-print('INSTRUCTIONS EXCEL:')
-print('NOTE: please have file REFERENCE_Post_Flight_Datasheet_Flight.csv in same folder and saved in .csv format!')
-print('Constructed arrrays are (converted to SI units):')
-print('1. 1st stationary measurements array = stat_1_conv')
-print('2. 2nd stationary measurements array = stat_2_conv')
-print('3. Xcg shift array = stat_xcg_conv')
-print()
-print('How to extract the data: Example for stat_1_conv')
-print('a) stat_1_conv[0] gives first measured parameter.')
-print('b) stat_1_conv[0][0] gives the name of this parameter.')   
-print('c) stat_1_conv[0][1] gives the actual measured data.')
-print('You can remove these print statements once you have read the instructions :)')
-print()
-print('\033[0;30m')
+#print()
+#print()
+#print()
+#print('INSTRUCTIONS EXCEL:')
+#print('NOTE: please have file REFERENCE_Post_Flight_Datasheet_Flight.csv in same folder and saved in .csv format!')
+#print('Constructed arrrays are (converted to SI units):')
+#print('1. 1st stationary measurements array = stat_1_conv')
+#print('2. 2nd stationary measurements array = stat_2_conv')
+#print('3. Xcg shift array = stat_xcg_conv')
+#print()
+#print('How to extract the data: Example for stat_1_conv')
+#print('a) stat_1_conv[0] gives first measured parameter.')
+#print('b) stat_1_conv[0][0] gives the name of this parameter.')   
+#print('c) stat_1_conv[0][1] gives the actual measured data.')
+#print('You can remove these print statements once you have read the instructions :)')
+#print()
+#print('\033[0;30m')
     
-print(stat_1_conv[2][1])
+#print(stat_1_conv[2][1])
 
