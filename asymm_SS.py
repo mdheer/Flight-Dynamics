@@ -90,10 +90,12 @@ nr = V/b * (Clr*KXZ+Cnr*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
 nda = V/b * (Clda*KXZ+Cnda*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
 ndr = V/b * (Cldr*KXZ+Cndr*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
 
-Aa = np.matrix([[yb, yphi, yp, yr],\
-                [0, 0, 2*V/b, 0],\
-                [lb, 0, lp, lr],\
-                [nb, 0, n_p, nr]])
+dim = b/(2*V)
+
+Aa = np.matrix([[yb, yphi, yp*dim, yr*dim],\
+                [0, 0, 2*V/b*dim, 0*dim],\
+                [lb, 0, lp*dim, lr*dim],\
+                [nb, 0, n_p*dim, nr*dim]])
 Ba = np.matrix([[0, ydr],\
                 [0, 0],\
                 [lda, ldr],\
