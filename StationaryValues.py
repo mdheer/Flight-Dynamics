@@ -48,6 +48,8 @@ def stat_mass(Fused):
     """ Returns an array for total mass at that measurement moment.   """
     return total_starting_mass - Fused
 
+
+
 # Ws = standard aircraft weight
 # Ve_red = reduced equivalent airspeed
 # Se = Surface area elevator

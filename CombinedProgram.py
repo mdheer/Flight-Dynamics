@@ -9,8 +9,12 @@ from Constants import *
 from StationaryValues import * 
 from ss_sym import * 
 #from asymm_SS import * 
-#Parameters for this program
+
+GeneralThrust = False
+
+"""################################################Parameters defined################################################"""
 datalength = 6
+numberdatasets = 2
 plist = []
 rholist = []
 Mlist = []
@@ -23,42 +27,63 @@ CZ0list = []
 V_TASlist = []
 Velist = []
 alist = []
-#From flight test parameters                  
-alpha = [1.8, 2.5, 3.3, 5.2, 8., 10.5]                  # angle of attack in the stationary flight condition [rad] (given)
+TISA1 = []
+TISA2 = []
+Tempdiff1 = []
+Tempdiff2 = []
+
 th   =  [1.8, 2.5, 3.3, 5.2, 8., 10.5]                  # pitch angle in the stationary flight condition [rad] (given)
-Vc = [121.92333228, 108.54777684, 99.28777692, 82.3111104, 68.42111052, 59.67555504]  #added (given)
-TISA = [246.20300399999996, 244.22281599999997, 242.92281599999995, 240.94262799999996, 239.52281599999998, 238.52281599999998] #Temperature Corrected
+#TISA = [246.20300399999996, 244.22281599999997, 242.92281599999995, 240.94262799999996, 239.52281599999998, 238.52281599999998] #Temperature Corrected
 # Aircraft mass
 m = [4000.,4000.,4000.,4000.,4000.,4000.]       # mass [kg]
 
+
+"""################################################Get the flight data################################################"""
 hpstat1 = stat_1_conv[0]
 Vcstat1 = stat_1_conv[1]
 Alpha1 = stat_1_conv[2]
-FFLstat1 = stat_1_conv[3]
-FFRstat1 = stat_1_conv[4]
 Tstat1 = stat_1_conv[6]
 
+if GeneralThrust == True: 
+    print("General Thrust Activated")
+    FFLstat1 = FFRstat1 =  [0.048,0.048,0.048,0.048,0.048,0.048]
+else:
+    FFLstat1 = stat_1_conv[3]
+    FFRstat1 = stat_1_conv[4]
+    
 hpstat2 = stat_2_conv[0]
 Vcstat2 = stat_2_conv[1]
-FFLstat2 = stat_2_conv[6]
-FFRstat2 = stat_2_conv[7]
+Alpha2 = stat_2_conv[2]
 Tstat2 = stat_2_conv[9]
-i = 0
-file = open("matlab.dat", "w") 
-#for i in range(5):
-file.write(hpstat1[1][1])
-    
-file.write("Hello World") 
-file.write("This is our new text file") 
-file.write("and this is another line.") 
-file.write("Why? Because we can.") 
- 
-file.close()
 
-#Get Stationary Values
-i =0
+if GeneralThrust == True: 
+    FFLstat2 = FFRstat2 =  [0.048,0.048,0.048,0.048,0.048,0.048]
+else:
+    FFLstat2 = stat_2_conv[6]
+    FFRstat2 = stat_2_conv[7]
+
+
+
+
+
+"""################################################Get the stationary values and make lists################################################"""
+#The format is: [a, b, c, d, e, f, g, h, i, j, k, l]. The first 6 are the values from the first test, the last 6 are the one of the final test.
 for i in range(datalength): 
-    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat1[1][i], Tstat1[1][i], Vcstat1[1][i], m[i], th[i])
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat1[1][i][0], Tstat1[1][i][0], Vcstat1[1][i][0], m[i], th[i])
+    plist.append(p)
+    rholist.append(rho)
+    Mlist.append(M)
+    Tlist.append(T)
+    Wlist.append(W)
+    muclist.append(muc)
+    mublist.append(mub)
+    CX0list.append(CX0)
+    CZ0list.append(CZ0)
+    V_TASlist.append(V_TAS)
+    Velist.append(Ve)
+    alist.append(a)
+for i in range(datalength): 
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat2[1][i][0], Tstat2[1][i][0], Vcstat2[1][i][0], m[i], th[i])
     plist.append(p)
     rholist.append(rho)
     Mlist.append(M)
@@ -72,6 +97,49 @@ for i in range(datalength):
     Velist.append(Ve)
     alist.append(a)
 
-#Get output State system Symmetric
+
+"""################################################Make the thrust file################################################"""
+#Must be in format the pressure altitude,  the Mach number,  the temperature difference,
+#the fuel flow of the left jet engine,  the fuel flow of the right jet engine. 
+file = open("matlab.dat", "w") 
+
+#Calculates temperature difference. 
+for i in range(6):
+    TISA1.append(Tstat1[1][i][0] + llambda * hpstat1[1][i][0])
+    TISA2.append(Tstat2[1][i][0] + llambda * hpstat2[1][i][0])
+    Tempdiff1.append(Tlist[i] - TISA1[i])
+    Tempdiff2.append(Tlist[i-5] - TISA2[i])
+
+#Prints the first 6 lines for the first test.
+for i in range(6):  
+    file.write( str(hpstat1[1][i][0]) + " " )
+    file.write( str(Mlist[i]) + " " )
+    file.write( str(Tempdiff1[i]) + " " )
+    if GeneralThrust == True:
+        file.write(str(FFLstat1[i]) + " " )
+        file.write(str(FFRstat1[i]) + "\n" )
+    else:
+        file.write( str(FFLstat1[1][i][0]) + " " )
+        file.write( str(FFRstat1[1][i][0]) + "\n" )
+#Prints the second 6 lines for the second test.
+
+for i in range(6):  
+    file.write( str(hpstat2[1][i][0]) + " " )
+    file.write( str(Mlist[i+4]) + " " )
+    file.write( str(Tempdiff2[i]) + " " )
+    if GeneralThrust == True:
+        file.write(str(FFLstat2[i]) + " " )
+        file.write(str(FFRstat2[i]) + "\n" )
+    else:
+        file.write( str(FFLstat2[1][i][0]) + " " )
+        file.write( str(FFRstat2[1][i][0]) + "\n" )
+ 
+file.close()
+
+"""################################################Take the thrust file################################################"""
+
+print(Thrustresult)
+
+"""################################################Get output State Space Symmetric################################################"""
 #ss_sym(muclist[0], c, V_TASlist[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
 

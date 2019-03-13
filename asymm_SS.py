@@ -71,41 +71,42 @@ V = V_TAS = 3.
 mub = 19.
 CL = 5.
 
-def assym_SS (V, b, CYb, mub, CL, CYp, CYr, CYda, CYdr, Clb, KZ2, Cnb, KXZ, KX2, Cnp)
-yb = V/b * CYb / (2*mub)
-yphi = V/b * CL / (2*mub)
-yp = V/b * CYp / (2*mub)
-yr = V/b * (CYr-4*mub)/(2*mub)
-yda = V/b * CYda/(2*mub)
-ydr = V/b * CYdr/(2*mub)
-
-lb = V/b * (Clb*KZ2+Cnb*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
-lphi = 0
-lp = V/b * (Clp*KZ2+Cnp*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
-lr = V/b * (Clr*KZ2+Cnr*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
-lda = V/b * (Clda*KZ2+Cnda*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
-ldr = V/b * (Cldr*KZ2+Cndr*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
-
-nb = V/b * (Clb*KXZ+Cnb*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
-nphi = 0
-n_p = V/b * (Clp*KXZ+Cnp*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
-nr = V/b * (Clr*KXZ+Cnr*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
-nda = V/b * (Clda*KXZ+Cnda*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
-ndr = V/b * (Cldr*KXZ+Cndr*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
-
-dim = b/(2*V)
-
-Aa = np.matrix([[yb, yphi, yp*dim, yr*dim],\
-                [0, 0, 2*V/b*dim, 0*dim],\
-                [lb, 0, lp*dim, lr*dim],\
-                [nb, 0, n_p*dim, nr*dim]])
-Ba = np.matrix([[0, ydr],\
-                [0, 0],\
-                [lda, ldr],\
-                [nda, ndr]])
-
-Ca = np.matrix([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]])
-Da = np.matrix([[0., 0.],[0., 0.],[0., 0.],[0., 0.]])
-
-eigw_as, eigv_as = la.eig(Aa) #eigenvalues & eigenvectors of A-matrix (asymmetric)
-sys_as = c.ss(Aa,Ba,Ca,Da)
+def assym_SS (V, b, CYb, mub, CL, CYp, CYr, CYda, CYdr, Clb, KZ2, Cnb, KXZ, KX2, Cnp):
+    
+    yb = V/b * CYb / (2*mub)
+    yphi = V/b * CL / (2*mub)
+    yp = V/b * CYp / (2*mub)
+    yr = V/b * (CYr-4*mub)/(2*mub)
+    yda = V/b * CYda/(2*mub)
+    ydr = V/b * CYdr/(2*mub)
+    
+    lb = V/b * (Clb*KZ2+Cnb*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
+    lphi = 0
+    lp = V/b * (Clp*KZ2+Cnp*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
+    lr = V/b * (Clr*KZ2+Cnr*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
+    lda = V/b * (Clda*KZ2+Cnda*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
+    ldr = V/b * (Cldr*KZ2+Cndr*KXZ) / (4*mub*(KX2*KZ2-KXZ**2))
+    
+    nb = V/b * (Clb*KXZ+Cnb*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
+    nphi = 0
+    n_p = V/b * (Clp*KXZ+Cnp*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
+    nr = V/b * (Clr*KXZ+Cnr*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
+    nda = V/b * (Clda*KXZ+Cnda*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
+    ndr = V/b * (Cldr*KXZ+Cndr*KX2) / (4*mub*(KX2*KZ2-KXZ**2))
+    
+    dim = b/(2*V)
+    
+    Aa = np.matrix([[yb, yphi, yp*dim, yr*dim],\
+                    [0, 0, 2*V/b*dim, 0*dim],\
+                    [lb, 0, lp*dim, lr*dim],\
+                    [nb, 0, n_p*dim, nr*dim]])
+    Ba = np.matrix([[0, ydr],\
+                    [0, 0],\
+                    [lda, ldr],\
+                    [nda, ndr]])
+    
+    Ca = np.matrix([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]])
+    Da = np.matrix([[0., 0.],[0., 0.],[0., 0.],[0., 0.]])
+    
+    eigw_as, eigv_as = la.eig(Aa) #eigenvalues & eigenvectors of A-matrix (asymmetric)
+    sys_as = c.ss(Aa,Ba,Ca,Da)
