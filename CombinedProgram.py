@@ -34,8 +34,31 @@ FFL = [0.086686542128, 0.06992882395500001, 0.064510915072, 0.052667114258000004
 FFR = [0.086056552723, 0.07484274131400001, 0.06829085150200001, 0.058337018903000006, 0.05455708247300001, 0.052793112139] #Fuel flow right engine
 TISA = [246.20300399999996, 244.22281599999997, 242.92281599999995, 240.94262799999996, 239.52281599999998, 238.52281599999998] #Temperature Corrected
 # Aircraft mass
-m = [2.,5.,3.,2.,5.,6.]       # mass [kg]
+m = [4000.,4000.,4000.,4000.,4000.,4000.]       # mass [kg]
 
 #Get Stationary Values
+for i in range(datalength): 
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hp[i], llambda, T0, g, R, rho0, gamma, p0, Tm[i], Vc[i], m[i], S, c, b, th[i])
+    plist.append(p)
+    rholist.append(rho)
+    Mlist.append(M)
+    Tlist.append(T)
+    Wlist.append(W)
+    muclist.append(muc)
+    mublist.append(mub)
+    CX0list.append(CX0)
+    CZ0list.append(CZ0)
+    V_TASlist.append(V_TAS)
+    Velist.append(Ve)
+    alist.append(a)
 
-p, rho, M, Temp, W, muc, mub, CX0, CZ0, V_TAS, Ve = StationaryValues(hp, llambda, h, T0, g, R, rho0, gamma, p, Tm, Vc, m, S, c, b, th)
+    
+ss_sym(muc[0], c, V_TAS[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
+
+
+    
+    
+    
+    
+    
+    

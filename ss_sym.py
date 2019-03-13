@@ -10,17 +10,17 @@ import numpy as np
 from math import *
 import matplotlib.pyplot as plt
 
-def ss_sym(muc, c, V0, Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde):
+def ss_sym(muc, c, V_TAS, Cmadot, KY2, CXu, CXa, CZ0, CXq, CZu, CZa, CX0, CZq, Cmu, Cma, Cmq, CXde, CZde, Cmde):
     
-    C1 = np.matrix([[-2*muc*(c/V0), 0.,0.,0.],
-                     [0., (CZadot - 2*muc)*(c/V0), 0., 0.],
-                     [0.,0.,-(c/V0), 0.],
-                     [0., Cmadot*(c/V0), 0., -2*muc*KY2*(c/V0)**2]])
+    C1 = np.matrix([[-2*muc*(c/V_TAS), 0.,0.,0.],
+                     [0., (CZadot - 2*muc)*(c/V_TAS), 0., 0.],
+                     [0.,0.,-(c/V_TAS), 0.],
+                     [0., Cmadot*(c/V_TAS), 0., -2*muc*KY2*(c/V_TAS)**2]])
 
-    C2 = np.matrix([[CXu, CXa, CZ0, CXq*(c/V0)],
-                    [CZu, CZa, -CX0, (CZq + 2*muc)*(c/V0)],
-                    [0.,0.,0.,1*(c/V0)],
-                    [Cmu, Cma, 0., Cmq*(c/V0)]])
+    C2 = np.matrix([[CXu, CXa, CZ0, CXq*(c/V_TAS)],
+                    [CZu, CZa, -CX0, (CZq + 2*muc)*(c/V_TAS)],
+                    [0.,0.,0.,1*(c/V_TAS)],
+                    [Cmu, Cma, 0., Cmq*(c/V_TAS)]])
     
     C3 = np.matrix([[CXde],
                     [CZde],
@@ -65,14 +65,14 @@ def ss_sym(muc, c, V0, Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu,
         y_alpha_1.append(y1[i][1])
         y_theta_1.append(y1[i][2])
         y_q_1.append(y1[i][3])
-        y_V_1.append(y1[i][0]+V0)
+        y_V_1.append(y1[i][0]+V_TAS)
         
     for i in range(len(y2)):
         y_u_2.append(y2[i][0])
         y_alpha_2.append(y2[i][1])
         y_theta_2.append(y2[i][2])
         y_q_2.append(y2[i][3])
-        y_V_2.append(y2[i][0]+V0)
+        y_V_2.append(y2[i][0]+V_TAS)
 #    print(y_u)
 #    print(y_V)
     print(y_theta_1)
@@ -130,3 +130,5 @@ def ss_sym(muc, c, V0, Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu,
     plt.ylabel('q[Rad/sec]')   
     plt.show()
     
+ss_sym(muc, c, V_TAS, Cmadot, KY2, CXu, CXa, CZ0, CXq, CZu, CZa, CX0, CZq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
+
