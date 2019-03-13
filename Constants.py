@@ -49,7 +49,7 @@ mu0 = 1.7894e-5
 KX2    = 0.019
 KZ2    = 0.042
 KXZ    = 0.002
-KY2    = 1.25 * 1.114
+KY2    = 1.3925
 
 # Aerodynamic constants
 
