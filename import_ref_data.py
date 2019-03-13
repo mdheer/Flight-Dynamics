@@ -227,12 +227,9 @@ print('How to extract the data: Example for stat_1_conv')
 print('a) stat_1_conv[0] gives first measured parameter.')
 print('b) stat_1_conv[0][0] gives the name of this parameter.')   
 print('c) stat_1_conv[0][1] gives the actual measured data.')
-    
-<<<<<<< HEAD
+print('You can remove these print statements once you have read the instructions :)')
+print()
 print('\033[0;30m')
     
 print(stat_1_conv[0][1])
-=======
 
-print (stat_1_conv[0][0])
->>>>>>> master
