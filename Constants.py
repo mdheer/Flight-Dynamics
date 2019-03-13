@@ -9,21 +9,21 @@ from math import *
 # Aircraft mass
 m      =      4547.8       # mass [kg]
 # aerodynamic properties
-e      =       1.      # Oswald factor [ ]
-CD0    =        1.     # Zero lift drag coefficient [ ]
-CLa    =         1.    # Slope of CL-alpha curve [ ]
+e      =       0.8      # Oswald factor [ ]
+CD0    =       0.04     # Zero lift drag coefficient [ ]
+CLa    =       5.084   # Slope of CL-alpha curve [ ]
 
 # Longitudinal stability
-Cma    = -0.43            # longitudinal stabilty [ ]
-Cmde   = -1.553            # elevator effectiveness [ ]
+Cma    = -0.5626            # longitudinal stabilty [ ]
+Cmde   = -1.1642            # elevator effectiveness [ ]
 
 # Aircraft geometry
 
-S      = 24.2#30.00	          # wing area [m^2]
+S      = 30.00	          # wing area [m^2]
 Sh     = 0.2 * S         # stabiliser area [m^2]
 Sh_S   = Sh / S	          # [ ]
 lh     = 5.5#0.71 * 5.968    # tail length [m]
-c      = 2.022#2.0569	          # mean aerodynamic cord [m]
+c      = 2.0569	          # mean aerodynamic cord [m]
 lh_c   = lh / c	          # [ ]
 b      = 15.911	          # wing span [m]
 bh     = 5.791	          # stabilser span [m]
@@ -47,12 +47,12 @@ gamma  = 1.4             # Specific heat ratio
 
 # Constant values concerning aircraft inertia
 
-muc    = m / (rho * S * c)
-mub    = m / (rho * S * b)
+#muc    = m / (rho * S * c)
+#mub    = m / (rho * S * b)
 KX2    = 0.019
 KZ2    = 0.042
 KXZ    = 0.002
-KY2    = 0.98#1.25 * 1.114
+KY2    = 1.25 * 1.114
 
 # Aerodynamic constants
 
@@ -82,9 +82,9 @@ CZadot = -0.00350
 CZq    = -5.66290
 CZde   = -0.69612
 
-Cmu    = 0#+0.06990
-Cmadot = -3.7#+0.17800
-Cmq    = -7.04#-8.79415
+Cmu    = +0.06990
+Cmadot = +0.17800
+Cmq    = -8.79415
 
 
 CYb    = -0.7500
