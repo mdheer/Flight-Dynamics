@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 #alpha = [1,2,3,4,5,6]
 #T=[1,2,3,4,5,6]
 
+
+
 def CL_CD(T, rho, V_TAS, W, alpha):
       
     C_L = []

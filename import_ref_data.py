@@ -1,5 +1,11 @@
 import numpy as np
 import scipy.io as sio
+import importlib
+
+import sys  
+
+importlib.reload(sys)  
+sys.setdefaultencoding('utf8')
 
 """ =============== PART I: MATLAB DATA =============== """
 
