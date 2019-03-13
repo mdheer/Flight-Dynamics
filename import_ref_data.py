@@ -266,9 +266,10 @@ def get_eigmot(name):
     for i in range(len(eigenmotion_times)):
         if name == eigenmotion_times[i][0]:
             print(name)
-        index = i
+            index = i
     
     time = eigenmotion_times[index][1]
+    print(time)
     
     seconds = float(time[-2:])
     minutes = float(time[-5:-3])
@@ -286,9 +287,9 @@ def get_eigmot(name):
         if t == total_time:
             jndex = j
     
-    V_TAS = get_data(42)[jndex][0]
+    V_TAS = get_data(42)[jndex][0]*0.514444         # [m/s]
     
-    mass = total_starting_mass - get_data(14)[jndex][0] - get_data(15)[jndex][0]
+    mass = total_starting_mass - get_data(14)[jndex][0]*0.000125998 - get_data(15)[jndex][0]*0.000125998    # [kg/s]
     
     hp = get_data(37)[jndex][0]
     Tm = get_data(36)[jndex][0]
