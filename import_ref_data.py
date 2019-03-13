@@ -1,11 +1,5 @@
 import numpy as np
 import scipy.io as sio
-import importlib
-
-import sys  
-
-importlib.reload(sys)  
-sys.setdefaultencoding('utf8')
 
 """ =============== PART I: MATLAB DATA =============== """
 
@@ -84,7 +78,7 @@ print('NOTE2: matlab units have not been converted to SI units as yet.')
 
 # Importing excel data from excel file
 # NOTE: Please save file as .csv instead of .xlsx
-excel_data = np.genfromtxt('REFERENCE_Post_Flight_Datasheet_Flight.csv',delimiter=',',dtype='U25')
+excel_data = np.genfromtxt('REFERENCE_Post_Flight_Datasheet_Flight.csv',delimiter=',',dtype='str',encoding='bytes')
 
 
 # ======= A) Getting weights =======
