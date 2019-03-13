@@ -10,7 +10,10 @@ from StationaryValues import *
 from ss_sym import * 
 import sys, string, os
 #from asymm_SS import * 
-ThrustUpdate = False
+
+"""################################################General Output Parameters################################################"""
+
+ThrustUpdate = True
 
 """################################################Parameters defined################################################"""
 datalength = 6
@@ -160,15 +163,21 @@ for i in range(12):
     ThurstStat2FD.append(Thrustresult[i + 12])
     ThurstStat1G.append(Thrustresult[i + 24])
     ThrustStat2G.append(Thrustresult[i + 36])
-
 print(ThrustStat2G)
+
+
 """################################################Get output State Space Symmetric################################################"""
+
+
 Sym_SS(V_TAS, muc, CX0, CZ0, rho)
 
+
 """################################################Get output State Space Assymmetric################################################"""
+
 Asymm_SS(V_TASlist[0], mub[0])
 
 
+"""################################################CL and CD calculation################################################"""
 
 
 
