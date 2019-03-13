@@ -6,12 +6,7 @@ import numpy as np
 from math import *
 # Stationary flight condition
 
-# Aircraft mass
-m      =      4547.8       # mass [kg]
-# aerodynamic properties
-e      =       1.      # Oswald factor [ ]
-CD0    =        1.     # Zero lift drag coefficient [ ]
-CLa    =         1.    # Slope of CL-alpha curve [ ]
+
 
 # Longitudinal stability
 Cma    = -0.43            # longitudinal stabilty [ ]
