@@ -24,20 +24,32 @@ V_TASlist = []
 Velist = []
 alist = []
 #From flight test parameters                  
-Tm = [268.65, 266.65, 265.34999999999997, 263.34999999999997, 261.95, 260.95]                             # (given)
-hp = [3453.384, 3450.336, 3450.336, 3447.288, 3450.336, 3450.336] # pressure altitude in the stationary flight condition [m] (given)   	         
 alpha = [1.8, 2.5, 3.3, 5.2, 8., 10.5]                  # angle of attack in the stationary flight condition [rad] (given)
 th   =  [1.8, 2.5, 3.3, 5.2, 8., 10.5]                  # pitch angle in the stationary flight condition [rad] (given)
 Vc = [121.92333228, 108.54777684, 99.28777692, 82.3111104, 68.42111052, 59.67555504]  #added (given)
-FFL = [0.086686542128, 0.06992882395500001, 0.064510915072, 0.052667114258000004, 0.049769162995000005, 0.04913917359]      #Fuel flow left engine
-FFR = [0.086056552723, 0.07484274131400001, 0.06829085150200001, 0.058337018903000006, 0.05455708247300001, 0.052793112139] #Fuel flow right engine
 TISA = [246.20300399999996, 244.22281599999997, 242.92281599999995, 240.94262799999996, 239.52281599999998, 238.52281599999998] #Temperature Corrected
 # Aircraft mass
 m = [4000.,4000.,4000.,4000.,4000.,4000.]       # mass [kg]
 
+hpstat1 = stat_1_conv[0]
+Vcstat1 = stat_1_conv[1]
+Alpha1 = stat_1_conv[2]
+FFLstat1 = stat_1_conv[3]
+FFRstat1 = stat_1_conv[4]
+Tstat1 = stat_1_conv[6]
+
+hpstat2 = stat_2_conv[0]
+Vcstat2 = stat_2_conv[1]
+FFLstat2 = stat_2_conv[6]
+FFRstat2 = stat_2_conv[7]
+Tstat2 = stat_2_conv[9]
+
+
+
+
 #Get Stationary Values
 for i in range(datalength): 
-    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hp[i], Tm[i], Vc[i], m[i], th[i])
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat1[1][i], Tstat1[1][i], Vcstat1[1][i], m[i], th[i])
     plist.append(p)
     rholist.append(rho)
     Mlist.append(M)
