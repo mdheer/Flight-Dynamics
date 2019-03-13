@@ -97,7 +97,7 @@ weight_names.append(excel_data[17][0][:-7])
 weight_names.append('BEM')
 
 weight_vals.append(float(excel_data[17][3])*0.453592)     # fuel weight [kg]
-weight_vals.append(0.0)                                    # BEM weight, STILL NEEDS TO BE COMPUTED
+weight_vals.append(4157.17)                                    # BEM weight [kg]
 
 weights[0][0] = weight_names
 weights[1][0] = weight_vals
@@ -116,6 +116,9 @@ for i in range(len(stat_1)):
     stat_1[i][0] = excel_data[24][i+3]+' '+excel_data[25][i+3]
     temp = excel_data[27:33,i+3:i+4]
     stat_1[i][1] = temp.astype(dtype='float')
+    
+    stat_1_conv[i][0] = stat_1[i][0]
+    stat_1_conv[i][1] = stat_1[i][1]
    
 # Converted names (to SI units)
 stat_1_conv[0][0] = stat_1[0][0][:-4]+'[m]'
@@ -145,6 +148,9 @@ for i in range(len(stat_2)):
     stat_2[i][0] = excel_data[55][i+3]+' '+excel_data[56][i+3]
     temp = excel_data[58:65,i+3:i+4] 
     stat_2[i][1] = temp.astype(dtype='float')
+    
+    stat_2_conv[i][0] = stat_2[i][0]
+    stat_2_conv[i][1] = stat_2[i][1]
 
 # Converted names (to SI units)  
 stat_2_conv[0][0] = stat_2[0][0][:-4]+'[m]'
@@ -174,6 +180,9 @@ for i in range(len(stat_xcg)):
     stat_xcg[i][0] = excel_data[72][i+3]+' '+excel_data[73][i+3]
     temp = excel_data[74:76,i+3:i+4] 
     stat_xcg[i][1] = temp.astype(dtype='float')
+    
+    stat_xcg_conv[i][0] = stat_xcg[i][0]
+    stat_xcg_conv[i][1] = stat_xcg[i][1]
     
 # Converted names (to SI units)  
 stat_xcg_conv[0][0] = stat_xcg[0][0][:-4]+'[m]'
@@ -227,6 +236,9 @@ print('How to extract the data: Example for stat_1_conv')
 print('a) stat_1_conv[0] gives first measured parameter.')
 print('b) stat_1_conv[0][0] gives the name of this parameter.')   
 print('c) stat_1_conv[0][1] gives the actual measured data.')
+print('You can remove these print statements once you have read the instructions :)')
+print()
+print('\033[0;30m')
     
+print(stat_1_conv[2][1])
 
-print (stat_1_conv[0][0])
