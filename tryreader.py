@@ -14,7 +14,7 @@ from math import *
 # Stationary flight condition
 
 hp0    =   1.    	      # pressure altitude in the stationary flight condition [m]
-V0     =    59.9         # true airspeed in the stationary flight condition [m/sec]
+V_TAS     =    59.9         # true airspeed in the stationary flight condition [m/sec]
 alpha0 =    1.         # angle of attack in the stationary flight condition [rad]
 th0    =     1.        # pitch angle in the stationary flight condition [rad]
 
@@ -37,7 +37,7 @@ Sh_S   = Sh / S	          # [ ]
 lh     = 5.5#0.71 * 5.968    # tail length [m]
 c      = 2.022#2.0569	          # mean aerodynamic cord [m]
 lh_c   = lh / c	          # [ ]
-b      = 15.911	          # wing span [m]
+b      = 13.36	          # wing span [m]
 bh     = 5.791	          # stabilser span [m]
 A      = b ** 2 / S      # wing aspect ratio [ ]
 Ah     = bh ** 2 / Sh    # stabilser aspect ratio [ ]
@@ -59,10 +59,10 @@ gamma  = 1.4             # Specific heat ratio
 
 # Constant values concerning aircraft inertia
 
-muc    = m / (rho * S * c)
-mub    = m / (rho * S * b)
-KX2    = 0.019
-KZ2    = 0.042
+muc    = 102.7# m / (rho * S * c)
+mub    = 15.5#m / (rho * S * b)
+KX2    = 0.012
+KZ2    = 0.037
 KXZ    = 0.002
 KY2    = 0.98#1.25 * 1.114
 
@@ -75,46 +75,46 @@ depsda = 4 / (A + 2)            # Downwash gradient [ ]
 
 # Lift and drag coefficient
 
-#####CL = 2 * W / (rho * V0 ** 2 * S)              # Lift coefficient [ ]
+CL = 1.1360# 2 * W / (rho * V0 ** 2 * S)              # Lift coefficient [ ]
 #####CD = CD0 + (CLa * alpha0) ** 2 / (pi * A * e) # Drag coefficient [ ]
 
 # Stabiblity derivatives
 
-CX0    = W * sin(th0) / (0.5 * rho * V0 ** 2 * S)
-CXu    = -0.02792
-CXa    = -0.47966
-CXadot = +0.08330
-CXq    = -0.28170
-CXde   = -0.03728
+CX0    = 0#W * sin(th0) / (0.5 * rho * V0 ** 2 * S)
+CXu    = -0.2199
+CXa    = 0.4653
+CXadot = 0#+0.08330
+CXq    = 0#-0.28170
+CXde   = 0#-0.03728
 
-CZ0    = -W * cos(th0) / (0.5 * rho * V0 ** 2 * S)
-CZu    = -0.37616
-CZa    = -5.74340
-CZadot = -0.00350
-CZq    = -5.66290
-CZde   = -0.69612
+CZ0    = -1.1360#-W * cos(th0) / (0.5 * rho * V0 ** 2 * S)
+CZu    = -2.272#-0.37616
+CZa    = -5.16#-5.74340
+CZadot = -1.43#-0.00350
+CZq    = -3.86#-5.66290
+CZde   = -0.6238#-0.69612
 
 Cmu    = 0#+0.06990
 Cmadot = -3.7#+0.17800
 Cmq    = -7.04#-8.79415
 
 
-CYb    = -0.7500
+CYb    = -0.9896
 CYbdot =  0     
-CYp    = -0.0304
-CYr    = +0.8495
-CYda   = -0.0400
-CYdr   = +0.2300
+CYp    = -0.0870
+CYr    = +0.43
+CYda   = 0#-0.0400
+CYdr   = +0.3037
 
-Clb    = -0.10260
-Clp    = -0.71085
-Clr    = +0.23760
-Clda   = -0.23088
-Cldr   = +0.03440
+Clb    = -0.0772
+Clp    = -0.3444
+Clr    = +0.28
+Clda   = -0.2349
+Cldr   = +0.0286
 
-Cnb    =  +0.1348
+Cnb    =  +0.1638
 Cnbdot =   0     
-Cnp    =  -0.0602
-Cnr    =  -0.2061
-Cnda   =  -0.0120
-Cndr   =  -0.0939
+Cnp    =  -0.0108
+Cnr    =  -0.1930
+Cnda   =  0.0286
+Cndr   =  -0.1261
