@@ -16,3 +16,4 @@ xcg = (xcgdat_RM - 261.45) * inch #m (wrt forward end of mac)
 xcg_prcnt = xcg*100/c #%c
 
 BEM = 9165*lbs #kg (basic empty mass) 
+m_ramp = 14223*lbs #kg (ramp mass)
