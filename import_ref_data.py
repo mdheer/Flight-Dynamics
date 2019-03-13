@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.io as sio
+from StationaryValues import DynamicValues
 
 """ =============== PART I: MATLAB DATA =============== """
 
@@ -61,7 +62,6 @@ for i in range(len(flight_data[0][0])):
 
 # Calling a certain line from the ref_data to get its values in an array
 def get_data(i):
-    print('Parameter =',ref_data[i][0])
     return ref_data[i][2]
 
 # Printing intructions when running
@@ -134,7 +134,7 @@ stat_1_conv[1][1] = stat_1[1][1]*0.514444           # kts    => m/s
 stat_1_conv[3][1] = stat_1[3][1]*0.000125998        # lbs/hr => kg/s
 stat_1_conv[4][1] = stat_1[4][1]*0.000125998        # lbs/hr => kg/s
 stat_1_conv[5][1] = stat_1[5][1]*0.453592           # lbs    => kg
-stat_1_conv[6][1] = stat_1[6][1]+273                # °C     => K
+stat_1_conv[6][1] = stat_1[6][1]+273.15             # °C     => K
 
 
 # ======= C) 2nd stationary measurements =======
@@ -166,7 +166,7 @@ stat_2_conv[1][1] = stat_2[1][1]*0.514444           # kts    => m/s
 stat_2_conv[6][1] = stat_2[6][1]*0.000125998        # lbs/hr => kg/s
 stat_2_conv[7][1] = stat_2[7][1]*0.000125998        # lbs/hr => kg/s
 stat_2_conv[8][1] = stat_2[8][1]*0.453592           # lbs    => kg
-stat_2_conv[9][1] = stat_2[9][1]+273                # °C     => K
+stat_2_conv[9][1] = stat_2[9][1]+273.15             # °C     => K
 
 
 # ======= D) Xcg shift =======
@@ -198,7 +198,7 @@ stat_xcg_conv[1][1] = stat_xcg[1][1]*0.514444           # kts    => m/s
 stat_xcg_conv[6][1] = stat_xcg[6][1]*0.000125998        # lbs/hr => kg/s
 stat_xcg_conv[7][1] = stat_xcg[7][1]*0.000125998        # lbs/hr => kg/s
 stat_xcg_conv[8][1] = stat_xcg[8][1]*0.453592           # lbs    => kg
-stat_xcg_conv[9][1] = stat_xcg[9][1]+273                # °C     => K
+stat_xcg_conv[9][1] = stat_xcg[9][1]+273.15             # °C     => K
 
 
 # ======= E) Eigenmotion times =======
@@ -285,3 +285,16 @@ def get_eigmot(name):
         if t == total_time:
             jndex = j
     
+    V_TAS = get_data(42)[jndex][0]
+    
+    mass = total_starting_mass - get_data(14)[jndex][0] - get_data(15)[jndex][0]
+    
+    hp = get_data(37)[jndex][0]
+    Tm = get_data(36)[jndex][0]
+    V_IAS = get_data(41)[jndex][0]
+    rho = DynamicValues(hp,Tm,V_IAS)[2]
+    
+    pitch = get_data(22)[jndex][0]
+    
+    print('Output: V_TAS,mass,rho,pitch')
+    return V_TAS,mass,rho,pitch

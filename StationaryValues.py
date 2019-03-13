@@ -1,6 +1,6 @@
 
 from Constants import *
-from import_ref_data import *
+#from import_ref_data import *
 
 Cm0 = Cmac
 
@@ -31,7 +31,11 @@ def StationaryValues(hp, Tm, Vc, m, th):
     return p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a
 
 
-def DynamicValues(hp,Tm,Vc):
+def DynamicValues(hp,Tm,V_IAS):
+    
+    hp = hp*0.3048              # [m]
+    Tm = Tm+273.15              # [K]
+    Vc = (V_IAS-2)*0.514444     # [m/s]
     
     p = p0 * (1 + ((llambda*hp)/T0))**(-(g)/(llambda * R))
     
