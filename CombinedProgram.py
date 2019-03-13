@@ -52,8 +52,8 @@ Tstat1 = stat_1_conv[6]
 FFLstat1 = stat_1_conv[3]
 FFRstat1 = stat_1_conv[4]
 FFFLstat1 = FFFRstat1 = FFFLstat2 = FFFRstat2 = [0.048,0.048,0.048,0.048,0.048,0.048]
-#for i in range(6):
-#    mlist.append(stat_mass(Fused[i]))
+for i in range(6):
+    mlist.append(stat_mass(stat_1_conv[5][i][0]))
 
 hpstat2 = stat_2_conv[0]
 Vcstat2 = stat_2_conv[1]
@@ -62,9 +62,10 @@ Tstat2 = stat_2_conv[9]
 FFLstat2 = stat_2_conv[6]
 FFRstat2 = stat_2_conv[7]
 
-
-#for i in range(6):
-#    mlist.append(stat_mass(Fused[i]))
+for i in range(6):
+    mlist.append(stat_mass(stat_1_conv[8][i][0]))
+    
+print (mlist)
 
 """################################################Get the stationary values and make lists################################################"""
 #The format is: [a, b, c, d, e, f, g, h, i, j, k, l]. The first 6 are the values from the first test, the last 6 are the one of the final test.
