@@ -163,5 +163,12 @@ for i in range(12):
 
 print(ThrustStat2G)
 """################################################Get output State Space Symmetric################################################"""
-#ss_sym(muclist[0], c, V_TASlist[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
+Sym_SS(V_TAS, muc, CX0, CZ0, rho)
+
+"""################################################Get output State Space Assymmetric################################################"""
+Asymm_SS(V_TASlist[0], mub[0])
+
+
+
+
 

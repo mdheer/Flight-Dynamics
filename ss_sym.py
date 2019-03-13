@@ -18,7 +18,7 @@ mass = get_eigmot('Phugoid')[1]
 rho = get_eigmot('Phugoid')[2]
 pitch = get_eigmot('Phugoid')[3]
 
-def ss_sym():
+def Sym_SS(V_TAS, muc, CX0, CZ0, rho):
     
     CX0 = mass * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     muc =  mass / (rho * S * c)
@@ -88,7 +88,6 @@ def ss_sym():
     print(Period)
     print(Dampratio)
              
-    
 #    tryinput=-0.005
 #    t1 = np.arange(0,10,0.01)
 #    t2 = np.arange(0,150,0.01)
