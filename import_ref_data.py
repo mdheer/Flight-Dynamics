@@ -240,5 +240,35 @@ print('You can remove these print statements once you have read the instructions
 print()
 print('\033[0;30m')
     
-print(stat_1_conv[2][1])
 
+""" =============== PART III: SOME FUNCTIONS =============== """
+
+def show_eigmot_names():
+    for i in range(len(eigenmotion_times)):
+        print(eigenmotion_times[i][0])
+
+def get_eigmot(name):
+    
+    for i in range(len(eigenmotion_times)):
+        if name == eigenmotion_times[i][0]:
+            print(name)
+        index = i
+    
+    time = eigenmotion_times[index][1]
+    
+    seconds = float(time[-2:])
+    minutes = float(time[-5:-3])
+    
+    if len(time)>5:
+        hours = float(time[-7:-6])
+    else:
+        hours = 0.
+    
+    total_time = seconds+minutes*60+hours*3600
+    
+    time_data = get_data(48)[0]
+    
+    for j,t in enumerate(time_data):
+        if t == total_time:
+            jndex = j
+    
