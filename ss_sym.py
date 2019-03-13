@@ -10,7 +10,7 @@ import numpy as np
 from math import *
 import matplotlib.pyplot as plt
 
-def ss_sym():
+def ss_sym(muc, c, V0, Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde):
     
     C1 = np.matrix([[-2*muc*(c/V0), 0.,0.,0.],
                      [0., (CZadot - 2*muc)*(c/V0), 0., 0.],

@@ -52,7 +52,6 @@ for i in range(datalength):
     Velist.append(Ve)
     alist.append(a)
     
-print(Tlist)
     
     
     
