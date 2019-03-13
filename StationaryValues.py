@@ -8,11 +8,11 @@ def StationaryValues(hp, Tm, Vc, m, th):
     
     p = p0 * (1 + ((llambda*hp)/T0))**(-(g)/(llambda * R))
     
-    rho = rho0 * pow(((1+(llambda * hp / T0))), (-((g / (llambda*R)) + 1)))
-    
     M = sqrt((2/(gamma -1))* ((1 + (p0/p)*((1 + ((gamma -1)/(2 *gamma)) * (rho0/p0)* Vc**2)**(gamma/(gamma -1)) -1))**((gamma -1)/gamma) -1))
     
     T = Tm/(1 + ((gamma - 1)/2)* M**2)
+    
+    rho = p / (R*T)
     
     W = m * g
     
@@ -30,21 +30,34 @@ def StationaryValues(hp, Tm, Vc, m, th):
     
     return p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a
 
-def pressure(hp,T0):
-    
 
+def DynamicValues(hp,Tm,Vc):
+    
+    p = p0 * (1 + ((llambda*hp)/T0))**(-(g)/(llambda * R))
+    
+    M = sqrt((2/(gamma-1)) * ((1 + (p0/p)*((1 + ((gamma-1)/(2*gamma)) * (rho0/p0)* Vc**2)**(gamma/(gamma-1))-1))**((gamma-1)/gamma)-1))
+    
+    T = Tm/(1+((gamma-1)/2)*M**2)
+    
+    rho = p / (R*T)
+    
+    return p,T,rho
+    
 
 def Ve_thilde(Ve, Ws, W):
     Ve_red = Ve * math.sqrt(Ws/W)
     return Ve_red
 
+
 def de_star(Cmde, Cm0, Cma, CNwa, Cmtc, W, rho, Ve_red, Tcs, S):
     de_red = (-1./Cmde)*(Cm0 + (Cma/CNwa)*(W/(0.5 * rho * Ve_red**2 * S)) + Cmtc * Tcs)
     return de_red
 
+
 def Fe_star(Ws, W, Fmeas):
     Fe_red = Fmeas * (Ws/W)
     return Fe_red  
+
 
 def stat_mass(Fused):
     """ Fused = the array with fuel used, of the desired measurement. """
