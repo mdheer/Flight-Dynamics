@@ -41,7 +41,12 @@ def de_star(Cmde, Cm0, Cma, CNwa, Cmtc, W, rho, Ve_red, Tcs, S):
 
 def Fe_star(Ws, W, Fmeas):
     Fe_red = Fmeas * (Ws/W)
-    return Fe_red    
+    return Fe_red  
+
+def stat_mass(Fused):
+    """ Fused = the array with fuel used, of the desired measurement. """
+    """ Returns an array for total mass at that measurement moment.   """
+    return total_starting_mass - Fused
 
 # Ws = standard aircraft weight
 # Ve_red = reduced equivalent airspeed

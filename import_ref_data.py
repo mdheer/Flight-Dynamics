@@ -102,7 +102,7 @@ weight_vals.append(4157.17)                                    # BEM weight [kg]
 weights[0][0] = weight_names
 weights[1][0] = weight_vals
 
-total_starting_weight = sum(weights[1][0])                  # [kg]
+total_starting_mass = sum(weights[1][0])                  # [kg]
 
 
 # ======= B) 1st stationary measurements =======
