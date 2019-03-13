@@ -146,13 +146,6 @@ if ThrustUpdate == True :
 
 """################################################Take the thrust file and put the values in a list################################################"""
 
-filethrust = open("thrust.dat", "r") 
-lines=filethrust.readlines()
-Thrustresult=[]
-for x in lines:
-    Thrustresult.append(x.split()[0])
-    Thrustresult.append(x.split()[1])
-filethrust.close()
 
 for i in range(12):
     ThrustStat1FD.append(Thrustresult[i])
@@ -160,6 +153,7 @@ for i in range(12):
     ThurstStat1G.append(Thrustresult[i + 24])
     ThrustStat2G.append(Thrustresult[i + 36])
 
+print(ThrustStat2G)
 """################################################Get output State Space Symmetric################################################"""
 #ss_sym(muclist[0], c, V_TASlist[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
 
