@@ -11,6 +11,7 @@ import numpy.linalg as la
 import control.matlab as c
 import matplotlib.pyplot as plt
 
+
 ##test values from reader
 #V0 = 59.9
 #S = 24.2
