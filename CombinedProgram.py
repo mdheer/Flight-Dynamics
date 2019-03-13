@@ -45,13 +45,15 @@ FFRstat2 = stat_2_conv[7]
 Tstat2 = stat_2_conv[9]
 i = 0
 file = open("matlab.dat", "w") 
-#for i in range(5):
-file.write(hpstat1[1][1])
-    
-file.write("Hello World") 
-file.write("This is our new text file") 
-file.write("and this is another line.") 
-file.write("Why? Because we can.") 
+
+for i in range(5):  
+    file.write( str(hpstat1[1][1]) + " " )
+    file.write( str(Vcstat1[1][1]) + " " )
+    file.write( str(Alpha1[1][1]) + " " )
+    file.write( str(FFLstat1[1][1]) + " " )
+    file.write( str(FFRstat1[1][1]) + " " )
+    file.write("/n")
+
  
 file.close()
 
