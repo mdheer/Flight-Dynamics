@@ -14,18 +14,18 @@ Cmde   = -1.1642            # elevator effectiveness [ ]
 
 # Aircraft geometry
 
-S      = 30.00	          # wing area [m^2]
-Sh     = 0.2 * S         # stabiliser area [m^2]
-Sh_S   = Sh / S	          # [ ]
-lh     = 5.5#0.71 * 5.968    # tail length [m]
-c      = 2.0569	          # mean aerodynamic cord [m]
-lh_c   = lh / c	          # [ ]
-b      = 15.911	          # wing span [m]
-bh     = 5.791	          # stabilser span [m]
-A      = b ** 2 / S      # wing aspect ratio [ ]
-Ah     = bh ** 2 / Sh    # stabilser aspect ratio [ ]
-Vh_V   = 1	          # [ ]
-ih     = -2 * pi / 180   # stabiliser angle of incidence [rad]
+S      = 30.00	            # wing area [m^2]
+Sh     = 0.2 * S            # stabiliser area [m^2]
+Sh_S   = Sh / S	            # [ ]
+lh     = 5.5#0.71 * 5.968   # tail length [m]
+c      = 2.0569	            # mean aerodynamic cord [m]
+lh_c   = lh / c	            # [ ]
+b      = 15.911	            # wing span [m]
+bh     = 5.791	            # stabilser span [m]
+A      = b ** 2 / S         # wing aspect ratio [ ]
+Ah     = bh ** 2 / Sh       # stabilser aspect ratio [ ]
+Vh_V   = 1	                # [ ]
+ih     = -2 * pi / 180      # stabiliser angle of incidence [rad]
 
 # Constant values concerning atmosphere and gravity
 
@@ -37,6 +37,7 @@ g      = 9.81            # [m/sec^2] (gravity constant)
 gamma  = 1.4             # Specific heat ratio
 p0     = 101.325 * 10**3 #
 mu0 = 1.7894e-5
+
 # air density [kg/m^3]  
 ######rho    = rho0 * pow( ((1+(llambda * hp0 / Temp0))), (-((g / (llambda*R)) + 1)))   
 ######W      = m * g            # [N]       (aircraft weight)

@@ -130,5 +130,5 @@ def ss_sym(muc, c, V_TAS, Cmadot, KY2, CXu, CXa, CZ0, CXq, CZu, CZa, CX0, CZq, C
     plt.ylabel('q[Rad/sec]')   
     plt.show()
     
-ss_sym(muc, c, V_TAS, Cmadot, KY2, CXu, CXa, CZ0, CXq, CZu, CZa, CX0, CZq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
+
 

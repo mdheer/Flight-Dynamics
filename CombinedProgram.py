@@ -7,9 +7,8 @@ Created on Tue Mar 12 15:55:35 2019
 
 from Constants import * 
 from StationaryValues import * 
-#from ss_sym import * 
+from ss_sym import * 
 #from asymm_SS import * 
-
 #Parameters for this program
 datalength = 6
 plist = []
@@ -26,7 +25,7 @@ Velist = []
 alist = []
 #From flight test parameters                  
 Tm = [268.65, 266.65, 265.34999999999997, 263.34999999999997, 261.95, 260.95]                             # (given)
-hp = [3453.384, 3450.3360000000002, 3450.3360000000002, 3447.288, 3450.3360000000002, 3450.3360000000002] # pressure altitude in the stationary flight condition [m] (given)   	         
+hp = [3453.384, 3450.336, 3450.336, 3447.288, 3450.336, 3450.336] # pressure altitude in the stationary flight condition [m] (given)   	         
 alpha = [1.8, 2.5, 3.3, 5.2, 8., 10.5]                  # angle of attack in the stationary flight condition [rad] (given)
 th   =  [1.8, 2.5, 3.3, 5.2, 8., 10.5]                  # pitch angle in the stationary flight condition [rad] (given)
 Vc = [121.92333228, 108.54777684, 99.28777692, 82.3111104, 68.42111052, 59.67555504]  #added (given)
@@ -38,7 +37,7 @@ m = [4000.,4000.,4000.,4000.,4000.,4000.]       # mass [kg]
 
 #Get Stationary Values
 for i in range(datalength): 
-    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hp[i], llambda, T0, g, R, rho0, gamma, p0, Tm[i], Vc[i], m[i], S, c, b, th[i])
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hp[i], Tm[i], Vc[i], m[i], th[i])
     plist.append(p)
     rholist.append(rho)
     Mlist.append(M)
@@ -52,13 +51,6 @@ for i in range(datalength):
     Velist.append(Ve)
     alist.append(a)
 
-    
-ss_sym(muc[0], c, V_TAS[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
+#Get output State system Symmetric
+#ss_sym(muclist[0], c, V_TASlist[0], Cmadot, KY2, Cxu, CXa, CZ0, CXq, CZu, CZa, CX0, Czq, Cmu, Cma, Cmq, CXde, CZde, Cmde)
 
-
-    
-    
-    
-    
-    
-    
