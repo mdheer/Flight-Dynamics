@@ -78,7 +78,9 @@ print('NOTE2: matlab units have not been converted to SI units as yet.')
 
 # Importing excel data from excel file
 # NOTE: Please save file as .csv instead of .xlsx
-excel_data = np.genfromtxt('REFERENCE_Post_Flight_Datasheet_Flight.csv',delimiter=',',dtype='str',encoding='bytes')
+# IMPORTANT: must have Numpy version 1.15+
+filename = 'REFERENCE_Post_Flight_Datasheet_Flight.csv'
+excel_data = np.genfromtxt(filename,delimiter=',',dtype='str')
 
 
 # ======= A) Getting weights =======
