@@ -9,11 +9,11 @@ import numpy as np
 from math import *
 import matplotlib.pyplot as plt
 
-W = [1,2,3,4,5,6]
-rho = [1,2,3,4,5,6]
-V_TAS = [1,2,3,4,5,6]
-alpha = [1,2,3,4,5,6]
-T=[1,2,3,4,5,6]
+#W = [1,2,3,4,5,6]
+#rho = [1,2,3,4,5,6]
+#V_TAS = [1,2,3,4,5,6]
+#alpha = [1,2,3,4,5,6]
+#T=[1,2,3,4,5,6]
 
 def CL_CD(T, rho, V_TAS, W, alpha):
       
@@ -54,7 +54,7 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     Re=[]
     for i in range(len(T)):
         
-        mu = mu0*(T/T0)^(3/2)*((T0+110)/(T+110))
-        Re = rho*V_TAS*c/mu    
+        mu = mu0*(T[i]/T0)**(1.5)*((T0+110.)/(T[i]+110.))
+        Re = rho[i]*V_TAS[i]*c/mu    
     return CD0, e, CLa
     
