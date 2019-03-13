@@ -43,11 +43,20 @@ Vcstat2 = stat_2_conv[1]
 FFLstat2 = stat_2_conv[6]
 FFRstat2 = stat_2_conv[7]
 Tstat2 = stat_2_conv[9]
-
-
-
+i = 0
+file = open("matlab.dat", "w") 
+#for i in range(5):
+file.write(hpstat1[1][1])
+    
+file.write("Hello World") 
+file.write("This is our new text file") 
+file.write("and this is another line.") 
+file.write("Why? Because we can.") 
+ 
+file.close()
 
 #Get Stationary Values
+i =0
 for i in range(datalength): 
     p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat1[1][i], Tstat1[1][i], Vcstat1[1][i], m[i], th[i])
     plist.append(p)
