@@ -1,10 +1,12 @@
 
 from Constants import *
 from import_ref_data import *
+import math
 
 Cm0 = Cmac
+Cmtc = -0.0064
 
-def StationaryValues(hp, Tm, Vc, m, th):
+def StationaryValues(hp, Tm, Vc, m):
     
     p = p0 * (1 + ((llambda*hp)/T0))**(-(g)/(llambda * R))
     
@@ -16,19 +18,13 @@ def StationaryValues(hp, Tm, Vc, m, th):
     
     W = m * g
     
-    muc = m / (rho * S * c)
-    mub = m / (rho * S * b)
-    
     a = sqrt(gamma * R * T)
     
     V_TAS = M * a
     
     Ve = V_TAS * sqrt(rho/rho0)
     
-    CX0 = W * sin(th) / (0.5 * rho * V_TAS ** 2 * S)
-    CZ0 = -W * cos(th) / (0.5 * rho * V_TAS ** 2 * S)
-    
-    return p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a
+    return p, rho, M, T, W, V_TAS, Ve, a
 
 
 def DynamicValues(hp,Tm,V_IAS):
@@ -46,27 +42,32 @@ def DynamicValues(hp,Tm,V_IAS):
     rho = p / (R*T)
     
     return p,T,rho
-    
+
 
 def Ve_thilde(Ve, Ws, W):
-    Ve_red = Ve * math.sqrt(Ws/W)
+    Ve_red = []
+    for i in range(len(W)):
+        Ve_red.append(Ve[i] * math.sqrt(Ws/W[i]))
     return Ve_red
 
-
-def de_star(Cmde, Cm0, Cma, CNwa, Cmtc, W, rho, Ve_red, Tcs, S):
-    de_red = (-1./Cmde)*(Cm0 + (Cma/CNwa)*(W/(0.5 * rho * Ve_red**2 * S)) + Cmtc * Tcs)
+def de_star(de_meas, Cmd, Cmtc, Tcs, Tc):
+    de_red = []
+    for i in range(len(de_meas)):
+        de_red = de_meas[i] - ((1./Cmd)*Cmtc(Tcs[i] - Tc[i]))
     return de_red
 
 
 def Fe_star(Ws, W, Fmeas):
-    Fe_red = Fmeas * (Ws/W)
+    Fe_red = []
+    for i in range(len(W)):
+        Fe_red.append(Fmeas[i] * (Ws/W[i]))
     return Fe_red  
 
 
 def stat_mass(Fused):
     """ Fused = the array with fuel used, of the desired measurement. """
     """ Returns an array for total mass at that measurement moment.   """
-    return total_starting_mass - Fused
+    return (total_starting_mass - Fused)
 
 
 
@@ -78,3 +79,12 @@ def stat_mass(Fused):
 # de_red = reduced elevator deflection (for reduced trim curve)
 
 
+def Cmalpha(Cmdelta, Cmalpha, Cmde):
+    Cmalpha = (1/Cmdelta) *(Cmalpha) * Cmde
+    return Cmalpha 
+    
+    
+
+    
+    
+    

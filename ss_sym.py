@@ -11,18 +11,21 @@ import numpy as np
 from math import *
 import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
+from StationaryValues import *
 
 #change in between brackets the name in order to get the values of the other motions
 V_TAS = get_eigmot('Phugoid')[0]
 mass = get_eigmot('Phugoid')[1]
 rho = get_eigmot('Phugoid')[2]
-pitch = get_eigmot('Phugoid')[3]
+pitch = radians(get_eigmot('Phugoid')[3])
 
-def Sym_SS(V_TAS, muc, CX0, CZ0, rho):
+def Sym_SS():
     
-    CX0 = mass * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    W = mass*g
+    
+    CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     muc =  mass / (rho * S * c)
-    CZ0 = -mass * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     # vector with dimensions
     C1 = np.matrix([[-2*muc*(c/V_TAS**2), 0.,0.,0.],
                      [0., (CZadot - 2*muc)*(c/V_TAS), 0., 0.],
@@ -69,9 +72,13 @@ def Sym_SS(V_TAS, muc, CX0, CZ0, rho):
     
     eigs = np.linalg.eig(sys.A)
     eigs2 = np.linalg.eig(sys2.A)
+    if PrintSSEigenvalues == True: 
+        print("Symmetric Eigenvalues!")
+        print("Eigenvalues with dimension", eigs[0])
+        print("Dimensionless eigenvectors", eigs2[0])
     
-    print(eigs[0])
-    print(eigs2[0])
+    #print("Eigenvalues with dimension", eigs[0])
+    #print("Dimensionless eigenvectors", eigs2[0])
     
     realpart = eigs2[0].real
     imagpart = eigs2[0].imag
@@ -85,8 +92,10 @@ def Sym_SS(V_TAS, muc, CX0, CZ0, rho):
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-    print(Period)
-    print(Dampratio)
+    #print(Period)
+    #print(Dampratio)
+    
+    return muc, CZ0, CX0
              
 #    tryinput=-0.005
 #    t1 = np.arange(0,10,0.01)
