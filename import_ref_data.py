@@ -299,8 +299,28 @@ def get_eigmot(name):
     
     pitch = get_data(22)[jndex][0]
     
-    print('Output: V_TAS,mass,rho,pitch')
-    return V_TAS,mass,rho,pitch
+    alpha_0 = get_data(1)[jndex][0]
+
+    q = get_data(27)[jndex][0]
+    
+    el_defl = get_data(17)[jndex][0]
+    
+    # Checking which motion to determine alpha interval
+    if name == 'Phugoid':
+        time_int = 150
+    elif name == 'Short period':
+        time_int = 10
+    
+    alpha_int = []
+    el_defl_int = []
+    
+    for t in range(time_int*10):
+        alpha_int.append(get_data(1)[jndex+t][0])
+        el_defl_int.append(get_data(17)[jndex+t][0])
+
+
+    print('Output: V_TAS,mass,rho,pitch,alpha_0,q,el_defl')
+    return V_TAS,mass,rho,pitch,alpha_0,q,el_defl,alpha_int,el_defl_int
 
 
 def stat_mass(Fused):
