@@ -285,7 +285,7 @@ def get_eigmot(name):
     
     for j,t in enumerate(time_data):
         if t == total_time:
-            jndex = j
+            jndex = j-15
     
     V_TAS = get_data(42)[jndex][0]*0.514444         # [m/s]
     

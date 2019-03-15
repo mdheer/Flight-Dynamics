@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Short period','Phugoid'
-name = 'Short period'
+name = 'Phugoid'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1]
@@ -29,14 +29,13 @@ V_TAS_int = get_eigmot(name)[9]
 pitch_int = get_eigmot(name)[10]
 q_int = get_eigmot(name)[11]
 
-print(alpha_int)
 def Sym_SS():
     
     W = mass*g
     
-    CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    CX0 = W * sin(radians(pitch)) / (0.5 * rho * V_TAS ** 2 * S)
     muc =  mass / (rho * S * c)
-    CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    CZ0 = -W * cos(radians(pitch)) / (0.5 * rho * V_TAS ** 2 * S)
     
     # Vector with dimensions
     C1 = np.matrix([[-2*muc*(c/V_TAS**2), 0.,0.,0.],
@@ -108,9 +107,9 @@ def Sym_SS():
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-    print(Period)
-    print(HalfT)
-    print(Dampratio)
+    #print(Period)
+    #print(HalfT)
+    #print(Dampratio)
     
     
     if name=='Short period':
@@ -129,7 +128,7 @@ def Sym_SS():
         for i in range(len(y1)):
             y_ed_1.append(el_int[i])
             y_alpha_1.append(degrees(y1[i][1]) + alpha_0)
-            y_theta_1.append(degrees(y1[i][2]) + pitch)
+            y_theta_1.append(-degrees(y1[i][2]) + pitch)
             y_q_1.append(degrees(y1[i][3]) + q_0)
             y_V_1.append((y1[i][0]/-cos(radians(alpha_int[i])))+ V_TAS)
             
