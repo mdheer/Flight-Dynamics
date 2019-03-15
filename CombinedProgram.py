@@ -9,6 +9,7 @@ from Constants import *
 from StationaryValues import * 
 #from ss_sym import * 
 import sys, string, os
+#from import_ref_data import *
 from asymm_SS import * 
 
 """################################################General Output Parameters################################################"""
@@ -48,34 +49,36 @@ th   =  [1.8, 2.5, 3.3, 5.2, 8., 10.5]                  # pitch angle in the sta
 # Aircraft mass
 
 """################################################Get the flight data################################################"""
-hpstat1 = stat_1_conv[0]
-Vcstat1 = stat_1_conv[1]
-Alpha1 = stat_1_conv[2]
-Tstat1 = stat_1_conv[6]
-FFLstat1 = stat_1_conv[3]
-FFRstat1 = stat_1_conv[4]
+hpstat1 = stat_1_conv[0][1]
+Vcstat1 = stat_1_conv[1][1] - 2.
+Alpha1 = stat_1_conv[2][1]
+Tstat1 = stat_1_conv[6][1]
+FFLstat1 = stat_1_conv[3][1]
+FFRstat1 = stat_1_conv[4][1]
 FFFLstat1 = FFFRstat1 = FFFLstat2 = FFFRstat2 = [0.048,0.048,0.048,0.048,0.048,0.048]
 
-
-for i in range(6):
+for i in range(len(stat_1_conv[5][1])):
+    print(stat_1_conv[5][1][i][0])
     mlist.append(stat_mass(stat_1_conv[5][1][i][0]))
 
-hpstat2 = stat_2_conv[0]
-Vcstat2 = stat_2_conv[1]
-Alpha2 = stat_2_conv[2]
-Tstat2 = stat_2_conv[9]
-FFLstat2 = stat_2_conv[6]
-FFRstat2 = stat_2_conv[7]
+hpstat2 = stat_2_conv[0][1]
+Vcstat2 = stat_2_conv[1][1] - 2.
+Alpha2 = stat_2_conv[2][1]
+de_meas = stat_2_conv[3][1]
+Tstat2 = stat_2_conv[9][1]
+FFLstat2 = stat_2_conv[6][1]
+FFRstat2 = stat_2_conv[7][1]
 
+print(de_meas)
 
-for i in range(6):
+for i in range(len(stat_2_conv[8][1])):
     mlist.append(stat_mass(stat_2_conv[8][1][i][0]))
     
 
 """################################################Get the stationary values and make lists################################################"""
 #The format is: [a, b, c, d, e, f, g, h, i, j, k, l]. The first 6 are the values from the first test, the last 6 are the one of the final test.
 for i in range(datalength): 
-    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat1[1][i][0], Tstat1[1][i][0], Vcstat1[1][i][0], mlist[i], th[i])
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat1[i][0], Tstat1[i][0], Vcstat1[i][0], m[i], th[i])
     plist.append(p)
     rholist.append(rho)
     Mlist.append(M)
@@ -88,8 +91,9 @@ for i in range(datalength):
     V_TASlist.append(V_TAS)
     Velist.append(Ve)
     alist.append(a)
+    
 for i in range(datalength): 
-    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat2[1][i][0], Tstat2[1][i][0], Vcstat2[1][i][0], mlist[i], th[i])
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat2[i][0], Tstat2[i][0], Vcstat2[i][0], m[i], th[i])
     plist.append(p)
     rholist.append(rho)
     Mlist.append(M)
@@ -111,31 +115,31 @@ file = open("matlab.dat", "w")
 
 #Calculates temperature difference. 
 for i in range(6):
-    TISA1.append(Tstat1[1][i][0] + llambda * hpstat1[1][i][0])
-    TISA2.append(Tstat2[1][i][0] + llambda * hpstat2[1][i][0])
+    TISA1.append(Tstat1[i][0] + llambda * hpstat1[i][0])
+    TISA2.append(Tstat2[i][0] + llambda * hpstat2[i][0])
     Tempdiff1.append(Tlist[i] - TISA1[i])
     Tempdiff2.append(Tlist[i-5] - TISA2[i])
 
 #Prints the first 6 lines for the first test.
 for i in range(6):  
-    file.write( str(hpstat1[1][i][0]) + " " )
+    file.write( str(hpstat1[i][0]) + " " )
     file.write( str(Mlist[i]) + " " )
     file.write( str(Tempdiff1[i]) + " " )
-    file.write( str(FFLstat1[1][i][0]) + " " )
-    file.write( str(FFRstat1[1][i][0]) + "\n" )
+    file.write( str(FFLstat1[i][0]) + " " )
+    file.write( str(FFRstat1[i][0]) + "\n" )
 #Prints the second 6 lines for the second test.
 
 for i in range(6):  
-    file.write( str(hpstat2[1][i][0]) + " " )
+    file.write( str(hpstat2[i][0]) + " " )
     file.write( str(Mlist[i+4]) + " " )
     file.write( str(Tempdiff2[i]) + " " )
-    file.write( str(FFLstat2[1][i][0]) + " " )
-    file.write( str(FFRstat2[1][i][0]) + "\n" )
+    file.write( str(FFLstat2[i][0]) + " " )
+    file.write( str(FFRstat2[i][0]) + "\n" )
  
     
 #Prints the first 6 lines for the first test with the fixed fuelflow.
 for i in range(6):  
-    file.write( str(hpstat1[1][i][0]) + " " )
+    file.write( str(hpstat1[i][0]) + " " )
     file.write( str(Mlist[i]) + " " )
     file.write( str(Tempdiff1[i]) + " " )
     file.write(str(FFFLstat1[i]) + " " )
@@ -143,7 +147,7 @@ for i in range(6):
 #Prints the second 6 lines for the second test with the fixed fuel flow.
 
 for i in range(6):  
-    file.write( str(hpstat2[1][i][0]) + " " )
+    file.write( str(hpstat2[i][0]) + " " )
     file.write( str(Mlist[i+4]) + " " )
     file.write( str(Tempdiff2[i]) + " " )
     file.write(str(FFFLstat2[i]) + " " )
@@ -175,6 +179,7 @@ for i in range(12):
 
 """################################################Get output State Space Assymmetric################################################"""
 
+Asymm_SS(V_TASlist[0], mub)
 
 Asymm_SS(V_TASlist[7], mublist[7], PrintASSEigenvalues)
 
