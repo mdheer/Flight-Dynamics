@@ -5,9 +5,7 @@ import math
 
 Cm0 = Cmac
 
-def StationaryValues(hp, Tm, V_IAS, m, th):
-    
-    Vc = V_IAS - 2
+def StationaryValues(hp, Tm, V_IAS, m):
     
     p = p0 * (1 + ((llambda*hp)/T0))**(-(g)/(llambda * R))
     
@@ -19,19 +17,13 @@ def StationaryValues(hp, Tm, V_IAS, m, th):
     
     W = m * g
     
-    muc = m / (rho * S * c)
-    mub = m / (rho * S * b)
-    
     a = sqrt(gamma * R * T)
     
     V_TAS = M * a
     
     Ve = V_TAS * sqrt(rho/rho0)
     
-    CX0 = W * sin(rad(th)) / (0.5 * rho * V_TAS ** 2 * S)
-    CZ0 = -W * cos(rad(th)) / (0.5 * rho * V_TAS ** 2 * S)
-    
-    return p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a
+    return p, rho, M, T, W, V_TAS, Ve, a
 
 
 def DynamicValues(hp,Tm,V_IAS):
@@ -49,6 +41,7 @@ def DynamicValues(hp,Tm,V_IAS):
     rho = p / (R*T)
     
     return p,T,rho
+
 
 def Ve_thilde(Ve, Ws, W):
     Ve_red = Ve * math.sqrt(Ws/W)
