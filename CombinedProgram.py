@@ -6,6 +6,9 @@ import sys, string, os
 from import_ref_data import *
 #from asymm_SS import * 
 
+Ws = 60500. # Standard aircraft mass [N] 
+
+"""################################################General Output Parameters################################################"""
 
 """ ============== I. General Output Parameters ============== """
 
@@ -84,6 +87,7 @@ hpstat2 = stat_2_conv[0][1]
 Vcstat2 = stat_2_conv[1][1] - 2.
 Alpha2 = stat_2_conv[2][1]
 de_meas = stat_2_conv[3][1]
+F_meas = stat_2_conv[5][1]
 Tstat2 = stat_2_conv[9][1]
 FFLstat2 = stat_2_conv[6][1]
 FFRstat2 = stat_2_conv[7][1]
@@ -127,69 +131,69 @@ for i in range(len(stat_2_conv[0][1])):
 
 # Must be in format the pressure altitude,  the Mach number,  the temperature difference,
 # the fuel flow of the left jet engine,  the fuel flow of the right jet engine. 
-
-file = open("matlab.dat", "w") 
-
-#Calculates temperature difference for first and second test respectively. 
-for i in range(len(stat_1_conv[0][1])):
+if ThrustUpdate == True: 
+    file = open("matlab.dat", "w") 
     
-    TISA1.append(Tstat1[i][0] + llambda * hpstat1[i][0])
-    Tempdiff1.append(Tlist1[i] - TISA1[i])
+    #Calculates temperature difference for first and second test respectively. 
+    for i in range(len(stat_1_conv[0][1])):
+        
+        TISA1.append(Tstat1[i][0] + llambda * hpstat1[i][0])
+        Tempdiff1.append(Tlist1[i] - TISA1[i])
+        
+    for i in range(len(stat_2_conv[0][1])): 
+        TISA2.append(Tstat2[i][0] + llambda * hpstat2[i][0])   
+        Tempdiff2.append(Tlist2[i] - TISA2[i])
     
-for i in range(len(stat_2_conv[0][1])): 
-    TISA2.append(Tstat2[i][0] + llambda * hpstat2[i][0])   
-    Tempdiff2.append(Tlist2[i] - TISA2[i])
-
-#Prints the first 6 lines for the first test.
-for i in range(len(stat_1_conv[0][1])):
+    #Prints the first 6 lines for the first test.
+    for i in range(len(stat_1_conv[0][1])):
+        
+        file.write( str(hpstat1[i][0])  + " " )
+        file.write( str(Mlist1[i])      + " " )
+        file.write( str(Tempdiff1[i])   + " " )
+        file.write( str(FFLstat1[i][0]) + " " )
+        file.write( str(FFRstat1[i][0]) + "\n")
+        
+    #Prints the second 6 lines for the second test.
+    for i in range(len(stat_2_conv[0][1])):  
+        
+        file.write( str(hpstat2[i][0])  + " " )
+        file.write( str(Mlist2[i])      + " " )
+        file.write( str(Tempdiff2[i])   + " " )
+        file.write( str(FFLstat2[i][0]) + " " )
+        file.write( str(FFRstat2[i][0]) + "\n")
+     
+    #Prints the first 6 lines for the first test with the fixed fuelflow.
+    for i in range(len(stat_1_conv[0][1])):  
+        
+        file.write( str(hpstat1[i][0]) + " " )
+        file.write( str(Mlist1[i])     + " " )
+        file.write( str(Tempdiff1[i])  + " " )
+        file.write( str(FFFLstat1[i])  + " " )
+        file.write( str(FFFRstat1[i])  + "\n")
+        
+        
+    #Prints the second 6 lines for the second test with the fixed fuel flow.
+    for i in range(len(stat_2_conv[0][1])):  
+        file.write( str(hpstat2[i][0]) + " " )
+        file.write( str(Mlist2[i])     + " " )
+        file.write( str(Tempdiff2[i])  + " " )
+        file.write( str(FFFLstat2[i])  + " " )
+        file.write( str(FFFRstat2[i])  + "\n")
+           
+    file.close()
     
-    file.write( str(hpstat1[i][0])  + " " )
-    file.write( str(Mlist1[i])      + " " )
-    file.write( str(Tempdiff1[i])   + " " )
-    file.write( str(FFLstat1[i][0]) + " " )
-    file.write( str(FFRstat1[i][0]) + "\n")
-    
-#Prints the second 6 lines for the second test.
-for i in range(len(stat_2_conv[0][1])):  
-    
-    file.write( str(hpstat2[i][0])  + " " )
-    file.write( str(Mlist2[i])      + " " )
-    file.write( str(Tempdiff2[i])   + " " )
-    file.write( str(FFLstat2[i][0]) + " " )
-    file.write( str(FFRstat2[i][0]) + "\n")
- 
-#Prints the first 6 lines for the first test with the fixed fuelflow.
-for i in range(len(stat_1_conv[0][1])):  
-    
-    file.write( str(hpstat1[i][0]) + " " )
-    file.write( str(Mlist1[i])     + " " )
-    file.write( str(Tempdiff1[i])  + " " )
-    file.write( str(FFFLstat1[i])  + " " )
-    file.write( str(FFFRstat1[i])  + "\n")
+    #Update Thrust File
+    if ThrustUpdate == True :
+        os.startfile("thrust(1).exe")
     
     
-#Prints the second 6 lines for the second test with the fixed fuel flow.
-for i in range(len(stat_2_conv[0][1])):  
-    file.write( str(hpstat2[i][0]) + " " )
-    file.write( str(Mlist2[i])     + " " )
-    file.write( str(Tempdiff2[i])  + " " )
-    file.write( str(FFFLstat2[i])  + " " )
-    file.write( str(FFFRstat2[i])  + "\n")
-       
-file.close()
-
-#Update Thrust File
-if ThrustUpdate == True :
-    os.startfile("thrust(1).exe")
-
-
-""" ============== VI. Take the thrust file and put the values in a list ============== """
-
-for i in range(12):
-    ThrustStat1FD.append(Thrustresult[i])
-    ThurstStat2FD.append(Thrustresult[i + 12])
-    ThurstStat1G.append(Thrustresult[i + 24])
-    ThrustStat2G.append(Thrustresult[i + 36])
+    """ ============== VI. Take the thrust file and put the values in a list ============== """
+    
+    for i in range(12):
+        ThrustStat1FD.append(Thrustresult[i])
+        ThurstStat2FD.append(Thrustresult[i + 12])
+        ThurstStat1G.append(Thrustresult[i + 24])
+        ThrustStat2G.append(Thrustresult[i + 36])
 
 
 
@@ -210,8 +214,17 @@ for i in range(12):
 """ ============== XI. Get output State Space Assymmetric ============== """
 
 #Asymm_SS(V_TASlist[0], mub)
-if Calcasymm_SS == True:  
-    Asymm_SS()
+#if Calcasymm_SS == True:  
+#    Asymm_SS()
+
+
+
+
+
+
+"""############################################### Control Force curve calculations #################################"""
+
+Fe_red = Fe_star(Ws, )
 
 
 
