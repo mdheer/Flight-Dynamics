@@ -306,10 +306,12 @@ def get_eigmot(name):
     el_defl = get_data(17)[jndex][0]
     
     # Checking which motion to determine alpha interval
-    if name == 'Phugoid':
+    if name == 'Phugoid' or name == 'Spiral':
         time_int = 150
     elif name == 'Short period':
         time_int = 10
+    else:
+        time_int = 15
     
     alpha_int = []
     el_defl_int = []
