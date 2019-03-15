@@ -6,6 +6,8 @@ import sys, string, os
 from import_ref_data import *
 #from asymm_SS import * 
 
+import matplotlib.pyplot as plt
+
 Ws = 60500. # Standard aircraft mass [N] 
 
 """################################################General Output Parameters################################################"""
@@ -222,9 +224,42 @@ if ThrustUpdate == True:
 
 
 
-"""############################################### Control Force curve calculations #################################"""
+"""############################################### Control Force curve calculations & plot #################################"""
 
-Fe_red = Fe_star(Ws, )
 
+Fe_red = Fe_star(Ws, Wlist2, F_meas)      # Returns the reduced elevator control force in a list [N]
+for i in range(len(Fe_red)):
+    Fe_red[i] = Fe_red[i][0]/9.80665 
+
+Ve_red = Ve_thilde(Velist2, Ws, Wlist2)   # Returns the reduced equivalent airspeed [m/s]
+
+Ve_red1 = []
+Ve_red2 = []
+Fe_red1 = []
+Fe_red2 = []
+
+Ve_red1 = Ve_red[:4]
+Fe_red1 = Fe_red[:4]
+
+for i in range(len(Ve_red)):
+    if i == 0 or i>= 4:
+        Ve_red2.append(Ve_red[i])
+        Fe_red2.append(Fe_red[i])
+
+print(Ve_red1)
+print(Fe_red1)
+
+print(Ve_red2)
+print(Fe_red2)
+
+print((Fe_red))
+print((Ve_red))
+
+plt.plot(Ve_red1, Fe_red1)
+plt.plot(Ve_red2, Fe_red2)
+plt.gca().invert_yaxis()
+plt.ylabel('Reduced control force [kg]')
+plt.xlabel('Reduced equivalent airspeed [m/s]')
+plt.show()
 
 
