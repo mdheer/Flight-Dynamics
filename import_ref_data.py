@@ -269,7 +269,7 @@ def get_eigmot(name):
             index = i
     
     time = eigenmotion_times[index][1]
-    print(time)
+    #print(time)
     
     seconds = float(time[-2:])
     minutes = float(time[-5:-3])
