@@ -17,13 +17,15 @@ from StationaryValues import *
 V_TAS = get_eigmot('Phugoid')[0]
 mass = get_eigmot('Phugoid')[1]
 rho = get_eigmot('Phugoid')[2]
-pitch = get_eigmot('Phugoid')[3]
+pitch = radians(get_eigmot('Phugoid')[3])
 
-def Sym_SS(V_TAS, muc, CX0, CZ0, rho, PrintSSEigenvalues):
+def Sym_SS():
     
-    CX0 = mass * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    W = mass*g
+    
+    CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     muc =  mass / (rho * S * c)
-    CZ0 = -mass * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     # vector with dimensions
     C1 = np.matrix([[-2*muc*(c/V_TAS**2), 0.,0.,0.],
                      [0., (CZadot - 2*muc)*(c/V_TAS), 0., 0.],
@@ -75,6 +77,9 @@ def Sym_SS(V_TAS, muc, CX0, CZ0, rho, PrintSSEigenvalues):
         print("Eigenvalues with dimension", eigs[0])
         print("Dimensionless eigenvectors", eigs2[0])
     
+    #print("Eigenvalues with dimension", eigs[0])
+    #print("Dimensionless eigenvectors", eigs2[0])
+    
     realpart = eigs2[0].real
     imagpart = eigs2[0].imag
     Period=[]
@@ -87,13 +92,11 @@ def Sym_SS(V_TAS, muc, CX0, CZ0, rho, PrintSSEigenvalues):
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-    if PrintSSEigenvalues == True: 
-        print(Period)
-        print(Dampratio)
-        print(" ")
-        print(" ")
- 
-
+    #print(Period)
+    #print(Dampratio)
+    
+    return muc, CZ0, CX0
+             
 #    tryinput=-0.005
 #    t1 = np.arange(0,10,0.01)
 #    t2 = np.arange(0,150,0.01)

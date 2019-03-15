@@ -6,13 +6,26 @@ Created on Mon Mar  4 15:50:11 2019
 @author: willemV_TASolker
 """
 #from Constants import *
-from tryreader import *
+from Constants import *
 import numpy as np
 import numpy.linalg as la
 import control.matlab as control
 import matplotlib.pyplot as plt
+from import_ref_data import show_eigmot_names,get_eigmot
 
-def Asymm_SS(V_TAS, mub, PrintAssEigenvalues):
+V_TAS = get_eigmot('Phugoid')[0]
+mass = get_eigmot('Phugoid')[1]
+rho = get_eigmot('Phugoid')[2]
+pitch = radians(get_eigmot('Phugoid')[3])
+
+def Asymm_SS():
+    
+    W = mass*g
+    CL = 2*W/(rho*V_TAS*S)
+    
+    CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    mub =  mass / (rho * S * b)
+    CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     
     C11 = np.matrix([[(CYbdot-2*mub), 0, 0, 0],
            [0, -1/2, 0, 0],
@@ -38,12 +51,8 @@ def Asymm_SS(V_TAS, mub, PrintAssEigenvalues):
     eigs = np.linalg.eig(sys.A)
     eigsdim = eigs[0]*(V_TAS/b)
     
-    if PrintAssEigenvalues == True: 
-        print("ASSYMETRIC EIGENVALUES ")
-        print(eigs[0])
-        print(eigsdim)
-        print(" ")
-        print(" ")
+    #print(eigs[0])
+    #print(eigsdim)
     
     realpart = eigs[0].real
     imagpart = eigs[0].imag
@@ -57,7 +66,7 @@ def Asymm_SS(V_TAS, mub, PrintAssEigenvalues):
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-
+    return mub,CL
 
 #plt.plot(t,y)
 
