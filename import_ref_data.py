@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.io as sio
-from StationaryValues import DynamicValues
+from StationaryValues import *
 
 
 """ =============== PART I: MATLAB DATA =============== """
