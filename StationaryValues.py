@@ -5,7 +5,7 @@ import math
 
 Cm0 = Cmac
 
-def StationaryValues(hp, Tm, V_IAS, m):
+def StationaryValues(hp, Tm, Vc, m):
     
     p = p0 * (1 + ((llambda*hp)/T0))**(-(g)/(llambda * R))
     
