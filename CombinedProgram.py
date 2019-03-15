@@ -14,6 +14,8 @@ from asymm_SS import *
 """################################################General Output Parameters################################################"""
 
 ThrustUpdate = True
+PrintSSEigenvalues = True
+PrintASSEigenvalues = True
 
 """################################################Parameters defined################################################"""
 datalength = 6
@@ -168,12 +170,13 @@ for i in range(12):
 """################################################Get output State Space Symmetric################################################"""
 
 
-#Sym_SS(V_TAS, muc, CX0, CZ0, rho)
+#Sym_SS(V_TAS, muc, CX0, CZ0, rho, PrintSSEigenvalues)
 
 
 """################################################Get output State Space Assymmetric################################################"""
 
-#Asymm_SS(V_TASlist[0], mub[0])
+
+Asymm_SS(V_TASlist[7], mublist[7], PrintASSEigenvalues)
 
 
 """################################################CL and CD calculation################################################"""

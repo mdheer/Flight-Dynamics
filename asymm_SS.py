@@ -12,7 +12,7 @@ import numpy.linalg as la
 import control.matlab as control
 import matplotlib.pyplot as plt
 
-def Asymm_SS(V_TAS, mub):
+def Asymm_SS(V_TAS, mub, PrintAssEigenvalues):
     
     C11 = np.matrix([[(CYbdot-2*mub), 0, 0, 0],
            [0, -1/2, 0, 0],
@@ -38,8 +38,12 @@ def Asymm_SS(V_TAS, mub):
     eigs = np.linalg.eig(sys.A)
     eigsdim = eigs[0]*(V_TAS/b)
     
-    print(eigs[0])
-    print(eigsdim)
+    if PrintAssEigenvalues == True: 
+        print("ASSYMETRIC EIGENVALUES ")
+        print(eigs[0])
+        print(eigsdim)
+        print(" ")
+        print(" ")
     
     realpart = eigs[0].real
     imagpart = eigs[0].imag
