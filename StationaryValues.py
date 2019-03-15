@@ -1,12 +1,11 @@
 
 from Constants import *
 from import_ref_data import *
+import math
 
 Cm0 = Cmac
 
-def StationaryValues(hp, Tm, V_IAS, m):
-    
-    Vc = V_IAS - 2
+def StationaryValues(hp, Tm, Vc, m):
     
     p = p0 * (1 + ((llambda*hp)/T0))**(-(g)/(llambda * R))
     
@@ -42,7 +41,7 @@ def DynamicValues(hp,Tm,V_IAS):
     rho = p / (R*T)
     
     return p,T,rho
-    
+
 
 def Ve_thilde(Ve, Ws, W):
     Ve_red = Ve * math.sqrt(Ws/W)
@@ -62,7 +61,7 @@ def Fe_star(Ws, W, Fmeas):
 def stat_mass(Fused):
     """ Fused = the array with fuel used, of the desired measurement. """
     """ Returns an array for total mass at that measurement moment.   """
-    return total_starting_mass - Fused
+    return (total_starting_mass - Fused)
 
 
 
@@ -74,3 +73,12 @@ def stat_mass(Fused):
 # de_red = reduced elevator deflection (for reduced trim curve)
 
 
+def Cmalpha(Cmdelta, Cmalpha, Cmde):
+    Cmalpha = (1/Cmdelta) *(Cmalpha) * Cmde
+    return Cmalpha 
+    
+    
+
+    
+    
+    

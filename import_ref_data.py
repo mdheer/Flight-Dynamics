@@ -295,7 +295,11 @@ def get_eigmot(name):
     V_IAS = get_data(41)[jndex][0]
     rho = DynamicValues(hp,Tm,V_IAS)[2]
     
+    
     pitch = get_data(22)[jndex][0]
     
     print('Output: V_TAS,mass,rho,pitch')
     return V_TAS,mass,rho,pitch
+
+
+
