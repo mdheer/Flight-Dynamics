@@ -28,8 +28,8 @@ def StationaryValues(hp, Tm, V_IAS, m, th):
     
     Ve = V_TAS * sqrt(rho/rho0)
     
-    CX0 = W * sin(th) / (0.5 * rho * V_TAS ** 2 * S)
-    CZ0 = -W * cos(th) / (0.5 * rho * V_TAS ** 2 * S)
+    CX0 = W * sin(rad(th)) / (0.5 * rho * V_TAS ** 2 * S)
+    CZ0 = -W * cos(rad(th)) / (0.5 * rho * V_TAS ** 2 * S)
     
     return p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a
 
@@ -68,7 +68,7 @@ def Fe_star(Ws, W, Fmeas):
 def stat_mass(Fused):
     """ Fused = the array with fuel used, of the desired measurement. """
     """ Returns an array for total mass at that measurement moment.   """
-    return total_starting_mass - Fused
+    return (total_starting_mass - Fused)
 
 
 
@@ -80,3 +80,12 @@ def stat_mass(Fused):
 # de_red = reduced elevator deflection (for reduced trim curve)
 
 
+def Cmalpha(Cmdelta, Cmalpha, Cmde):
+    Cmalpha = (1/Cmdelta) *(Cmalpha) * Cmde
+    return Cmalpha 
+    
+    
+
+    
+    
+    
