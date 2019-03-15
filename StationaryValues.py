@@ -68,7 +68,7 @@ def Fe_star(Ws, W, Fmeas):
 def stat_mass(Fused):
     """ Fused = the array with fuel used, of the desired measurement. """
     """ Returns an array for total mass at that measurement moment.   """
-    return total_starting_mass - Fused
+    return (total_starting_mass - Fused)
 
 
 
@@ -85,8 +85,7 @@ def Cmalpha():
     return Cmalpha
     
     
-    
-    
+
     
     
     
