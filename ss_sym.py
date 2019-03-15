@@ -70,8 +70,8 @@ def ss_sym():
     eigs = np.linalg.eig(sys.A)
     eigs2 = np.linalg.eig(sys2.A)
     
-    print(eigs[0])
-    print(eigs2[0])
+    print("Eigenvalues with dimension", eigs[0])
+    print("Dimensionless eigenvectors", eigs2[0])
     
     realpart = eigs2[0].real
     imagpart = eigs2[0].imag
