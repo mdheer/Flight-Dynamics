@@ -72,11 +72,13 @@ Alpha1 = stat_1_conv[2][1]
 Tstat1 = stat_1_conv[6][1]
 FFLstat1 = stat_1_conv[3][1]
 FFRstat1 = stat_1_conv[4][1]
-FFFLstat1 = FFFRstat1 = FFFLstat2 = FFFRstat2 = [0.048,0.048,0.048,0.048,0.048,0.048]
+FFFLstat1 = FFFRstat1 = FFFLstat2 = FFFRstat2 = [0.048,0.048,0.048,0.048,0.048,0.048,0.048]
+
 
 for i in range(len(stat_1_conv[5][1])):
-    print(stat_1_conv[5][1][i][0])
     mlist1.append(stat_mass(stat_1_conv[5][1][i][0]))
+
+
 
 hpstat2 = stat_2_conv[0][1]
 Vcstat2 = stat_2_conv[1][1] - 2.
@@ -135,7 +137,6 @@ for i in range(len(stat_1_conv[0][1])):
     Tempdiff1.append(Tlist1[i] - TISA1[i])
     
 for i in range(len(stat_2_conv[0][1])): 
-    
     TISA2.append(Tstat2[i][0] + llambda * hpstat2[i][0])   
     Tempdiff2.append(Tlist2[i] - TISA2[i])
 
@@ -146,7 +147,7 @@ for i in range(len(stat_1_conv[0][1])):
     file.write( str(Mlist1[i])      + " " )
     file.write( str(Tempdiff1[i])   + " " )
     file.write( str(FFLstat1[i][0]) + " " )
-    file.write( str(FFRstat1[i][0]) + "\n" )
+    file.write( str(FFRstat1[i][0]) + "\n")
     
 #Prints the second 6 lines for the second test.
 for i in range(len(stat_2_conv[0][1])):  
@@ -155,7 +156,7 @@ for i in range(len(stat_2_conv[0][1])):
     file.write( str(Mlist2[i])      + " " )
     file.write( str(Tempdiff2[i])   + " " )
     file.write( str(FFLstat2[i][0]) + " " )
-    file.write( str(FFRstat2[i][0]) + "\n" )
+    file.write( str(FFRstat2[i][0]) + "\n")
  
 #Prints the first 6 lines for the first test with the fixed fuelflow.
 for i in range(len(stat_1_conv[0][1])):  
@@ -164,7 +165,8 @@ for i in range(len(stat_1_conv[0][1])):
     file.write( str(Mlist1[i])     + " " )
     file.write( str(Tempdiff1[i])  + " " )
     file.write( str(FFFLstat1[i])  + " " )
-    file.write( str(FFFRstat1[i])  + "\n" )
+    file.write( str(FFFRstat1[i])  + "\n")
+    
     
 #Prints the second 6 lines for the second test with the fixed fuel flow.
 for i in range(len(stat_2_conv[0][1])):  
@@ -172,7 +174,7 @@ for i in range(len(stat_2_conv[0][1])):
     file.write( str(Mlist2[i])     + " " )
     file.write( str(Tempdiff2[i])  + " " )
     file.write( str(FFFLstat2[i])  + " " )
-    file.write( str(FFFRstat2[i])  + "\n" )
+    file.write( str(FFFRstat2[i])  + "\n")
        
 file.close()
 
