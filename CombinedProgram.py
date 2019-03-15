@@ -4,14 +4,14 @@ from StationaryValues import *
 #from ss_sym import * 
 import sys, string, os
 from import_ref_data import *
-#from asymm_SS import * 
+from asymm_SS import * 
 
 
 """ ============== I. General Output Parameters ============== """
 
 ThrustUpdate = True
 PrintSSEigenvalues = True
-PrintASSEigenvalues = True
+Calcasymm_SS = True
 
 
 """ ============== II. Parameters defined ============== """
@@ -210,8 +210,8 @@ for i in range(12):
 """ ============== XI. Get output State Space Assymmetric ============== """
 
 #Asymm_SS(V_TASlist[0], mub)
-
-#Asymm_SS(V_TASlist[7], mublist[7], PrintASSEigenvalues)
+if Calcasymm_SS == True:  
+    Asymm_SS()
 
 
 
