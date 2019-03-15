@@ -13,19 +13,25 @@ import control.matlab as control
 import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
-V_TAS = get_eigmot('Phugoid')[0]
-mass = get_eigmot('Phugoid')[1]
-rho = get_eigmot('Phugoid')[2]
-pitch = radians(get_eigmot('Phugoid')[3])
+#'Aper. Roll', 'Dutch Roll', 'Dutch Roll YD', 'Spiral'
+
+name = 'Aper. Roll'
+
+V_TAS = get_eigmot(name)[0]
+mass = get_eigmot(name)[1]
+rho = get_eigmot(name)[2]
+roll_angle = radians(get_eigmot(name)[12])
+p_0 = get_eigmot(name)[13]
+r_0 = get_eigmot(name)[14]
+rudder_int = get_eigmot(name)[15]
+aileron_int = get_eigmot(name)[16]
 
 def Asymm_SS():
     
     W = mass*g
     CL = 2*W/(rho*V_TAS*S)
     
-    CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     mub =  mass / (rho * S * b)
-    CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     
     C11 = np.matrix([[(CYbdot-2*mub), 0, 0, 0],
            [0, -1/2, 0, 0],
@@ -66,6 +72,17 @@ def Asymm_SS():
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     return mub,CL
 
 #plt.plot(t,y)
