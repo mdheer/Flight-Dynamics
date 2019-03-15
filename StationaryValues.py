@@ -49,7 +49,6 @@ def DynamicValues(hp,Tm,V_IAS):
     rho = p / (R*T)
     
     return p,T,rho
-    
 
 def Ve_thilde(Ve, Ws, W):
     Ve_red = Ve * math.sqrt(Ws/W)

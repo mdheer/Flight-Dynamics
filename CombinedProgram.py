@@ -77,8 +77,8 @@ for i in range(len(stat_2_conv[8][1])):
 
 """################################################Get the stationary values and make lists################################################"""
 #The format is: [a, b, c, d, e, f, g, h, i, j, k, l]. The first 6 are the values from the first test, the last 6 are the one of the final test.
-for i in range(datalength): 
-    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat1[i][0], Tstat1[i][0], Vcstat1[i][0], m[i], th[i])
+for i in range(len(stat_1_conv[0][1)): 
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat1[i][0], Tstat1[i][0], Vcstat1[i][0], mlist[i], th[i])
     plist.append(p)
     rholist.append(rho)
     Mlist.append(M)
@@ -92,8 +92,8 @@ for i in range(datalength):
     Velist.append(Ve)
     alist.append(a)
     
-for i in range(datalength): 
-    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat2[i][0], Tstat2[i][0], Vcstat2[i][0], m[i], th[i])
+for i in range(len(stat_2_conv[0][1)): 
+    p, rho, M, T, W, muc, mub, CX0, CZ0, V_TAS, Ve, a = StationaryValues(hpstat2[i][0], Tstat2[i][0], Vcstat2[i][0], mlist[i+len(stat_1_conv[0][1])], th[i])
     plist.append(p)
     rholist.append(rho)
     Mlist.append(M)
