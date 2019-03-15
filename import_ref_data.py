@@ -303,4 +303,8 @@ def get_eigmot(name):
     return V_TAS,mass,rho,pitch
 
 
+def stat_mass(Fused):
+    """ Fused = the array with fuel used, of the desired measurement. """
+    """ Returns an array for total mass at that measurement moment.   """
+    return (total_starting_mass - Fused)
 

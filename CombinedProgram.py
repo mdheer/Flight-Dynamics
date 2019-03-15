@@ -16,7 +16,6 @@ ThrustUpdate = True
 PrintSSEigenvalues = True
 Calcasymm_SS = True
 
-
 """ ============== II. Parameters defined ============== """
 
 #datalength = 6
@@ -95,7 +94,7 @@ FFRstat2 = stat_2_conv[7][1]
 for i in range(len(stat_2_conv[8][1])):
     mlist2.append(stat_mass(stat_2_conv[8][1][i][0]))
     
-print (Tstat1)
+    
 """ ============== IV. Get the stationary values and make lists ============== """
 
 # The format is: [a, b, c, d, e, f, g, h, i, j, k, l]. The first 6 are the values from the first test, the last 6 are the one of the final test.
@@ -112,7 +111,7 @@ for i in range(len(stat_1_conv[0][1])):
     V_TASlist1.append(V_TAS)
     Velist1.append(Ve)
     alist1.append(a)
-print (Tlist1)
+
 for i in range(len(stat_2_conv[0][1])): 
     
     p, rho, M, T, W, V_TAS, Ve, a = StationaryValues(hpstat2[i][0], Tstat2[i][0], Vcstat2[i][0], mlist2[i])
