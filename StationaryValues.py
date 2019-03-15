@@ -4,6 +4,7 @@ from import_ref_data import *
 import math
 
 Cm0 = Cmac
+Cmtc = -0.0064
 
 def StationaryValues(hp, Tm, Vc, m):
     
@@ -44,17 +45,22 @@ def DynamicValues(hp,Tm,V_IAS):
 
 
 def Ve_thilde(Ve, Ws, W):
-    Ve_red = Ve * math.sqrt(Ws/W)
+    Ve_red = []
+    for i in range(len(W)):
+        Ve_red.append(Ve[i] * math.sqrt(Ws/W[i]))
     return Ve_red
 
-
-def de_star(Cmde, Cm0, Cma, CNwa, Cmtc, W, rho, Ve_red, Tcs, S):
-    de_red = (-1./Cmde)*(Cm0 + (Cma/CNwa)*(W/(0.5 * rho * Ve_red**2 * S)) + Cmtc * Tcs)
+def de_star(de_meas, Cmd, Cmtc, Tcs, Tc):
+    de_red = []
+    for i in range(len(de_meas)):
+        de_red = de_meas[i] - ((1./Cmd)*Cmtc(Tcs[i] - Tc[i]))
     return de_red
 
 
 def Fe_star(Ws, W, Fmeas):
-    Fe_red = Fmeas * (Ws/W)
+    Fe_red = []
+    for i in range(len(W)):
+        Fe_red.append(Fmeas[i] * (Ws/W[i]))
     return Fe_red  
 
 
