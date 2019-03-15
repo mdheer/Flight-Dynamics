@@ -37,22 +37,37 @@ def CL_CD(T, rho, V_TAS, W, alpha):
         C_D_j= 2*T[j]/(rho[j]*V_TAS[j]*V_TAS[j]*S)
         C_D.append(C_D_j)
         
+    # Size of plot labels:
+    title_size = 25
+    tick_size = 20
+    axes_size = 20
+        
     plt.subplot(2,1,1)
+    plt.title('Lift Curve',fontsize=title_size)
+    plt.tick_params(labelsize=tick_size)
+    plt.xlabel('alpha [deg]',fontsize=axes_size)
+    plt.ylabel('CL [-]',fontsize=axes_size)
+    plt.grid()
     plt.plot(x, C_L)
-    
     # calc the trendline
     z = np.polyfit(x, C_L, 1)
     p1 = np.poly1d(z)
     plt.plot(x,p1(x),"r--")
     
     plt.subplot(2,1,2)
-    plt.plot(C_L2, C_D) 
+    plt.title('Drag Polar',fontsize=title_size)
+    plt.tick_params(labelsize=tick_size)
+    plt.xlabel('CD [-]',fontsize=axes_size)
+    plt.ylabel('CL^2 [-]',fontsize=axes_size)
+    plt.grid()
+    plt.plot(C_L2, C_D)
+    # calc the trendline
     w = np.polyfit(C_L2, C_D, 1)
     p2 = np.poly1d(w)
     plt.plot(C_L2, p2(C_L2),"r--")
     
     print()
-    print ("y=%.6fx+(%.6f)"%(z[0],z[1]))
+    print ("y = %.6f*x + (%.6f)"%(z[0],z[1]))
     alpha0 = np.roots(p1)
     CLa = (z[0])
     CD0 = np.roots(p2)[0]
