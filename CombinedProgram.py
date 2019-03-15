@@ -6,6 +6,9 @@ import sys, string, os
 from import_ref_data import *
 from asymm_SS import * 
 
+Ws = 60500. # Standard aircraft mass [N] 
+
+"""################################################General Output Parameters################################################"""
 
 """ ============== I. General Output Parameters ============== """
 
@@ -84,6 +87,7 @@ hpstat2 = stat_2_conv[0][1]
 Vcstat2 = stat_2_conv[1][1] - 2.
 Alpha2 = stat_2_conv[2][1]
 de_meas = stat_2_conv[3][1]
+F_meas = stat_2_conv[5][1]
 Tstat2 = stat_2_conv[9][1]
 FFLstat2 = stat_2_conv[6][1]
 FFRstat2 = stat_2_conv[7][1]
@@ -212,6 +216,15 @@ for i in range(12):
 #Asymm_SS(V_TASlist[0], mub)
 if Calcasymm_SS == True:  
     Asymm_SS()
+
+
+
+
+
+
+"""############################################### Control Force curve calculations #################################"""
+
+Fe_red = Fe_star(Ws, )
 
 
 
