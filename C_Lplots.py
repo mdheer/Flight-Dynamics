@@ -38,9 +38,9 @@ def CL_CD(T, rho, V_TAS, W, alpha):
         C_D.append(C_D_j)
         
     # Size of plot labels:
-    title_size = 25
-    tick_size = 20
-    axes_size = 20
+    title_size = 30
+    tick_size = 25
+    axes_size = 25
         
     plt.subplot(2,1,1)
     plt.title('Lift Curve',fontsize=title_size)
@@ -48,11 +48,11 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     plt.xlabel('alpha [deg]',fontsize=axes_size)
     plt.ylabel('CL [-]',fontsize=axes_size)
     plt.grid()
-    plt.plot(x, C_L)
+    plt.plot(x, C_L, linewidth=3)
     # calc the trendline
     z = np.polyfit(x, C_L, 1)
     p1 = np.poly1d(z)
-    plt.plot(x,p1(x),"r--")
+    plt.plot(x,p1(x),"r--",linewidth=3)
     
     plt.subplot(2,1,2)
     plt.title('Drag Polar',fontsize=title_size)
@@ -60,11 +60,11 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     plt.xlabel('CD [-]',fontsize=axes_size)
     plt.ylabel('CL^2 [-]',fontsize=axes_size)
     plt.grid()
-    plt.plot(C_L2, C_D)
+    plt.plot(C_L2, C_D, linewidth=3)
     # calc the trendline
     w = np.polyfit(C_L2, C_D, 1)
     p2 = np.poly1d(w)
-    plt.plot(C_L2, p2(C_L2),"r--")
+    plt.plot(C_L2, p2(C_L2),"r--",linewidth=3)
     
     print()
     print ("y = %.6f*x + (%.6f)"%(z[0],z[1]))
