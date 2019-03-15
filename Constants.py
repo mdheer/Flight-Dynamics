@@ -6,7 +6,9 @@ import numpy as np
 from math import *
 
 # Stationary flight condition
-
+CD0 = -0.61190877399889
+e = 0.0012573470750284785
+CLa = 0.08719791597644637
 
 
 # Longitudinal stability
