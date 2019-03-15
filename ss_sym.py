@@ -11,7 +11,7 @@ import numpy as np
 from math import *
 import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
-from StationaryValues import *
+
 
 #change in between brackets the name in order to get the values of the other motions
 V_TAS = get_eigmot('Phugoid')[0]
@@ -72,13 +72,13 @@ def Sym_SS():
     
     eigs = np.linalg.eig(sys.A)
     eigs2 = np.linalg.eig(sys2.A)
-    if PrintSSEigenvalues == True: 
-        print("Symmetric Eigenvalues!")
-        print("Eigenvalues with dimension", eigs[0])
-        print("Dimensionless eigenvectors", eigs2[0])
+    #if PrintSSEigenvalues == True: 
+    #    print("Symmetric Eigenvalues!")
+    #    print("Eigenvalues with dimension", eigs[0])
+    #    print("Dimensionless eigenvectors", eigs2[0])
     
-    #print("Eigenvalues with dimension", eigs[0])
-    #print("Dimensionless eigenvectors", eigs2[0])
+    print("Eigenvalues with dimension", eigs[0])
+    print("Dimensionless eigenvectors", eigs2[0])
     
     realpart = eigs2[0].real
     imagpart = eigs2[0].imag
@@ -92,8 +92,8 @@ def Sym_SS():
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-    #print(Period)
-    #print(Dampratio)
+    print(Period)
+    print(Dampratio)
     
     return muc, CZ0, CX0
              

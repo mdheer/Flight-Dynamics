@@ -18,7 +18,6 @@ ThrustUpdate = True
 PrintSSEigenvalues = True
 Calcasymm_SS = True
 
-
 """ ============== II. Parameters defined ============== """
 
 #datalength = 6
@@ -97,7 +96,7 @@ FFRstat2 = stat_2_conv[7][1]
 for i in range(len(stat_2_conv[8][1])):
     mlist2.append(stat_mass(stat_2_conv[8][1][i][0]))
     
-
+    
 """ ============== IV. Get the stationary values and make lists ============== """
 
 # The format is: [a, b, c, d, e, f, g, h, i, j, k, l]. The first 6 are the values from the first test, the last 6 are the one of the final test.
@@ -114,7 +113,7 @@ for i in range(len(stat_1_conv[0][1])):
     V_TASlist1.append(V_TAS)
     Velist1.append(Ve)
     alist1.append(a)
-    
+
 for i in range(len(stat_2_conv[0][1])): 
     
     p, rho, M, T, W, V_TAS, Ve, a = StationaryValues(hpstat2[i][0], Tstat2[i][0], Vcstat2[i][0], mlist2[i])
@@ -128,6 +127,10 @@ for i in range(len(stat_2_conv[0][1])):
     Velist2.append(Ve)
     alist2.append(a)
 
+#calculate these values for first cg position (xcg1)
+p_xcg1, rho_xcg1, M_xcg1, T_xcg1, W_xcg1, V_TAS_xcg1, Ve_xcg1, a_xcg1 = StationaryValues(stat_xcg_conv[0][1][0][0], stat_xcg_conv[9][1][0][0], stat_xcg_conv[1][1][0][0]-2, stat_mass(stat_xcg_conv[8][1][0][0]))
+#calculate these values for second cg position (xcg2)
+p_xcg2, rho_xcg2, M_xcg2, T_xcg2, W_xcg2, V_TAS_xcg2, Ve_xcg2, a_xcg2 = StationaryValues(stat_xcg_conv[0][1][1][0], stat_xcg_conv[9][1][1][0], stat_xcg_conv[1][1][1][0]-2, stat_mass(stat_xcg_conv[8][1][1][0]))
 
 """ ============== V. Make the thrust file ============== """
 
@@ -192,10 +195,10 @@ if ThrustUpdate == True:
     """ ============== VI. Take the thrust file and put the values in a list ============== """
     
     for i in range(12):
-        ThrustStat1FD.append(Thrustresult[i])
-        ThurstStat2FD.append(Thrustresult[i + 12])
-        ThurstStat1G.append(Thrustresult[i + 24])
-        ThrustStat2G.append(Thrustresult[i + 36])
+        ThrustStat1FD.append(float(Thrustresult[i]))            # L - R - L - R etc.
+        ThurstStat2FD.append(float(Thrustresult[i + 12]))
+        ThurstStat1G.append(float(Thrustresult[i + 24]))
+        ThrustStat2G.append(float(Thrustresult[i + 36]))
 
 
 
@@ -252,8 +255,12 @@ print(Fe_red1)
 print(Ve_red2)
 print(Fe_red2)
 
+<<<<<<< HEAD
 print((Fe_red))
 print((Ve_red))
+=======
+#Fe_red = Fe_star(Ws, )
+>>>>>>> master
 
 plt.plot(Ve_red1, Fe_red1)
 plt.plot(Ve_red2, Fe_red2)

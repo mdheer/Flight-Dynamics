@@ -98,6 +98,7 @@ weight_names.append(excel_data[17][0][:-7])
 weight_names.append('BEM')
 
 weight_vals.append(float(excel_data[17][3])*0.453592)     # fuel weight [kg]
+startfuelmass = float(excel_data[17][3])
 weight_vals.append(4157.17)                                    # BEM weight [kg]
 
 weights[0][0] = weight_names
@@ -302,4 +303,8 @@ def get_eigmot(name):
     return V_TAS,mass,rho,pitch
 
 
+def stat_mass(Fused):
+    """ Fused = the array with fuel used, of the desired measurement. """
+    """ Returns an array for total mass at that measurement moment.   """
+    return (total_starting_mass - Fused)
 

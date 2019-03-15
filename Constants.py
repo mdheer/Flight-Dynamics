@@ -4,13 +4,14 @@
 #import control.matlab as control
 import numpy as np
 from math import *
+
 # Stationary flight condition
 
 
 
 # Longitudinal stability
 Cma    = -0.5626            # longitudinal stabilty [ ]
-Cmde   = -1.1642            # elevator effectiveness [ ]
+Cmde   = -0.02306887789173838           # elevator effectiveness [ ]
 
 # Aircraft geometry
 

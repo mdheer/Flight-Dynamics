@@ -1,10 +1,11 @@
 
 from Constants import *
-from import_ref_data import *
+#from import_ref_data import total_starting_mass
 import math
 
 Cm0 = Cmac
 Cmtc = -0.0064
+
 
 def StationaryValues(hp, Tm, Vc, m):
     
@@ -64,10 +65,7 @@ def Fe_star(Ws, W, Fmeas):
     return Fe_red  
 
 
-def stat_mass(Fused):
-    """ Fused = the array with fuel used, of the desired measurement. """
-    """ Returns an array for total mass at that measurement moment.   """
-    return (total_starting_mass - Fused)
+
 
 
 
