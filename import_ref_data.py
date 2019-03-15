@@ -269,7 +269,7 @@ def get_eigmot(name):
             index = i
     
     time = eigenmotion_times[index][1]
-    print(time)
+    #print(time)
     
     seconds = float(time[-2:])
     minutes = float(time[-5:-3])
@@ -299,9 +299,63 @@ def get_eigmot(name):
     
     pitch = get_data(22)[jndex][0]
     
-    print('Output: V_TAS,mass,rho,pitch')
-    return V_TAS,mass,rho,pitch
+    alpha_0 = get_data(1)[jndex][0]
 
+    q_0 = get_data(27)[jndex][0]
+    
+    el_defl = get_data(17)[jndex][0]
+    
+    # Checking which motion to determine alpha interval
+    if name == 'Phugoid' or name == 'Spiral':
+        time_int = 150
+    elif name == 'Short period':
+        time_int = 10
+    else:
+        time_int = 15
+    
+    alpha_int = []
+    el_defl_int = []
+    V_TAS_int = []
+    pitch_int = []
+    q_int = []
+    
+    roll_0 = get_data(21)[jndex][0]
+    
+    p_0 = get_data(28)[jndex][0] # yaw rate
+    r_0 = get_data(26)[jndex][0] # pitch rate
+    
+    rud_defl_int = []
+    ail_defl_int = []
+    roll_int = []
+    p_int = []
+    r_int = []
+    
+    
+    for t in range(time_int*10):
+        alpha_int.append(get_data(1)[jndex+t][0])
+        el_defl_int.append(get_data(17)[jndex+t][0])
+        V_TAS_int.append(get_data(42)[jndex+t][0]*0.514444)
+        pitch_int.append(get_data(22)[jndex+t][0])
+        q_int.append(get_data(27)[jndex+t][0])
+        
+        rud_defl_int.append(get_data(18)[jndex+t][0])
+        ail_defl_int.append(get_data(16)[jndex+t][0])
+        roll_int.append(get_data(21)[jndex+t][0])
+        p_int.append(get_data(28)[jndex+t][0])
+        r_int.append(get_data(26)[jndex+t][0])
+
+    return V_TAS,mass,rho,pitch,alpha_0,q_0,el_defl,alpha_int,el_defl_int,\
+           V_TAS_int,pitch_int,q_int,roll_0,p_0,r_0,rud_defl_int,ail_defl_int,\
+           roll_int,p_int,r_int
+
+def eigmot_ret_ind():
+    names = ['V_TAS [m/s]','mass [kg]','rho [kg/m3]','pitch [deg]','alpha_0 [deg]','q_0 [deg/s]',\
+             'el_defl [deg]','alpha_int [list][deg]','el_defl_int [list][deg]','V_TAS_int [list][m/s]',\
+             'pitch_int [list][deg]','q_int [list][deg/s]','roll_0 [deg]','p_0 [deg/s]','r_0 [deg/s]',\
+             'rud_defl_int [list][deg]','ail_defl_int [list][deg]','roll_int [list][deg]','p_int [list][deg/s]',\
+             'r_int [list][deg/s]']
+    for i in range(len(get_eigmot('Phugoid'))):
+        print(i,'=',names[i])
 
 def stat_mass(Fused):
     """ Fused = the array with fuel used, of the desired measurement. """
