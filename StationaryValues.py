@@ -80,9 +80,9 @@ def stat_mass(Fused):
 # de_red = reduced elevator deflection (for reduced trim curve)
 
 
-def Cmalpha():
-    Cmalpha = - slope * Cmde
-    return Cmalpha
+def Cmalpha(Cmdelta, Cmalpha, Cmde):
+    Cmalpha = (1/Cmdelta) *(Cmalpha) * Cmde
+    return Cmalpha 
     
     
 
