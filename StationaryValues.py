@@ -4,8 +4,6 @@ from Constants import *
 import math
 
 Cm0 = Cmac
-Cmtc = -0.0064
-
 
 def StationaryValues(hp, Tm, Vc, m):
     
@@ -53,8 +51,8 @@ def Ve_thilde(Ve, Ws, W):
 
 def de_star(de_meas, Cmd, Cmtc, Tcs, Tc):
     de_red = []
-    for i in range(len(de_meas)):
-        de_red = de_meas[i] - ((1./Cmd)*Cmtc(Tcs[i] - Tc[i]))
+    for c in range(len(de_meas)):
+        de_red.append(de_meas[c] - ((1./Cmd)*Cmtc*(Tcs[c] - Tc[c])))
     return de_red
 
 

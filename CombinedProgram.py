@@ -1,4 +1,4 @@
-
+import numpy as np
 from Constants import * 
 from StationaryValues import * 
 #from ss_sym import * 
@@ -9,6 +9,7 @@ from import_ref_data import *
 import matplotlib.pyplot as plt
 
 Ws = 60500. # Standard aircraft mass [N] 
+Cmtc = -0.0064
 
 """################################################General Output Parameters################################################"""
 
@@ -87,7 +88,7 @@ for i in range(len(stat_1_conv[5][1])):
 hpstat2 = stat_2_conv[0][1]
 Vcstat2 = stat_2_conv[1][1] - 2.
 Alpha2 = stat_2_conv[2][1]
-de_meas = stat_2_conv[3][1]
+de_meash = stat_2_conv[3][1]
 F_meas = stat_2_conv[5][1]
 Tstat2 = stat_2_conv[9][1]
 FFLstat2 = stat_2_conv[6][1]
@@ -249,24 +250,78 @@ for i in range(len(Ve_red)):
         Ve_red2.append(Ve_red[i])
         Fe_red2.append(Fe_red[i])
 
-print(Ve_red1)
-print(Fe_red1)
+#plt.plot(Ve_red1, Fe_red1)
+#plt.plot(Ve_red2, Fe_red2)
+#plt.gca().invert_yaxis()
+#plt.ylabel('Reduced control force [kg]')
+#plt.xlabel('Reduced equivalent airspeed [m/s]')
+#plt.show()
 
-print(Ve_red2)
-print(Fe_red2)
 
-<<<<<<< HEAD
-print((Fe_red))
-print((Ve_red))
-=======
-#Fe_red = Fe_star(Ws, )
->>>>>>> master
+"""############################################### Elevator trim curve #################################"""
 
-plt.plot(Ve_red1, Fe_red1)
-plt.plot(Ve_red2, Fe_red2)
+de_meas = []
+for a in range(len(de_meash)):
+    de_meas.append(de_meash[a][0])
+
+de_meas = de_meas[:len(de_meas)-1]
+
+T_stat = []  # Stationary thrust [N]
+T_dyn = []   # Total thrust [N]
+
+Tcs = []    # dimensionless stationary thrust [-]
+Tc = []     # dimensionless thrust [-]
+for b in range(7):
+    T_stat.append(ThrustStat2G[b] + ThrustStat2G[b+1])
+    T_dyn.append(ThurstStat2FD[b] + ThurstStat2FD[b+1])
+    b += 2 
+    
+for d in range(len(rholist2[:6])):
+    Tcs.append(T_stat[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
+    Tc.append(T_dyn[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
+    
+print(Tcs)
+print(Tc)   
+print(de_meas)
+
+de_red = []
+de_red = de_star(de_meas, Cmde, Cmtc, Tcs, Tc)
+print(de_red)
+
+#plt.plot(Ve_red[:6], de_red)
+#plt.gca().invert_yaxis()
+#plt.ylabel('Reduced elevator deflection [degree]')
+#plt.xlabel('Reduced equivalent airspeed [m/s]')
+#plt.show()
+
+alpha2 = []
+for e in range(len(Alpha2)-1):
+    alpha2.append(Alpha2[e][0])
+
+print(alpha2)
+print(de_red)
+
+alpha2_sorted = []
+alpha2_sorted.append(alpha2[5])
+alpha2_sorted.append(alpha2[4])
+alpha2_sorted.append(alpha2[0])
+alpha2_sorted.append(alpha2[1])
+alpha2_sorted.append(alpha2[2])
+
+de_red_sorted = []
+de_red_sorted.append(de_red[5]) 
+de_red_sorted.append(de_red[4]) 
+de_red_sorted.append(de_red[0]) 
+de_red_sorted.append(de_red[1]) 
+de_red_sorted.append(de_red[2]) 
+ 
+
+plt.plot(alpha2_sorted, de_red_sorted)
 plt.gca().invert_yaxis()
-plt.ylabel('Reduced control force [kg]')
-plt.xlabel('Reduced equivalent airspeed [m/s]')
+plt.ylabel('Reduced elevator deflection [degree]')
+plt.xlabel('Angle of attack [degree]')
 plt.show()
 
+Cma = np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]
+print(Cma)
 
