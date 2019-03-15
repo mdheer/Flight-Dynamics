@@ -12,46 +12,47 @@ import numpy.linalg as la
 import control.matlab as control
 import matplotlib.pyplot as plt
 
-
-C11 = np.matrix([[(CYbdot-2*mub), 0, 0, 0],
-       [0, -1/2, 0, 0],
-       [0, 0, -4*mub*KX2, 4*mub*KXZ],
-       [Cnbdot, 0, 4*mub*KXZ, -4*mub*KZ2]])
-
-C22 = np.matrix([[CYb, CL, CYp, (CYr-4*mub)],
-       [0, 0, 1., 0],
-       [Clb, 0, Clp, Clr],
-       [Cnb, 0, Cnp, Cnr]])
-
-C33 = np.matrix([[CYda, CYdr],
-      [0, 0],
-      [Clda, Cldr],
-      [Cnda, Cndr]])
-
-A = np.dot(-la.inv(C11),C22)
-B = np.dot(-la.inv(C11),C33)
-C = np.matrix([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]])
-D = np.matrix([[0., 0.],[0., 0.],[0., 0.],[0., 0.]])
-
-sys = control.ss(A,B,C,D)
-eigs = np.linalg.eig(sys.A)
-eigsdim = eigs[0]*(V_TAS/b)
-
-print(eigs[0])
-print(eigsdim)
-
-realpart = eigs[0].real
-imagpart = eigs[0].imag
-Period=[]
-HalfT = []
-Dampratio = []
-for i in range(len(realpart)):
-    P= ((2*pi)/(imagpart[i]))*(b/V_TAS)
-    Period.append(P)
-    Thalf= (log(1/2)/realpart[i])*(b/V_TAS)
-    HalfT.append(Thalf)
-    Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
-    Dampratio.append(Damp)
+def Asymm_SS(V_TAS, mub):
+    
+    C11 = np.matrix([[(CYbdot-2*mub), 0, 0, 0],
+           [0, -1/2, 0, 0],
+           [0, 0, -4*mub*KX2, 4*mub*KXZ],
+           [Cnbdot, 0, 4*mub*KXZ, -4*mub*KZ2]])
+    
+    C22 = np.matrix([[CYb, CL, CYp, (CYr-4*mub)],
+           [0, 0, 1., 0],
+           [Clb, 0, Clp, Clr],
+           [Cnb, 0, Cnp, Cnr]])
+    
+    C33 = np.matrix([[CYda, CYdr],
+          [0, 0],
+          [Clda, Cldr],
+          [Cnda, Cndr]])
+    
+    A = np.dot(-la.inv(C11),C22)
+    B = np.dot(-la.inv(C11),C33)
+    C = np.matrix([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]])
+    D = np.matrix([[0., 0.],[0., 0.],[0., 0.],[0., 0.]])
+    
+    sys = control.ss(A,B,C,D)
+    eigs = np.linalg.eig(sys.A)
+    eigsdim = eigs[0]*(V_TAS/b)
+    
+    print(eigs[0])
+    print(eigsdim)
+    
+    realpart = eigs[0].real
+    imagpart = eigs[0].imag
+    Period=[]
+    HalfT = []
+    Dampratio = []
+    for i in range(len(realpart)):
+        P= ((2*pi)/(imagpart[i]))*(b/V_TAS)
+        Period.append(P)
+        Thalf= (log(1/2)/realpart[i])*(b/V_TAS)
+        HalfT.append(Thalf)
+        Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
+        Dampratio.append(Damp)
 
 
 #plt.plot(t,y)

@@ -243,15 +243,14 @@ eigenmotion_times[5][1] = excel_data[83][9]
 #print('\033[0;30m')
     
 
-#""" =============== PART III: THRUST DATA =============== """
-#filethrust = open("thrust.dat", "r") 
-#
-#lines=filethrust.readlines()
-#Thrustresult=[]
-#for x in lines:
-#    Thrustresult.append(x.split()[0])
-#    Thrustresult.append(x.split()[1])
-#filethrust.close()
+""" =============== PART III: THRUST DATA =============== """
+filethrust = open("thrust.dat", "r") 
+lines=filethrust.readlines()
+Thrustresult=[]
+for x in lines:
+    Thrustresult.append(x.split()[0])
+    Thrustresult.append(x.split()[1])
+filethrust.close()
 
 
 
