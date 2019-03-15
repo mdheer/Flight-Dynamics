@@ -190,10 +190,10 @@ if ThrustUpdate == True:
     """ ============== VI. Take the thrust file and put the values in a list ============== """
     
     for i in range(12):
-        ThrustStat1FD.append(Thrustresult[i])
-        ThurstStat2FD.append(Thrustresult[i + 12])
-        ThurstStat1G.append(Thrustresult[i + 24])
-        ThrustStat2G.append(Thrustresult[i + 36])
+        ThrustStat1FD.append(float(Thrustresult[i]))            # L - R - L - R etc.
+        ThurstStat2FD.append(float(Thrustresult[i + 12]))
+        ThurstStat1G.append(float(Thrustresult[i + 24]))
+        ThrustStat2G.append(float(Thrustresult[i + 36]))
 
 
 
@@ -224,7 +224,7 @@ if ThrustUpdate == True:
 
 """############################################### Control Force curve calculations #################################"""
 
-Fe_red = Fe_star(Ws, )
+#Fe_red = Fe_star(Ws, )
 
 
 
