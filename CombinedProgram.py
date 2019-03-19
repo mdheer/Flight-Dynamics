@@ -167,7 +167,7 @@ if ThrustUpdate == True:
         file.write( str(Tempdiff2[i])   + " " )
         file.write( str(FFLstat2[i][0]) + " " )
         file.write( str(FFRstat2[i][0]) + "\n")
-     
+        
     #Prints the first 6 lines for the first test with the fixed fuelflow.
     for i in range(len(stat_1_conv[0][1])):  
         
@@ -196,17 +196,17 @@ if ThrustUpdate == True:
     """ ============== VI. Take the thrust file and put the values in a list ============== """
     
     for i in range(12):
-        ThrustStat1FD.append(float(Thrustresult[i]))            # L - R - L - R etc.
-        ThurstStat2FD.append(float(Thrustresult[i + 12]))
+        ThrustStat1FD.append(float(Thrustresult[i]))          # L - R - L - R etc.
         ThurstStat1G.append(float(Thrustresult[i + 24]))
-        ThrustStat2G.append(float(Thrustresult[i + 36]))
-
-
+    
+    for i in range(14):
+        ThurstStat2FD.append(float(Thrustresult[i + 14]))
+        ThrustStat2G.append(float(Thrustresult[i + 38]))
 
 """ ============== VII. CL and CD calculation ============== """
 
 
-
+print(len(ThurstStat2FD))
 
 
 """ ============== VIII. Get output State Space Symmetric ============== """
@@ -223,7 +223,7 @@ if ThrustUpdate == True:
 #if Calcasymm_SS == True:  
 #    Asymm_SS()
 
-
+print (V_TASlist1)
 
 
 
@@ -280,13 +280,13 @@ for d in range(len(rholist2[:6])):
     Tcs.append(T_stat[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
     Tc.append(T_dyn[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
     
-print(Tcs)
-print(Tc)   
-print(de_meas)
+#print(Tcs)
+#print(Tc)   
+#print(de_meas)
 
 de_red = []
 de_red = de_star(de_meas, Cmde, Cmtc, Tcs, Tc)
-print(de_red)
+#print(de_red)
 
 #plt.plot(Ve_red[:6], de_red)
 #plt.gca().invert_yaxis()
@@ -298,8 +298,8 @@ alpha2 = []
 for e in range(len(Alpha2)-1):
     alpha2.append(Alpha2[e][0])
 
-print(alpha2)
-print(de_red)
+#print(alpha2)
+#print(de_red)
 
 alpha2_sorted = []
 alpha2_sorted.append(alpha2[5])
@@ -323,5 +323,5 @@ plt.xlabel('Angle of attack [degree]')
 plt.show()
 
 Cma = np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]
-print(Cma)
+#print(Cma)
 
