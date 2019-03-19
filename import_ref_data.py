@@ -285,7 +285,7 @@ def get_eigmot(name):
     
     for j,t in enumerate(time_data):
         if t == total_time:
-            jndex = j
+            jndex = j-15
     
     V_TAS = get_data(42)[jndex][0]*0.514444         # [m/s]
     
@@ -321,8 +321,8 @@ def get_eigmot(name):
     
     roll_0 = get_data(21)[jndex][0]
     
-    p_0 = get_data(28)[jndex][0] # yaw rate
-    r_0 = get_data(26)[jndex][0] # pitch rate
+    p_0 = get_data(26)[jndex][0] # roll rate
+    r_0 = get_data(28)[jndex][0] # yaw rate
     
     rud_defl_int = []
     ail_defl_int = []
@@ -341,8 +341,8 @@ def get_eigmot(name):
         rud_defl_int.append(get_data(18)[jndex+t][0])
         ail_defl_int.append(get_data(16)[jndex+t][0])
         roll_int.append(get_data(21)[jndex+t][0])
-        p_int.append(get_data(28)[jndex+t][0])
-        r_int.append(get_data(26)[jndex+t][0])
+        p_int.append(get_data(26)[jndex+t][0]) # roll rate
+        r_int.append(get_data(28)[jndex+t][0]) # yaw rate
 
     return V_TAS,mass,rho,pitch,alpha_0,q_0,el_defl,alpha_int,el_defl_int,\
            V_TAS_int,pitch_int,q_int,roll_0,p_0,r_0,rud_defl_int,ail_defl_int,\

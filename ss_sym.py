@@ -13,15 +13,15 @@ import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Short period','Phugoid'
-name = 'Short period'
+name = 'Phugoid'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1]
 rho = get_eigmot(name)[2]
-pitch = radians(get_eigmot(name)[3])
+pitch = get_eigmot(name)[3]
 
-alpha_0 = radians(get_eigmot(name)[4])
-q_0= radians(get_eigmot(name)[5])
+alpha_0 = get_eigmot(name)[4]
+q_0= get_eigmot(name)[5]
 alpha_int = get_eigmot(name)[7]
 el_int = get_eigmot(name)[8]
 
@@ -29,14 +29,13 @@ V_TAS_int = get_eigmot(name)[9]
 pitch_int = get_eigmot(name)[10]
 q_int = get_eigmot(name)[11]
 
-
 def Sym_SS():
     
     W = mass*g
     
-    CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    CX0 = W * sin(radians(pitch)) / (0.5 * rho * V_TAS ** 2 * S)
     muc =  mass / (rho * S * c)
-    CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
+    CZ0 = -W * cos(radians(pitch)) / (0.5 * rho * V_TAS ** 2 * S)
     
     # Vector with dimensions
     C1 = np.matrix([[-2*muc*(c/V_TAS**2), 0.,0.,0.],
@@ -85,6 +84,7 @@ def Sym_SS():
     
     eigs = np.linalg.eig(sys.A)
     eigs2 = np.linalg.eig(sys2.A)
+    print(eigs2)
     
     #if PrintSSEigenvalues == True: 
     #    print("Symmetric Eigenvalues!")
@@ -107,17 +107,16 @@ def Sym_SS():
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-    print(Period)
-    print(HalfT)
-    print(Dampratio)
+    #print(Period)
+    #print(HalfT)
+    #print(Dampratio)
     
     
     if name=='Short period':
         
         elinput = el_int
         t1 = np.arange(0, 10, 0.1)
-        U1 = np.ones(len(t1))*elinput
-        y1,t1,x1 = control.lsim(sys, U1, t1)
+        y1,t1,x1 = control.lsim(sys, elinput, t1)
         
         # Defining arrays of the different state variables for the short period motion
         y_ed_1 = []
@@ -127,11 +126,11 @@ def Sym_SS():
         y_V_1 = []
         
         for i in range(len(y1)):
-            y_ed_1.append(radians(el_int[i]))
-            y_alpha_1.append(y1[i][1] + alpha_0)
-            y_theta_1.append(y1[i][2] + pitch)
-            y_q_1.append(y1[i][3] + q_0)
-            y_V_1.append((y1[i][0]/cos(radians(alpha_int[i])))+ V_TAS)
+            y_ed_1.append(el_int[i])
+            y_alpha_1.append(degrees(y1[i][1]) + alpha_0)
+            y_theta_1.append(-degrees(y1[i][2]) + pitch)
+            y_q_1.append(degrees(y1[i][3]) + q_0)
+            y_V_1.append((y1[i][0]/-cos(radians(alpha_int[i])))+ V_TAS)
             
         # Plots for the short period motion
         plt.subplot(5,1,1)
@@ -186,11 +185,11 @@ def Sym_SS():
         y_V_2 = []
    
         for i in range(len(y2)):
-            y_ed_2.append(radians(el_int[i]))
-            y_alpha_2.append(y2[i][1] + alpha_0)
-            y_theta_2.append(y2[i][2] + pitch)
-            y_q_2.append(y2[i][3] + q_0)
-            y_V_2.append((y2[i][0]/cos(radians(alpha_int[i])))+ V_TAS)
+            y_ed_2.append(el_int[i])
+            y_alpha_2.append(degrees(y2[i][1]) + alpha_0)
+            y_theta_2.append(degrees(y2[i][2]) + pitch)
+            y_q_2.append(degrees(y2[i][3]) + q_0)
+            y_V_2.append((y2[i][0]/-cos(radians(alpha_int[i])))+ V_TAS)
 
         # Plots for the phugoid
         plt.subplot(5,1,1)
