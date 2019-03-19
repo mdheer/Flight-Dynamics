@@ -78,9 +78,12 @@ def Asymm_SS():
     t1 = np.arange(0, 15, 0.1)
     U_rudder = np.ones(len(t1))*rudinput 
     U_aileron = np.ones(len(t1))*aleinput
-    U_tot = np.vstack((U_rudder,U_aileron))
+    U_tot = np.vstack((U_aileron,U_rudder))
+    #print(U_tot.shape)
+
     
-    y,t,x = control.lsim(sys, U_tot, t1)
+    y,t,x = control.lsim(sys, U_tot.T, t1)
+
 #defining arrays of the different state variables for the short period motion
     y_aileron = []
     y_rudder = []
@@ -96,41 +99,42 @@ def Asymm_SS():
         y_phi.append(y[i][1] + roll_angle)
         y_p.append(y[i][2] + p_0)
         y_r.append(y[i][3] + r_0)
+        
             
     # plots for the short period motion
     
-        plt.subplot(5,1,1)
-        plt.plot(t, y_aileron)
-        plt.plot(t, y_rudder, 'r--')
-        plt.title('Aileron and rudder eflection')
-        plt.xlabel('t[sec]')
-        plt.ylabel('\u03B4 and \u03B4  [Rad]')
-        
-        plt.subplot(5,1,2)
-        plt.plot(t,y_beta)
-        plt.title('Response of side slip angle due to')
-        plt.xlabel('t[sec]')
-        plt.ylabel('\u03B2 [m/sec]')
-        
-        plt.subplot(5,1,3)
-        plt.plot(t,y_phi)
-        plt.title('Response of roll angle due to ')
-        plt.xlabel('t[sec]')
-        plt.ylabel('\u03B1 [Rad]')
-        
-        plt.subplot(5,1,4)
-        plt.plot(t,y_p)
-        plt.title('Response of yaw rate due to ')
-        plt.xlabel('t[sec]')
-        plt.ylabel('p [Rad]')
+    plt.subplot(5,1,1)
+    plt.plot(t, y_aileron)
+    plt.plot(t, y_rudder, 'r--')
+    plt.title('Aileron and rudder eflection')
+    plt.xlabel('t[sec]')
+    plt.ylabel('\u03B4 and \u03B4  [Rad]')
     
-        plt.subplot(5,1,5)
-        plt.plot(t,y_roll)
-        plt.title('Response of roll rate due to ')
-        plt.xlabel('t[sec]')
-        plt.ylabel('r [Rad/sec]') 
-        
-        plt.show()    
+    plt.subplot(5,1,2)
+    plt.plot(t,y_beta)
+    plt.title('Response of side slip angle due to')
+    plt.xlabel('t[sec]')
+    plt.ylabel('\u03B2 [m/sec]')
+    
+    plt.subplot(5,1,3)
+    plt.plot(t,y_phi)
+    plt.title('Response of roll angle due to ')
+    plt.xlabel('t[sec]')
+    plt.ylabel('\u03B1 [Rad]')
+    
+    plt.subplot(5,1,4)
+    plt.plot(t,y_p)
+    plt.title('Response of yaw rate due to ')
+    plt.xlabel('t[sec]')
+    plt.ylabel('p [Rad]')
+
+    plt.subplot(5,1,5)
+    plt.plot(t,y_r)
+    plt.title('Response of roll rate due to ')
+    plt.xlabel('t[sec]')
+    plt.ylabel('r [Rad/sec]') 
+    
+    plt.show()    
           
     return mub,CL
 

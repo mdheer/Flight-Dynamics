@@ -84,7 +84,12 @@ def Sym_SS():
     
     eigs = np.linalg.eig(sys.A)
     eigs2 = np.linalg.eig(sys2.A)
-    print(eigs2)
+    #eigs22 = eigs2*(V_TAS/c)
+    print(V_TAS)
+    print(c)
+    print(eigs[0])
+    print(eigs2[0])
+    #print(eigs22)
     
     #if PrintSSEigenvalues == True: 
     #    print("Symmetric Eigenvalues!")
