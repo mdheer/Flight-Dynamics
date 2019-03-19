@@ -18,7 +18,7 @@ Thrust = []
 elements = int(len(ThrustStat1FD)/2)
 for i in range(elements):
     Thrust.append(ThrustStat1FD[i]+ThrustStat1FD[i+1])
-    
+   
 # Making Alpha1 a "plain" list for compatibility:
 Alpha = []
 for alpha in Alpha1:
@@ -141,3 +141,5 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     return CD0, e, CLa
 
 CD0,e,CLa = CL_CD(Thrust, rholist1, V_TASlist1, Wlist1, Alpha)
+
+print(Thrust) 
