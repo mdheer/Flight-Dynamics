@@ -5,7 +5,7 @@ Created on Mon Mar  4 15:50:11 2019
 
 @author: Mathilde Terleth
 """
-#from Constants import *
+
 from Constants import *
 import numpy as np
 import numpy.linalg as la
@@ -13,8 +13,7 @@ import control.matlab as control
 import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
-#'Aper. Roll', 'Dutch Roll', 'Dutch Roll YD', 'Spiral'
-
+# 'Aper. Roll', 'Dutch Roll', 'Dutch Roll YD', 'Spiral'
 name = 'Aper. Roll'
 
 V_TAS = get_eigmot(name)[0]
@@ -25,6 +24,7 @@ p_0 = get_eigmot(name)[13]
 r_0 = get_eigmot(name)[14]
 rudder_int = get_eigmot(name)[15]
 aileron_int = get_eigmot(name)[16]
+
 
 def Asymm_SS():
     
@@ -56,6 +56,7 @@ def Asymm_SS():
     sys = control.ss(A,B,C,D)
     eigs = np.linalg.eig(sys.A)
     eigsdim = eigs[0]*(V_TAS/b)
+    print(eigs)
     
     print(eigs[0])
     print(eigsdim)
@@ -84,11 +85,10 @@ def Asymm_SS():
     U_aileron = np.ones(len(t1))*aleinput
     U_tot = np.vstack((U_aileron,U_rudder))
     #print(U_tot.shape)
-
     
     y,t,x = control.lsim(sys, U_tot.T, t1)
 
-#defining arrays of the different state variables for the short period motion
+    #defining arrays of the different state variables for the short period motion
     y_aileron = []
     y_rudder = []
     y_beta=[]   #sideslip angle
@@ -105,12 +105,12 @@ def Asymm_SS():
         y_r.append(y[i][3] + r_0)
         
             
-    # plots for the short period motion
+    # PLOTTING
     
     plt.subplot(5,1,1)
-    plt.plot(t, y_aileron)
-    plt.plot(t, y_rudder, 'r--')
-    plt.title('Aileron and rudder eflection')
+    plt.plot(t, y_aileron,'g-')
+    plt.plot(t, y_rudder, 'r-')
+    plt.title('Aileron and rudder deflection')
     plt.xlabel('t[sec]')
     plt.ylabel('\u03B4 and \u03B4  [Rad]')
     

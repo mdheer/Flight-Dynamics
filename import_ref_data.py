@@ -287,6 +287,8 @@ def get_eigmot(name):
         if t == total_time:
             jndex = j-10
     
+    print(jndex)
+    
     V_TAS = get_data(42)[jndex][0]*0.514444         # [m/s]
     
     mass = total_starting_mass - get_data(14)[jndex][0]*0.000125998 - get_data(15)[jndex][0]*0.000125998    # [kg/s]
@@ -343,14 +345,14 @@ def get_eigmot(name):
 
     return V_TAS,mass,rho,pitch,alpha_0,q_0,el_defl,alpha_int,el_defl_int,\
            V_TAS_int,pitch_int,q_int,roll_0,p_0,r_0,rud_defl_int,ail_defl_int,\
-           roll_int,p_int,r_int
+           roll_int,p_int,r_int,jndex
 
 def eigmot_ret_ind():
     names = ['V_TAS [m/s]','mass [kg]','rho [kg/m3]','pitch [deg]','alpha_0 [deg]','q_0 [deg/s]',\
              'el_defl [deg]','alpha_int [list][deg]','el_defl_int [list][deg]','V_TAS_int [list][m/s]',\
              'pitch_int [list][deg]','q_int [list][deg/s]','roll_0 [deg]','p_0 [deg/s]','r_0 [deg/s]',\
              'rud_defl_int [list][deg]','ail_defl_int [list][deg]','roll_int [list][deg]','p_int [list][deg/s]',\
-             'r_int [list][deg/s]']
+             'r_int [list][deg/s]','index']
     for i in range(len(get_eigmot('Phugoid'))):
         print(i,'=',names[i])
 
