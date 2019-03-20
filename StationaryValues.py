@@ -26,6 +26,7 @@ def StationaryValues(hp, Tm, Vc, m):
     return p, rho, M, T, W, V_TAS, Ve, a
 
 
+
 def DynamicValues(hp,Tm,V_IAS):
     
     hp = hp*0.3048              # [m]
@@ -42,6 +43,8 @@ def DynamicValues(hp,Tm,V_IAS):
     
     return p,T,rho
 
+
+print(DynamicValues(3600, 2, 100))
 
 def Ve_thilde(Ve, Ws, W):
     Ve_red = []
@@ -61,6 +64,7 @@ def Fe_star(Ws, W, Fmeas):
     for i in range(len(W)):
         Fe_red.append(Fmeas[i] * (Ws/W[i]))
     return Fe_red  
+
 
 
 
