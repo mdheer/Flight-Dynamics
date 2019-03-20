@@ -285,7 +285,7 @@ def get_eigmot(name):
     
     for j,t in enumerate(time_data):
         if t == total_time:
-            jndex = j-15
+            jndex = j-10
     
     V_TAS = get_data(42)[jndex][0]*0.514444         # [m/s]
     
@@ -296,14 +296,11 @@ def get_eigmot(name):
     V_IAS = get_data(41)[jndex][0]
     rho = DynamicValues(hp,Tm,V_IAS)[2]
     
-    
-    pitch = get_data(22)[jndex][0]
-    
-    alpha_0 = get_data(1)[jndex][0]
-
-    q_0 = get_data(27)[jndex][0]
-    
-    el_defl = get_data(17)[jndex][0]
+    # Initial values SYMM
+    pitch = radians(get_data(22)[jndex][0])
+    alpha_0 = radians(get_data(1)[jndex][0])
+    q_0 = radians(get_data(27)[jndex][0])
+    el_defl = radians(get_data(17)[jndex][0])
     
     # Checking which motion to determine alpha interval
     if name == 'Phugoid' or name == 'Spiral':
@@ -319,10 +316,10 @@ def get_eigmot(name):
     pitch_int = []
     q_int = []
     
-    roll_0 = get_data(21)[jndex][0]
-    
-    p_0 = get_data(26)[jndex][0] # roll rate
-    r_0 = get_data(28)[jndex][0] # yaw rate
+    # Initial values ASYMM
+    roll_0 = radians(get_data(21)[jndex][0])
+    p_0 = radians(get_data(26)[jndex][0]) # roll rate
+    r_0 = radians(get_data(28)[jndex][0]) # yaw rate
     
     rud_defl_int = []
     ail_defl_int = []
@@ -332,11 +329,11 @@ def get_eigmot(name):
     
     
     for t in range(time_int*10):
-        alpha_int.append(get_data(1)[jndex+t][0])
+        alpha_int.append(radians(get_data(1)[jndex+t][0]))
         el_defl_int.append(get_data(17)[jndex+t][0])
         V_TAS_int.append(get_data(42)[jndex+t][0]*0.514444)
-        pitch_int.append(get_data(22)[jndex+t][0])
-        q_int.append(get_data(27)[jndex+t][0])
+        pitch_int.append(radians(get_data(22)[jndex+t][0]))
+        q_int.append(radians(get_data(27)[jndex+t][0]))
         
         rud_defl_int.append(get_data(18)[jndex+t][0])
         ail_defl_int.append(get_data(16)[jndex+t][0])

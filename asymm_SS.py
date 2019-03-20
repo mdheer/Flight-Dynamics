@@ -20,7 +20,7 @@ name = 'Aper. Roll'
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1]
 rho = get_eigmot(name)[2]
-roll_angle = radians(get_eigmot(name)[12])
+roll_angle = get_eigmot(name)[12]
 p_0 = get_eigmot(name)[13]
 r_0 = get_eigmot(name)[14]
 rudder_int = get_eigmot(name)[15]
@@ -57,7 +57,6 @@ def Asymm_SS():
     eigs = np.linalg.eig(sys.A)
     eigsdim = eigs[0]*(V_TAS/b)
     
-    print(CL)
     print(eigs[0])
     print(eigsdim)
     
@@ -80,7 +79,7 @@ def Asymm_SS():
         
     rudinput = rudder_int
     aleinput = aileron_int
-    t1 = np.arange(0, 30, 0.1)
+    t1 = np.arange(0, 15, 0.1)
     U_rudder = np.ones(len(t1))*rudinput 
     U_aileron = np.ones(len(t1))*aleinput
     U_tot = np.vstack((U_aileron,U_rudder))
@@ -98,8 +97,8 @@ def Asymm_SS():
     y_r = [] #yaw rate
         
     for i in range(len(y)):
-        y_aileron.append(radians(aileron_int[i]))
-        y_rudder.append(radians(rudder_int[i]))
+        y_aileron.append(aileron_int[i])
+        y_rudder.append(rudder_int[i])
         y_beta.append(y[i][0])
         y_phi.append(y[i][1] + roll_angle)
         y_p.append(y[i][2] + p_0)

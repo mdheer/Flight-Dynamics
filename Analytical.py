@@ -41,9 +41,13 @@ eigs = [eig_sp, eig_phu, eig_aperiodic, eig_dr, eig_spiral]
 realpart = eigs[2].real
 imagpart = eigs[2].imag
 
-P= ((2*pi)/(imagpart))*(c/V_TAS)
+#for the symmetric cases
+#P= ((2*pi)/(imagpart))*(c/V_TAS)
+#Thalf= (log(1/2)/realpart)*(c/V_TAS)
 
-Thalf= (log(1/2)/realpart)*(c/V_TAS)
+#for the asymmetric cases
+P= ((2*pi)/(imagpart))*(b/V_TAS)
+Thalf= (log(1/2)/realpart)*(b/V_TAS)
 
 Damp = -realpart/(realpart**2 + imagpart**2)**0.5
 
