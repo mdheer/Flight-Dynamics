@@ -38,8 +38,8 @@ eig_dr= (-B_dr + 1j*np.sqrt(4*A_dr*C_dr - B_dr*B_dr))/(2*A_dr)
 
 eigs = [eig_sp, eig_phu, eig_aperiodic, eig_dr, eig_spiral]
 
-realpart = eigs[1].real
-imagpart = eigs[1].imag
+realpart = eigs[2].real
+imagpart = eigs[2].imag
 
 P= ((2*pi)/(imagpart))*(c/V_TAS)
 
@@ -53,8 +53,8 @@ print('Thalf =', Thalf)
 print('Damping =', Damp)
 
 #print(eig_sp)
-print(eig_phu)
-#print(eig_aperiodic) 
+#print(eig_phu)
+print(eig_aperiodic) 
 #print(eig_dr)
 #print(eig_spiral)
 
