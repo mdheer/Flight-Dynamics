@@ -131,3 +131,5 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     return CD0, e, CLa
 
 CD0,e,CLa = CL_CD(Thrust, rholist1, V_TASlist1, Wlist1, Alpha)
+
+print(Thrust) 
