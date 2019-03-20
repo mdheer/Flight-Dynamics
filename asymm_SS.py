@@ -29,7 +29,7 @@ aileron_int = get_eigmot(name)[16]
 def Asymm_SS():
     
     W = mass*g
-    CL = 2*W/(rho*V_TAS*S)
+    CL = 2*W/(rho*V_TAS*V_TAS*S)
     
     mub =  mass / (rho * S * b)
     
@@ -48,8 +48,8 @@ def Asymm_SS():
           [Clda, Cldr],
           [Cnda, Cndr]])
     
-    A = np.dot(-la.inv(C11),C22)
-    B = np.dot(-la.inv(C11),C33)
+    A = -la.inv(C11)*C22
+    B = -la.inv(C11)*C33
     C = np.matrix([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]])
     D = np.matrix([[0., 0.],[0., 0.],[0., 0.],[0., 0.]])
     
@@ -57,8 +57,9 @@ def Asymm_SS():
     eigs = np.linalg.eig(sys.A)
     eigsdim = eigs[0]*(V_TAS/b)
     
-    #print(eigs[0])
-    #print(eigsdim)
+    print(CL)
+    print(eigs[0])
+    print(eigsdim)
     
     realpart = eigs[0].real
     imagpart = eigs[0].imag
@@ -73,9 +74,13 @@ def Asymm_SS():
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
         
+    print(Period)
+    print(HalfT)
+    print(Dampratio)
+        
     rudinput = rudder_int
     aleinput = aileron_int
-    t1 = np.arange(0, 15, 0.1)
+    t1 = np.arange(0, 30, 0.1)
     U_rudder = np.ones(len(t1))*rudinput 
     U_aileron = np.ones(len(t1))*aleinput
     U_tot = np.vstack((U_aileron,U_rudder))
