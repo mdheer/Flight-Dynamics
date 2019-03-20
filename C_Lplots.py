@@ -23,17 +23,7 @@ for i in range(elements):
 Alpha = []
 for alpha in Alpha1:
     Alpha.append(alpha[0])
-    
 
-print(Thrust)
-print()
-print(rholist1)
-print()
-print(V_TASlist1)
-print()
-print(Wlist1)
-print()
-print(Alpha)
     
 """ ========== PART II. Function for CL,CD and graphs ========== """
 
@@ -141,3 +131,5 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     return CD0, e, CLa
 
 CD0,e,CLa = CL_CD(Thrust, rholist1, V_TASlist1, Wlist1, Alpha)
+
+print(Thrust) 

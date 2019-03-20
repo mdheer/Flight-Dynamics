@@ -167,7 +167,7 @@ if ThrustUpdate == True:
         file.write( str(Tempdiff2[i])   + " " )
         file.write( str(FFLstat2[i][0]) + " " )
         file.write( str(FFRstat2[i][0]) + "\n")
-     
+        
     #Prints the first 6 lines for the first test with the fixed fuelflow.
     for i in range(len(stat_1_conv[0][1])):  
         
@@ -196,17 +196,17 @@ if ThrustUpdate == True:
     """ ============== VI. Take the thrust file and put the values in a list ============== """
     
     for i in range(12):
-        ThrustStat1FD.append(float(Thrustresult[i]))            # L - R - L - R etc.
-        ThurstStat2FD.append(float(Thrustresult[i + 12]))
+        ThrustStat1FD.append(float(Thrustresult[i]))          # L - R - L - R etc.
         ThurstStat1G.append(float(Thrustresult[i + 24]))
-        ThrustStat2G.append(float(Thrustresult[i + 36]))
-
-
+    
+    for i in range(14):
+        ThurstStat2FD.append(float(Thrustresult[i + 14]))
+        ThrustStat2G.append(float(Thrustresult[i + 38]))
 
 """ ============== VII. CL and CD calculation ============== """
 
 
-
+print(len(ThurstStat2FD))
 
 
 """ ============== VIII. Get output State Space Symmetric ============== """
@@ -223,7 +223,7 @@ if ThrustUpdate == True:
 #if Calcasymm_SS == True:  
 #    Asymm_SS()
 
-
+print (V_TASlist1)
 
 
 
@@ -257,51 +257,49 @@ for i in range(len(Ve_red)):
 #plt.xlabel('Reduced equivalent airspeed [m/s]')
 #plt.show()
 
-
+print(len(ThrustStat2G))
 """############################################### Elevator trim curve #################################"""
 
 de_meas = []
 for a in range(len(de_meash)):
     de_meas.append(de_meash[a][0])
 
-de_meas = de_meas[:len(de_meas)-1]
-
-T_stat = []  # Stationary thrust [N]
-T_dyn = []   # Total thrust [N]
+T_stan = []  # Standard thrust [N]
+T_dyn = []   # Total thrust stationary measurements 2 [N]
 
 Tcs = []    # dimensionless stationary thrust [-]
 Tc = []     # dimensionless thrust [-]
-for b in range(7):
-    T_stat.append(ThrustStat2G[b] + ThrustStat2G[b+1])
-    T_dyn.append(ThurstStat2FD[b] + ThurstStat2FD[b+1])
-    b += 2 
+
+b = 0
+for b in range(int(len(ThrustStat2G)/2)):
+    e = 2*b
+    f = e + 1
+    T_stan.append(ThrustStat2G[e] + ThrustStat2G[f])
+    T_dyn.append(ThurstStat2FD[e] + ThurstStat2FD[f])
+    b += 1 
+    print(e, f)
     
-for d in range(len(rholist2[:6])):
-    Tcs.append(T_stat[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
+for d in range(len(rholist2)):
+    Tcs.append(T_stan[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
     Tc.append(T_dyn[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
     
-print(Tcs)
-print(Tc)   
-print(de_meas)
+#print(Tcs)
+#print(Tc)   
+#print(de_meas)
 
 de_red = []
 de_red = de_star(de_meas, Cmde, Cmtc, Tcs, Tc)
-print(de_red)
-
-#plt.plot(Ve_red[:6], de_red)
-#plt.gca().invert_yaxis()
-#plt.ylabel('Reduced elevator deflection [degree]')
-#plt.xlabel('Reduced equivalent airspeed [m/s]')
-#plt.show()
+#print(de_red)
 
 alpha2 = []
-for e in range(len(Alpha2)-1):
+for e in range(len(Alpha2)):
     alpha2.append(Alpha2[e][0])
 
-print(alpha2)
-print(de_red)
+#print(alpha2)
+#print(de_red)
 
 alpha2_sorted = []
+alpha2_sorted.append(alpha2[6])
 alpha2_sorted.append(alpha2[5])
 alpha2_sorted.append(alpha2[4])
 alpha2_sorted.append(alpha2[0])
@@ -309,19 +307,41 @@ alpha2_sorted.append(alpha2[1])
 alpha2_sorted.append(alpha2[2])
 
 de_red_sorted = []
+de_red_sorted.append(de_red[6])
 de_red_sorted.append(de_red[5]) 
 de_red_sorted.append(de_red[4]) 
 de_red_sorted.append(de_red[0]) 
 de_red_sorted.append(de_red[1]) 
 de_red_sorted.append(de_red[2]) 
- 
 
-plt.plot(alpha2_sorted, de_red_sorted)
+Ve_red_sorted = []
+Ve_red_sorted.append(Ve_red[6])
+Ve_red_sorted.append(Ve_red[5]) 
+Ve_red_sorted.append(Ve_red[4]) 
+Ve_red_sorted.append(Ve_red[0]) 
+Ve_red_sorted.append(Ve_red[1]) 
+Ve_red_sorted.append(Ve_red[2]) 
+
+ 
+""" Reduced elevator deflection vs Reduced equivalent velocity"""
+
+plt.plot(Ve_red_sorted, de_red_sorted)
 plt.gca().invert_yaxis()
 plt.ylabel('Reduced elevator deflection [degree]')
-plt.xlabel('Angle of attack [degree]')
+plt.xlabel('Reduced equivalent airspeed [m/s]')
 plt.show()
 
+""" Reduced elevator deflection vs Angle of attack (to determine Cm_alpha) """
+
+#plt.plot(alpha2_sorted, de_red_sorted)
+#plt.gca().invert_yaxis()
+#plt.ylabel('Reduced elevator deflection [degree]')
+#plt.xlabel('Angle of attack [degree]')
+#plt.show()
+
+
+"""############################################### Cm_lpha (Longitudinal stability) #################################"""
+
 Cma = np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]
-print(Cma)
+#print(Cma)
 
