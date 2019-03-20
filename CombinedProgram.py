@@ -192,7 +192,7 @@ if ThrustUpdate == True:
     if ThrustUpdate == True :
         os.startfile("thrust(1).exe")
     
-    
+
     """ ============== VI. Take the thrust file and put the values in a list ============== """
     
     for i in range(12):
@@ -206,14 +206,18 @@ if ThrustUpdate == True:
 """ ============== VII. CL and CD calculation ============== """
 
 
-print(len(ThurstStat2FD))
-
+#print(len(ThurstStat2FD))
 
 """ ============== VIII. Get output State Space Symmetric ============== """
+qwerty = []
+verifylst = [3666.87, 3772.86, 2981.32, 3042.88, 2377.59, 2503.17, 1836.16, 1987.19, 1860.5, 2039.69, 2169.04 ,2360.45, 1880.27, 2053.44, 1920.15, 2094.5, 1951.35, 2122.92 ,1981.03, 2162.57, 1845.53, 2015.52,1852.07, 2020.87 ,1839.25, 1998.22 ,958.531,958.531 ,1050.21 ,1050.21,1152.11, 1152.11 ,1262.91, 1262.91, 1400.9, 1400.9, 1461.59, 1461.59, 1309.64,1309.64, 1367.37, 1367.37, 1418.23, 1418.23, 1475.65, 1475.65, 1265.13, 1265.13 ,1228.75, 1228.75, 1161.88, 1161.88]
 
+for i in range(len(verifylst)):
+    qwerty.append(verifylst[i] - float(Thrustresult[i]))
 
+print(qwerty)
+    
 #Sym_SS(V_TAS, muc, CX0, CZ0, rho, PrintSSEigenvalues)
-
 
 
 
@@ -223,7 +227,8 @@ print(len(ThurstStat2FD))
 #if Calcasymm_SS == True:  
 #    Asymm_SS()
 
-print (V_TASlist1)
+#print (V_TASlist1)
+
 
 
 
@@ -257,7 +262,7 @@ for i in range(len(Ve_red)):
 #plt.xlabel('Reduced equivalent airspeed [m/s]')
 #plt.show()
 
-print(len(ThrustStat2G))
+#print(len(ThrustStat2G))
 """############################################### Elevator trim curve #################################"""
 
 de_meas = []
@@ -277,7 +282,7 @@ for b in range(int(len(ThrustStat2G)/2)):
     T_stan.append(ThrustStat2G[e] + ThrustStat2G[f])
     T_dyn.append(ThurstStat2FD[e] + ThurstStat2FD[f])
     b += 1 
-    print(e, f)
+    #print(e, f)
     
 for d in range(len(rholist2)):
     Tcs.append(T_stan[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
