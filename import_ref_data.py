@@ -81,7 +81,7 @@ def get_data(i):
 # NOTE: Please save file as .csv instead of .xlsx
 # IMPORTANT: must have Numpy version 1.15+
 filename = 'REFERENCE_Post_Flight_Datasheet_Flight.csv'
-excel_data = np.genfromtxt(filename,delimiter=',',dtype='str')
+excel_data = np.genfromtxt(filename,delimiter=',',dtype='str',encoding='bytes')
 
 
 # ======= A) Getting weights =======

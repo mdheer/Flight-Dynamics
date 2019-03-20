@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 # Importing constants and calculated parameters from parallel programs
 from Constants import *
-from CombinedProgram import ThrustStat1FD, rholist1, V_TASlist1, Wlist1, Alpha1
+from CombinedProgram import ThrustStat1FD, rholist1, V_TASlist1, Wlist1, Alpha1, Tlist1, Mlist1
 
 
 """ ========== PART I. Calculating inputs ========== """
@@ -23,21 +23,11 @@ for i in range(elements):
 Alpha = []
 for alpha in Alpha1:
     Alpha.append(alpha[0])
-    
 
-print(Thrust)
-print()
-print(rholist1)
-print()
-print(V_TASlist1)
-print()
-print(Wlist1)
-print()
-print(Alpha)
     
 """ ========== PART II. Function for CL,CD and graphs ========== """
 
-def CL_CD(T, rho, V_TAS, W, alpha):
+def CL_CD(T, rho, V_TAS, W, alpha, temp, mach):
      
     # Creating (empty) tables for parameters of interest
     C_L = []
@@ -60,7 +50,7 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     
     # Size of plot labels:
     title_size = 30
-    tick_size = 25
+    tick_size = 22
     axes_size = 25
         
     # PLOT 1
@@ -69,12 +59,12 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     plt.tick_params(labelsize=tick_size)
     plt.xlabel('alpha [deg]',fontsize=axes_size)
     plt.ylabel('CL [-]',fontsize=axes_size)
-    plt.grid()
+    plt.grid(b=True,which='both')
     # Calculating the trendline
     z = np.polyfit(x, C_L, 1)
     p1 = np.poly1d(z)
     # Plotting
-    plt.plot(x,C_L,'bo-',linewidth=3)
+    plt.plot(x,C_L,'bo-',linewidth=3,markersize=9)
     plt.plot(x,p1(x),"r--",linewidth=3)
     
     # PLOT 2
@@ -83,9 +73,9 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     plt.tick_params(labelsize=tick_size)
     plt.xlabel('alpha [deg]',fontsize=axes_size)
     plt.ylabel('CD [-]',fontsize=axes_size)
-    plt.grid()
+    plt.grid(b=True,which='both')
     # Plotting
-    plt.plot(x, C_D,'bo-')
+    plt.plot(x, C_D,'bo-',linewidth=3,markersize=9)
     
     # PLOT 3
     plt.subplot(2,2,3)
@@ -93,9 +83,9 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     plt.tick_params(labelsize=tick_size)
     plt.xlabel('CD [-]',fontsize=axes_size)
     plt.ylabel('CL [-]',fontsize=axes_size)
-    plt.grid()
+    plt.grid(b=True,which='both')
     # Plotting
-    plt.plot(C_D, C_L,'bo-',linewidth=3)
+    plt.plot(C_D, C_L,'bo-',linewidth=3,markersize=9)
     
     # PLOT 4
     plt.subplot(2,2,4)
@@ -103,12 +93,12 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     plt.tick_params(labelsize=tick_size)
     plt.xlabel('CD   [-]',fontsize=axes_size)
     plt.ylabel('CL^2 [-]',fontsize=axes_size)
-    plt.grid()
+    plt.grid(b=True,which='both')
     # Calculating the trendline
     w = np.polyfit(C_L2, C_D, 1)
     p2 = np.poly1d(w)
     # Plotting  
-    plt.plot(C_D, C_L2,'bo-')
+    plt.plot(C_D, C_L2,'bo-',linewidth=3,markersize=9)
     plt.plot(p2(C_L2),C_L2,"r--",linewidth=3)
     
     # Adjusting plot settings
@@ -129,9 +119,21 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     mu=[]
     Re=[]
     
-    for i in range(len(T)):
-        mu = mu0*(T[i]/T0)**(1.5)*((T0+110.)/(T[i]+110.))
-        Re = rho[i]*V_TAS[i]*c/mu   
+    for i in range(len(temp)):
+        mu_i = mu0 * ((T[i]/T0)**(1.5)) * ((T0+110.)/(T[i]+110.))
+        Re_i = rho[i]*V_TAS[i]*c/mu_i
+        mu.append(mu_i)
+        Re.append(Re_i)
+    
+    # Mach number
+    M = mach
+    
+    print()
+    print(Re)
+    print(min(Re),max(Re))
+    print()
+    print(M) 
+    print(min(M),max(M))
     
     print()
     print('CD0 = ',CD0,'    [-]')
@@ -140,4 +142,6 @@ def CL_CD(T, rho, V_TAS, W, alpha):
     
     return CD0, e, CLa
 
-CD0,e,CLa = CL_CD(Thrust, rholist1, V_TASlist1, Wlist1, Alpha)
+CD0,e,CLa = CL_CD(Thrust, rholist1, V_TASlist1, Wlist1, Alpha, Tlist1, Mlist1)
+
+
