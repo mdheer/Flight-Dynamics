@@ -206,7 +206,7 @@ if ThrustUpdate == True:
 """ ============== VII. CL and CD calculation ============== """
 
 
-print(len(ThurstStat2FD))
+#print(len(ThurstStat2FD))
 
 
 """ ============== VIII. Get output State Space Symmetric ============== """
@@ -223,7 +223,7 @@ print(len(ThurstStat2FD))
 #if Calcasymm_SS == True:  
 #    Asymm_SS()
 
-print (V_TASlist1)
+#print (V_TASlist1)
 
 
 
@@ -257,7 +257,7 @@ for i in range(len(Ve_red)):
 #plt.xlabel('Reduced equivalent airspeed [m/s]')
 #plt.show()
 
-print(len(ThrustStat2G))
+#print(len(ThrustStat2G))
 """############################################### Elevator trim curve #################################"""
 
 de_meas = []
@@ -277,7 +277,7 @@ for b in range(int(len(ThrustStat2G)/2)):
     T_stan.append(ThrustStat2G[e] + ThrustStat2G[f])
     T_dyn.append(ThurstStat2FD[e] + ThurstStat2FD[f])
     b += 1 
-    print(e, f)
+    #print(e, f)
     
 for d in range(len(rholist2)):
     Tcs.append(T_stan[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
