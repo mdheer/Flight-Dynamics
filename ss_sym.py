@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Short period','Phugoid'
-name = 'Short period'
+name = 'Phugoid'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1] 
@@ -23,13 +23,15 @@ pitch = get_eigmot(name)[3] #rad
 alpha_0 = get_eigmot(name)[4] #rad
 q_0= get_eigmot(name)[5] #rad
 alpha_int = get_eigmot(name)[7]
-el_int = get_eigmot(name)[8]
+el_int = np.array(get_eigmot(name)[8])
+el_int = el_int - el_int[0]
+    
 
 V_TAS_int = get_eigmot(name)[9]
 pitch_int = get_eigmot(name)[10]
 q_int = get_eigmot(name)[11]
 
-print(alpha_int)
+
 
 def Sym_SS():
     
@@ -38,7 +40,10 @@ def Sym_SS():
     CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     muc =  mass / (rho * S * c)
     CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
-    
+    print(CX0)
+    print(muc)
+    print(CZ0)
+    print(W)
     # Vector with dimensions
     C1 = np.matrix([[-2*muc*(c/V_TAS**2), 0.,0.,0.],
                      [0., (CZadot - 2*muc)*(c/V_TAS), 0., 0.],
@@ -79,7 +84,7 @@ def Sym_SS():
     As = np.dot(-np.linalg.inv(C1),C2)
     Bs = np.dot(-np.linalg.inv(C1),C3)
     sys = control.ss(As,Bs,Cs,Ds)
-    print(sys)
+    #print(sys)
     
     Ass = np.dot(-np.linalg.inv(C11),C22)
     Bss = np.dot(-np.linalg.inv(C11),C33)
@@ -88,10 +93,10 @@ def Sym_SS():
     eigs = np.linalg.eig(sys.A)
     eigs2 = np.linalg.eig(sys2.A)
 
-    print(V_TAS)
-    print(c)
+   # print(V_TAS)
+   # print(c)
     
-    #print("Eigenvalues with dimension", eigs[0])
+    print("Eigenvalues with dimension", eigs[0])
     print("Dimensionless eigenvectors", eigs2[0])
     
     realpart = eigs2[0].real
@@ -124,16 +129,16 @@ def Sym_SS():
         y_V_1 = []
         
         for i in range(len(y1)):
-            y_ed_1.append(radians(el_int[i]))
+            y_ed_1.append(el_int[i])
             y_alpha_1.append(y1[i][1] + alpha_0)
             y_theta_1.append(y1[i][2] + pitch)
             y_q_1.append(y1[i][3] + q_0)
-            y_V_1.append((y1[i][0]/-cos(radians(alpha_int[i]))+ V_TAS)
+            y_V_1.append((y1[i][0]/cos(alpha_int[i])+ V_TAS))
           
         # Plots for the short period motion
         plt.subplot(5,1,1)
         plt.plot(t1,y_ed_1,'b-')
-        #plt.plot(t1,el_int,'r--')
+        plt.plot(t1,el_int,'r--')
         plt.title('Elevator deflection')
         plt.xlabel('t [sec]')
         plt.ylabel('\u03B4 [Rad]')
@@ -170,10 +175,8 @@ def Sym_SS():
             
     elif name == 'Phugoid':
         
-        elinput = el_int
         t2 = np.arange(0, 150, 0.1)    
-        U2 = np.ones(len(t2))*elinput
-        y2,t2,x2 = control.lsim(sys, U2, t2)
+        y2,t2,x2 = control.lsim(sys, el_int, t2)
 
         # Defining arrays of the different state variable for the phugoid motion    
         y_ed_2 = []
@@ -184,10 +187,10 @@ def Sym_SS():
    
         for i in range(len(y2)):
             y_ed_2.append(el_int[i])
-            y_alpha_2.append(degrees(y2[i][1]) + alpha_0)
-            y_theta_2.append(degrees(y2[i][2]) + pitch)
-            y_q_2.append(degrees(y2[i][3]) + q_0)
-            y_V_2.append((y2[i][0]/-cos(radians(alpha_int[i])))+ V_TAS)
+            y_alpha_2.append(y2[i][1] + alpha_0)
+            y_theta_2.append(y2[i][2] + pitch)
+            y_q_2.append(y2[i][3] + q_0)
+            y_V_2.append(y2[i][0]/cos(alpha_int[i])+ V_TAS)
 
         # Plots for the phugoid
         plt.subplot(5,1,1)

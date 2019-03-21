@@ -330,23 +330,23 @@ Ve_red_sorted.append(Ve_red[2])
  
 """ Reduced elevator deflection vs Reduced equivalent velocity"""
 
-plt.plot(Ve_red_sorted, de_red_sorted)
-plt.gca().invert_yaxis()
-plt.ylabel('Reduced elevator deflection [degree]')
-plt.xlabel('Reduced equivalent airspeed [m/s]')
-plt.show()
+#plt.plot(Ve_red_sorted, de_red_sorted)
+#plt.gca().invert_yaxis()
+#plt.ylabel('Reduced elevator deflection [degree]')
+#plt.xlabel('Reduced equivalent airspeed [m/s]')
+#plt.show()
 
 """ Reduced elevator deflection vs Angle of attack (to determine Cm_alpha) """
 
-#plt.plot(alpha2_sorted, de_red_sorted)
-#plt.gca().invert_yaxis()
-#plt.ylabel('Reduced elevator deflection [degree]')
-#plt.xlabel('Angle of attack [degree]')
-#plt.show()
+plt.plot(alpha2_sorted, de_red_sorted)
+plt.gca().invert_yaxis()
+plt.ylabel('Reduced elevator deflection [degree]')
+plt.xlabel('Angle of attack [degree]')
+plt.show()
 
 
 """############################################### Cm_lpha (Longitudinal stability) #################################"""
 
 Cma = np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]
-#print(Cma)
+print(Cma)
 

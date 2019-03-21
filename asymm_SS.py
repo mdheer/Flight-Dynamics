@@ -15,7 +15,7 @@ from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Aper. Roll', 'Dutch Roll', 'Dutch Roll YD', 'Spiral'
 
-name = 'Aper. Roll'
+name = 'Spiral'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1]
@@ -23,8 +23,17 @@ rho = get_eigmot(name)[2]
 roll_angle = get_eigmot(name)[12]
 p_0 = get_eigmot(name)[13]
 r_0 = get_eigmot(name)[14]
-rudder_int = get_eigmot(name)[15]
-aileron_int = get_eigmot(name)[16]
+rudder_int = np.array(get_eigmot(name)[15])
+aileron_int = np.array(get_eigmot(name)[16])
+
+rudder_int = rudder_int - rudder_int[0]
+aileron_int = aileron_int - aileron_int[0]
+
+roll_int = get_eigmot(name)[17]
+p_int = get_eigmot(name)[18]
+r_int = get_eigmot(name)[19]
+
+
 
 def Asymm_SS():
     
@@ -32,22 +41,23 @@ def Asymm_SS():
     CL = 2*W/(rho*V_TAS*V_TAS*S)
     
     mub =  mass / (rho * S * b)
+
+    #dimensionless
+    C11 = np.matrix([[(CYbdot-2*mub)*(b/V_TAS), 0, 0, 0],
+           [0, -1/2*(b/V_TAS), 0, 0],
+           [0, 0, -4*mub*KX2*(b**2/(2*V_TAS**2)), 4*mub*KXZ*(b**2/(2*V_TAS**2))],
+           [Cnbdot*(b/V_TAS), 0, 4*mub*KXZ*(b**2/(2*V_TAS**2)), -4*mub*KZ2*(b**2/(2*V_TAS**2))]])
     
-    C11 = np.matrix([[(CYbdot-2*mub), 0, 0, 0],
-           [0, -1/2, 0, 0],
-           [0, 0, -4*mub*KX2, 4*mub*KXZ],
-           [Cnbdot, 0, 4*mub*KXZ, -4*mub*KZ2]])
-    
-    C22 = np.matrix([[CYb, CL, CYp, (CYr-4*mub)],
-           [0, 0, 1., 0],
-           [Clb, 0, Clp, Clr],
-           [Cnb, 0, Cnp, Cnr]])
+    C22 = np.matrix([[CYb, CL, CYp*(b/(2*V_TAS)), (CYr-4*mub)*(b/(2*V_TAS))],
+           [0, 0, 1.*(b/(2*V_TAS)), 0],
+           [Clb, 0, Clp*(b/(2*V_TAS)), Clr*(b/(2*V_TAS))],
+           [Cnb, 0, Cnp*(b/(2*V_TAS)), Cnr*(b/(2*V_TAS))]])
     
     C33 = np.matrix([[CYda, CYdr],
           [0, 0],
           [Clda, Cldr],
           [Cnda, Cndr]])
-    
+
     A = -la.inv(C11)*C22
     B = -la.inv(C11)*C33
     C = np.matrix([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.],[0.,0.,0.,1.]])
@@ -58,7 +68,6 @@ def Asymm_SS():
     eigsdim = eigs[0]*(V_TAS/b)
     
     print(eigs[0])
-    print(eigsdim)
     
     realpart = eigs[0].real
     imagpart = eigs[0].imag
@@ -79,11 +88,11 @@ def Asymm_SS():
         
     rudinput = rudder_int
     aleinput = aileron_int
-    t1 = np.arange(0, 15, 0.1)
+    t1 = np.arange(0, 150, 0.1)
     U_rudder = np.ones(len(t1))*rudinput 
     U_aileron = np.ones(len(t1))*aleinput
     U_tot = np.vstack((U_aileron,U_rudder))
-    #print(U_tot.shape)
+
 
     
     y,t,x = control.lsim(sys, U_tot.T, t1)
@@ -102,7 +111,7 @@ def Asymm_SS():
         y_beta.append(y[i][0])
         y_phi.append(y[i][1] + roll_angle)
         y_p.append(y[i][2] + p_0)
-        y_r.append(y[i][3] + r_0)
+        y_r.append(y[i][3]+ r_0)
         
             
     # plots for the short period motion
@@ -118,23 +127,26 @@ def Asymm_SS():
     plt.plot(t,y_beta)
     plt.title('Response of side slip angle due to')
     plt.xlabel('t[sec]')
-    plt.ylabel('\u03B2 [m/sec]')
+    plt.ylabel('beta [Rad]')
     
     plt.subplot(5,1,3)
-    plt.plot(t,y_phi)
+    plt.plot(t,y_phi, 'b-')
+    plt.plot(t,roll_int, 'r--')
     plt.title('Response of roll angle due to ')
     plt.xlabel('t[sec]')
-    plt.ylabel('\u03B1 [Rad]')
+    plt.ylabel('phi [Rad]')
     
     plt.subplot(5,1,4)
     plt.plot(t,y_p)
-    plt.title('Response of yaw rate due to ')
+    plt.plot(t, p_int, 'r--')
+    plt.title('Response of roll rate due to ')
     plt.xlabel('t[sec]')
-    plt.ylabel('p [Rad]')
+    plt.ylabel('p [Rad/sec]')
 
     plt.subplot(5,1,5)
     plt.plot(t,y_r)
-    plt.title('Response of roll rate due to ')
+    plt.plot(t,r_int, 'r--')
+    plt.title('Response of yaw rate due to ')
     plt.xlabel('t[sec]')
     plt.ylabel('r [Rad/sec]') 
     

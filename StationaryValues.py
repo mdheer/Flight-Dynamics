@@ -81,7 +81,8 @@ def Fe_star(Ws, W, Fmeas):
 
 def Cmalpha(Cmdelta, Cmalpha, Cmde):
     Cmalpha = (1/Cmdelta) *(Cmalpha) * Cmde
-    return Cmalpha 
+    
+    return Cmalpha
     
     
 
