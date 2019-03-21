@@ -231,3 +231,4 @@ def Sym_SS():
 
     return muc, CZ0, CX0
 
+Symul = Sym_SS()
