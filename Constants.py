@@ -12,8 +12,8 @@ CLa = 0.08719791597644637
 
 
 # Longitudinal stability
-Cma    = -0.44592152            # longitudinal stabilty [ ]
-Cmde   = -0.02306887789173838           # elevator effectiveness [ ]
+Cma    = -0.6298523504            # longitudinal stabilty [ ]
+Cmde   = -1.3217493412992616           # elevator effectiveness [ ]
 
 # Aircraft geometry
 

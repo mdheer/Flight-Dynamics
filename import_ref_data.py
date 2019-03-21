@@ -285,7 +285,8 @@ def get_eigmot(name):
     
     for j,t in enumerate(time_data):
         if t == total_time:
-            jndex = j-10
+            jndex = j-100
+            
     
     print(jndex)
     
@@ -310,7 +311,7 @@ def get_eigmot(name):
     elif name == 'Short period':
         time_int = 10
     else:
-        time_int = 15
+        time_int = 40
     
     alpha_int = []
     el_defl_int = []
@@ -332,16 +333,16 @@ def get_eigmot(name):
     
     for t in range(time_int*10):
         alpha_int.append(radians(get_data(1)[jndex+t][0]))
-        el_defl_int.append(get_data(17)[jndex+t][0])
+        el_defl_int.append(radians(get_data(17)[jndex+t][0]))
         V_TAS_int.append(get_data(42)[jndex+t][0]*0.514444)
         pitch_int.append(radians(get_data(22)[jndex+t][0]))
         q_int.append(radians(get_data(27)[jndex+t][0]))
         
-        rud_defl_int.append(get_data(18)[jndex+t][0])
-        ail_defl_int.append(get_data(16)[jndex+t][0])
-        roll_int.append(get_data(21)[jndex+t][0])
-        p_int.append(get_data(26)[jndex+t][0]) # roll rate
-        r_int.append(get_data(28)[jndex+t][0]) # yaw rate
+        rud_defl_int.append(radians(get_data(18)[jndex+t][0]))
+        ail_defl_int.append(radians(get_data(16)[jndex+t][0]))
+        roll_int.append(radians(get_data(21)[jndex+t][0]))
+        p_int.append(radians(get_data(26)[jndex+t][0])) # roll rate
+        r_int.append(radians(get_data(28)[jndex+t][0])) # yaw rate
 
     return V_TAS,mass,rho,pitch,alpha_0,q_0,el_defl,alpha_int,el_defl_int,\
            V_TAS_int,pitch_int,q_int,roll_0,p_0,r_0,rud_defl_int,ail_defl_int,\
