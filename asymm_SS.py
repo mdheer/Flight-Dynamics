@@ -88,11 +88,17 @@ def Asymm_SS():
         
     rudinput = rudder_int
     aleinput = aileron_int
-    t1 = np.arange(0, 150, 0.1)
-    U_rudder = np.ones(len(t1))*rudinput 
-    U_aileron = np.ones(len(t1))*aleinput
-    U_tot = np.vstack((U_aileron,U_rudder))
-
+    if name == 'Spiral':
+        
+        t1 = np.arange(0, 150, 0.1)
+        U_rudder = np.ones(len(t1))*rudinput 
+        U_aileron = np.ones(len(t1))*aleinput
+        U_tot = np.vstack((U_aileron,U_rudder))
+    if name == 'Aper. Roll' or name == 'Dutch Roll':
+        t1 = np.arange(0, 15, 0.1)
+        U_rudder = np.ones(len(t1))*rudinput 
+        U_aileron = np.ones(len(t1))*aleinput
+        U_tot = np.vstack((U_aileron,U_rudder))
 
     
     y,t,x = control.lsim(sys, U_tot.T, t1)

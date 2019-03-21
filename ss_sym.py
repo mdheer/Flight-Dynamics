@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Short period','Phugoid'
-name = 'Phugoid'
+name = 'Short period'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1] 
