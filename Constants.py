@@ -6,13 +6,13 @@ import numpy as np
 from math import *
 
 # Stationary flight condition
-CD0 = -0.61190877399889
-e = 0.0012573470750284785
-CLa = 0.08719791597644637
+CD0 = 0.02146309747229064
+e = 0.7896042533607102
+CLa = 4.99607256778675
 
 
 # Longitudinal stability
-Cma    = -0.6298523504            # longitudinal stabilty [ ]
+Cma    = -0.6298525212907744            # longitudinal stabilty [ ]
 Cmde   = -1.3217493412992616           # elevator effectiveness [ ]
 
 # Aircraft geometry

@@ -347,6 +347,6 @@ plt.show()
 
 """############################################### Cm_lpha (Longitudinal stability) #################################"""
 
-Cma = np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]
+Cma = (np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]) * -Cmde
 print(Cma)
 

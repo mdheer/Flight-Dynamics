@@ -112,9 +112,9 @@ def Sym_SS():
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-    #print(Period)
-    #print(HalfT)
-    #print(Dampratio)
+    print(Period)
+    print(HalfT)
+    print(Dampratio)
     
     if name=='Short period':
         

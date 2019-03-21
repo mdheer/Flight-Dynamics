@@ -111,7 +111,7 @@ def CL_CD(T, rho, V_TAS, W, alpha, temp, mach):
     
     # Calculating desired parameters from trendlines
     alpha0 = np.roots(p1)
-    CLa = z[0]
+    CLa = z[0]*180/pi
     CD0 = w[1]
     e = 1/(pi*A*w[0])
     
