@@ -78,11 +78,6 @@ def Fe_star(Ws, W, Fmeas):
 # Chd = Ch delta
 # de_red = reduced elevator deflection (for reduced trim curve)
 
-
-def Cmalpha(Cmdelta, Cmalpha, Cmde):
-    Cmalpha = (1/Cmdelta) *(Cmalpha) * Cmde
-    
-    return Cmalpha
     
     
 
