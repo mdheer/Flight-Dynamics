@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Short period','Phugoid'
-name = 'Phugoid'
+name = 'Short period'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1] 
@@ -112,9 +112,9 @@ def Sym_SS():
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-    #print(Period)
-    #print(HalfT)
-    #print(Dampratio)
+    print(Period)
+    print(HalfT)
+    print(Dampratio)
     
     if name=='Short period':
         
@@ -231,3 +231,4 @@ def Sym_SS():
 
     return muc, CZ0, CX0
 
+Symul = Sym_SS()

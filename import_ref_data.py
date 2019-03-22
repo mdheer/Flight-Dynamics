@@ -5,8 +5,9 @@ from StationaryValues import *
 
 """ =============== PART I: MATLAB DATA =============== """
 
-# Importing matlab file
-matlab_data = sio.loadmat('matlab.mat')
+# Importing reference matlab file 'matlab.mat'
+# Importing flight data file 'FTISxprt-20190308_152811.mat'
+matlab_data = sio.loadmat('FTISxprt-20190308_152811.mat')
 
 # Getting relevant data from matlab file
 flight_data = matlab_data['flightdata']
@@ -36,7 +37,7 @@ def print_pars_w_index():
             print()
 
 # Putting data into handy matrix
-ref_data = np.zeros((49,3),dtype='object')
+ref_data = np.zeros((50,3),dtype='object')
 
 # Titles for ref_data
 ref_data[0][0] = 'Name'
@@ -45,7 +46,7 @@ ref_data[0][2] = 'Data'
 
 # Loop to fill ref_data matrix
 for i in range(len(flight_data[0][0])):
-        
+    
     if i==13 or i==14 or i==47:
         ref_data[i+1][0] = flight_data[0][0][i][0][0][2][0]   # name
         ref_data[i+1][1] = flight_data[0][0][i][0][0][1][0]   #unit
@@ -55,11 +56,13 @@ for i in range(len(flight_data[0][0])):
         ref_data[i+1][0] = flight_data[0][0][i][0][0][2][0][0][0]   # name
         ref_data[i+1][1] = 'no unit'                                #unit
         ref_data[i+1][2] = flight_data[0][0][i][0][0][0]            #data
-
+    
     else:
         ref_data[i+1][0] = flight_data[0][0][i][0][0][2][0][0][0]   # name
         ref_data[i+1][1] = flight_data[0][0][i][0][0][1][0][0][0]   #unit
         ref_data[i+1][2] = flight_data[0][0][i][0][0][0]            #data
+        
+ref_data = np.delete(ref_data,10,0)
 
 # Calling a certain line from the ref_data to get its values in an array
 def get_data(i):
@@ -77,13 +80,20 @@ def get_data(i):
 
 """ =============== PART II: EXCEL DATA =============== """
 
-# Importing excel data from excel file
+# Importing excel data from excel file reference case: 'REFERENCE_Post_Flight_Datasheet_Flight.csv'
+# Importing excel data from excel file reference case: 'Post_Flight_Datasheet_08_03_V4.csv'
 # NOTE: Please save file as .csv instead of .xlsx
 # IMPORTANT: must have Numpy version 1.15+
-filename = 'REFERENCE_Post_Flight_Datasheet_Flight.csv'
+filename = 'Post_Flight_Datasheet_08_03_V4.csv'
 excel_data = np.genfromtxt(filename,delimiter=',',dtype='str',encoding='bytes')
 
+if filename == 'REFERENCE_Post_Flight_Datasheet_Flight.csv':
+    second_length = 65
+elif filename == 'Post_Flight_Datasheet_08_03_V4.csv':
+    second_length = 63
 
+    
+    
 # ======= A) Getting weights =======
 weights = np.zeros((2,1),dtype='object')
 
@@ -148,7 +158,7 @@ for i in range(len(stat_2)):
     
     # Measured values
     stat_2[i][0] = excel_data[55][i+3]+' '+excel_data[56][i+3]
-    temp = excel_data[58:65,i+3:i+4] 
+    temp = excel_data[58:second_length,i+3:i+4]
     stat_2[i][1] = temp.astype(dtype='float')
     
     stat_2_conv[i][0] = stat_2[i][0]
@@ -285,7 +295,7 @@ def get_eigmot(name):
     
     for j,t in enumerate(time_data):
         if t == total_time:
-            jndex = j-100
+            jndex = j
             
     
     print(jndex)
@@ -311,7 +321,7 @@ def get_eigmot(name):
     elif name == 'Short period':
         time_int = 10
     else:
-        time_int = 40
+        time_int = 15
     
     alpha_int = []
     el_defl_int = []

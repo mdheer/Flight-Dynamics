@@ -195,13 +195,13 @@ if ThrustUpdate == True:
 
     """ ============== VI. Take the thrust file and put the values in a list ============== """
     
-    for i in range(12):
+    for i in range(len(stat_1_conv[0][1])*2):
         ThrustStat1FD.append(float(Thrustresult[i]))          # L - R - L - R etc.
-        ThurstStat1G.append(float(Thrustresult[i + 24]))
+        ThurstStat1G.append(float(Thrustresult[i + len(stat_1_conv[0][1])*4]))
     
-    for i in range(14):
-        ThurstStat2FD.append(float(Thrustresult[i + 14]))
-        ThrustStat2G.append(float(Thrustresult[i + 38]))
+    for i in range(len(stat_2_conv[0][1])*2):
+        ThurstStat2FD.append(float(Thrustresult[i + len(stat_2_conv[0][1])*2]))
+        ThrustStat2G.append(float(Thrustresult[i + len(stat_2_conv[0][1])*2+len(stat_1_conv[0][1])*4]))
 
 """ ============== VII. CL and CD calculation ============== """
 
@@ -209,13 +209,7 @@ if ThrustUpdate == True:
 #print(len(ThurstStat2FD))
 
 """ ============== VIII. Get output State Space Symmetric ============== """
-qwerty = []
-verifylst = [3666.87, 3772.86, 2981.32, 3042.88, 2377.59, 2503.17, 1836.16, 1987.19, 1860.5, 2039.69, 2169.04 ,2360.45, 1880.27, 2053.44, 1920.15, 2094.5, 1951.35, 2122.92 ,1981.03, 2162.57, 1845.53, 2015.52,1852.07, 2020.87 ,1839.25, 1998.22 ,958.531,958.531 ,1050.21 ,1050.21,1152.11, 1152.11 ,1262.91, 1262.91, 1400.9, 1400.9, 1461.59, 1461.59, 1309.64,1309.64, 1367.37, 1367.37, 1418.23, 1418.23, 1475.65, 1475.65, 1265.13, 1265.13 ,1228.75, 1228.75, 1161.88, 1161.88]
 
-for i in range(len(verifylst)):
-    qwerty.append(verifylst[i] - float(Thrustresult[i]))
-
-print(qwerty)
     
 #Sym_SS(V_TAS, muc, CX0, CZ0, rho, PrintSSEigenvalues)
 
@@ -302,30 +296,58 @@ for e in range(len(Alpha2)):
 
 #print(alpha2)
 #print(de_red)
-
-alpha2_sorted = []
-alpha2_sorted.append(alpha2[6])
-alpha2_sorted.append(alpha2[5])
-alpha2_sorted.append(alpha2[4])
-alpha2_sorted.append(alpha2[0])
-alpha2_sorted.append(alpha2[1])
-alpha2_sorted.append(alpha2[2])
-
-de_red_sorted = []
-de_red_sorted.append(de_red[6])
-de_red_sorted.append(de_red[5]) 
-de_red_sorted.append(de_red[4]) 
-de_red_sorted.append(de_red[0]) 
-de_red_sorted.append(de_red[1]) 
-de_red_sorted.append(de_red[2]) 
-
-Ve_red_sorted = []
-Ve_red_sorted.append(Ve_red[6])
-Ve_red_sorted.append(Ve_red[5]) 
-Ve_red_sorted.append(Ve_red[4]) 
-Ve_red_sorted.append(Ve_red[0]) 
-Ve_red_sorted.append(Ve_red[1]) 
-Ve_red_sorted.append(Ve_red[2]) 
+if len(Alpha2)==7:
+    
+    alpha2_sorted = []
+    alpha2_sorted.append(alpha2[6])
+    alpha2_sorted.append(alpha2[5])
+    alpha2_sorted.append(alpha2[4])
+    alpha2_sorted.append(alpha2[0])
+    alpha2_sorted.append(alpha2[1])
+    alpha2_sorted.append(alpha2[2])
+    alpha2_sorted.append(alpha2[3])
+    
+    de_red_sorted = []
+    de_red_sorted.append(de_red[6])
+    de_red_sorted.append(de_red[5]) 
+    de_red_sorted.append(de_red[4]) 
+    de_red_sorted.append(de_red[0]) 
+    de_red_sorted.append(de_red[1]) 
+    de_red_sorted.append(de_red[2]) 
+    de_red_sorted.append(de_red[3]) 
+    
+    Ve_red_sorted = []
+    Ve_red_sorted.append(Ve_red[6])
+    Ve_red_sorted.append(Ve_red[5]) 
+    Ve_red_sorted.append(Ve_red[4]) 
+    Ve_red_sorted.append(Ve_red[0]) 
+    Ve_red_sorted.append(Ve_red[1]) 
+    Ve_red_sorted.append(Ve_red[2])
+    Ve_red_sorted.append(Ve_red[3])
+    
+elif len(Alpha2)==5:
+    
+    alpha2_sorted = []
+    alpha2_sorted.append(alpha2[4])
+    alpha2_sorted.append(alpha2[3])
+    alpha2_sorted.append(alpha2[0])
+    alpha2_sorted.append(alpha2[1])
+    alpha2_sorted.append(alpha2[2])
+    
+    de_red_sorted = []
+    de_red_sorted.append(de_red[4])
+    de_red_sorted.append(de_red[3]) 
+    de_red_sorted.append(de_red[0]) 
+    de_red_sorted.append(de_red[1]) 
+    de_red_sorted.append(de_red[2]) 
+    
+    Ve_red_sorted = []
+    Ve_red_sorted.append(Ve_red[4])
+    Ve_red_sorted.append(Ve_red[3]) 
+    Ve_red_sorted.append(Ve_red[0]) 
+    Ve_red_sorted.append(Ve_red[1]) 
+    Ve_red_sorted.append(Ve_red[2]) 
+    
 
  
 """ Reduced elevator deflection vs Reduced equivalent velocity"""
@@ -347,6 +369,6 @@ plt.show()
 
 """############################################### Cm_lpha (Longitudinal stability) #################################"""
 
-Cma = np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]
+Cma = (np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]) * -Cmde
 print(Cma)
 
