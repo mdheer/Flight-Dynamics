@@ -9,7 +9,7 @@ from Constants import *
 #import cg shift
 #import ddelta shift 
 from import_ref_data import *
-from cog import *
+from cog2 import *
 from CombinedProgram import rho_xcg1, W_xcg1, V_TAS_xcg1
 
 def Cmdelta():
@@ -23,5 +23,6 @@ def Cmdelta():
     ddelta = delta2-delta1
     CN = 2*W_xcg1/(rho_xcg1*V_TAS_xcg1*V_TAS_xcg1*S)
     Cmde = -(1/(ddelta*pi/180))*CN*(dcg/c)
-
+    print(cg1)
+    print(cg2)
     return Cmde

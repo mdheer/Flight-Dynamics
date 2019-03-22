@@ -6,19 +6,19 @@ import numpy as np
 from math import *
 
 # Stationary flight condition
-#CD0 = 0.02146309747229064 #ref data
-#e = 0.7896042533607102 #ref data
-#CLa = 4.99607256778675 #ref data
-CD0 = 0.022075271947871483 #flight data
-e = 0.9313120335222014  #flight data
-CLa = 4.785099261086851 #flight data
+CD0 = 0.02146309747229064 #ref data
+e = 0.7896042533607102 #ref data
+CLa = 4.99607256778675 #ref data
+#CD0 = 0.022075271947871483 #flight data
+#e = 0.9313120335222014  #flight data
+#CLa = 4.785099261086851 #flight data
 
 
 # Longitudinal stability
-#Cma    = -0.6298525212907744 #ref data
-Cma    = -0.8466218568966501 #flight data             # longitudinal stabilty [ ]
-#Cmde   = -1.3217493412992616 #ref data           # elevator effectiveness [ ]
-Cmde   = -1.7183020785217513 #flight data
+Cma    = -0.8255591830743901 #ref data
+#Cma    = -0.8484093080490469 #flight data             # longitudinal stabilty [ ]
+Cmde   = -1.1360615466526127 #ref data           # elevator effectiveness [ ]
+#Cmde   = -1.721929595905437 #flight data
 # Aircraft geometry
 
 S      = 30.00	            # wing area [m^2]
