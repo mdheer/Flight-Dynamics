@@ -15,10 +15,10 @@ CLa = 4.99607256778675 #ref data
 
 
 # Longitudinal stability
-Cma    = -0.8255591830743901 #ref data
-#Cma    = -0.8484093080490469 #flight data             # longitudinal stabilty [ ]
-Cmde   = -1.1360615466526127 #ref data           # elevator effectiveness [ ]
-#Cmde   = -1.721929595905437 #flight data
+#Cma    = -0.8255591830743901 #ref data
+Cma    = -0.8484093080490469 #flight data             # longitudinal stabilty [ ]
+#Cmde   = -1.1360615466526127 #ref data           # elevator effectiveness [ ]
+Cmde   = -1.721929595905437 #flight data
 # Aircraft geometry
 
 S      = 30.00	            # wing area [m^2]

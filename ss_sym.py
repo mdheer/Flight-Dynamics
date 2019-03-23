@@ -12,7 +12,7 @@ from math import *
 import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
-#'Short period','Phugoid', 'initial'
+#'Short period','Phugoid'
 name = 'Phugoid'
 
 V_TAS = get_eigmot(name)[0]
@@ -27,7 +27,7 @@ el_int = np.array(get_eigmot(name)[8])
 el_int = el_int - el_int[0]
 el_int_deg = []
 for i in range(len(el_int)):
-    el_int_deg.append(el_int[i])
+    el_int_deg.append(degrees(el_int[i]))
     
 
 V_TAS_int = get_eigmot(name)[9]
@@ -43,10 +43,7 @@ def Sym_SS():
     CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     muc =  mass / (rho * S * c)
     CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
-    print(CX0)
-    print(muc)
-    print(CZ0)
-    print(W)
+
     # Vector with dimensions
     C1 = np.matrix([[-2*muc*(c/V_TAS**2), 0.,0.,0.],
                      [0., (CZadot - 2*muc)*(c/V_TAS), 0., 0.],
@@ -119,7 +116,7 @@ def Sym_SS():
     print("Thalf", HalfT)
     print("Dampratio",Dampratio)
     
-    initial = True 
+    initial = False 
     
     if initial == True:
         
@@ -196,18 +193,19 @@ def Sym_SS():
               
             # Plots for the short period motion
             plt.subplot(5,1,1)
-            plt.plot(t1,y_ed_1,'b-')
-            plt.plot(t1,el_int_deg,'r--')
+            plt.plot(t1,y_ed_1,'y-', label="Elevator deflection")
             plt.title('Elevator deflection')
             plt.xlabel('t [sec]')
-            plt.ylabel('\u03B4 [Rad]')
+            plt.ylabel('\u03B4e [deg]')
+            plt.legend(bbox_to_anchor=(1.0,1))
             
             plt.subplot(5,1,2)
-            plt.plot(t1,y_V_1,'b-')
-            plt.plot(t1,V_TAS_int,'r--')
+            plt.plot(t1,y_V_1,'b-', label = "Numerical model")
+            plt.plot(t1,V_TAS_int,'r--', label="Flight data")
             plt.title('Speed', fontweight="bold")
             plt.xlabel('t [sec]')
             plt.ylabel('V [m/sec]')
+            plt.legend(bbox_to_anchor=(1.0,0.5))
             
             plt.subplot(5,1,3)
             plt.plot(t1,y_alpha_1,'b-')
@@ -253,18 +251,19 @@ def Sym_SS():
     
             # Plots for the phugoid
             plt.subplot(5,1,1)
-            plt.plot(t2,y_ed_2,'b-')
-            plt.plot(t2,el_int_deg,'r--')
+            plt.plot(t2,el_int_deg,'y-', label="Elevator deflection")
             plt.title('Elevator deflection')
             plt.xlabel('t [sec]')
-            plt.ylabel('\u03B4 [Rad]')
+            plt.ylabel('\u03B4e [deg]')
+            plt.legend(bbox_to_anchor=(1.0,1.0))
             
             plt.subplot(5,1,2)
-            plt.plot(t2,y_V_2,'b-')
-            plt.plot(t2,V_TAS_int,'r--')
+            plt.plot(t2,y_V_2,'b-', label = "Numerical model")
+            plt.plot(t2,V_TAS_int,'r--', label="Flight test")
             plt.title('Speed', fontweight="bold")
             plt.xlabel('t [sec]')
             plt.ylabel('V [m/sec]')
+            plt.legend(bbox_to_anchor=(1.0,0.5))
             
             plt.subplot(5,1,3)
             plt.plot(t2,y_alpha_2,'b-')

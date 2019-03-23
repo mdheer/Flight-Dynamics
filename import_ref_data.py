@@ -62,7 +62,7 @@ for i in range(len(flight_data[0][0])):
         ref_data[i+1][1] = flight_data[0][0][i][0][0][1][0][0][0]   #unit
         ref_data[i+1][2] = flight_data[0][0][i][0][0][0]            #data
         
-#ref_data = np.delete(ref_data,10,0)
+ref_data = np.delete(ref_data,10,0)
 
 # Calling a certain line from the ref_data to get its values in an array
 def get_data(i):
@@ -295,7 +295,7 @@ def get_eigmot(name):
     
     for j,t in enumerate(time_data):
         if t == total_time:
-            jndex = j
+            jndex = j-150
     
     #print(jndex)    
     
