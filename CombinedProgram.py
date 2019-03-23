@@ -236,27 +236,29 @@ for i in range(len(Fe_red)):
 
 Ve_red = Ve_thilde(Velist2, Ws, Wlist2)   # Returns the reduced equivalent airspeed [m/s]
 
-Ve_red1 = []
-Ve_red2 = []
-Fe_red1 = []
-Fe_red2 = []
+print('Ve_red = ', Ve_red)
+print('Fe_red = ', Fe_red)
 
-Ve_red1 = Ve_red[:4]
-Fe_red1 = Fe_red[:4]
+Fe_red_sorted = []
+Ve_red_sorted = []
 
-for i in range(len(Ve_red)):
-    if i == 0 or i>= 4:
-        Ve_red2.append(Ve_red[i])
-        Fe_red2.append(Fe_red[i])
 
-#plt.plot(Ve_red1, Fe_red1)
-#plt.plot(Ve_red2, Fe_red2)
-#plt.gca().invert_yaxis()
-#plt.ylabel('Reduced control force [kg]')
-#plt.xlabel('Reduced equivalent airspeed [m/s]')
-#plt.show()
+Fe_red.sort()
+Ve_red.sort()
 
-#print(len(ThrustStat2G))
+""" Elevator control force curve plot """
+
+plt.plot(Ve_red, Fe_red)
+plt.gca().invert_yaxis()
+plt.ylabel('Reduced elevator control force [kg]')
+plt.xlabel('Reduced equivalent airspeed [m/s]')
+plt.show()
+
+print('Reduced elevator control force = ', Fe_red[2])
+print('Measured elevator control force = ', F_meas[2])
+print('Measured weight = ', Wlist2[2])
+
+
 """############################################### Elevator trim curve #################################"""
 
 de_meas = []
@@ -279,22 +281,23 @@ for b in range(int(len(ThrustStat2G)/2)):
     #print(e, f)
     
 for d in range(len(rholist2)):
-    Tcs.append(T_stan[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
+    Tcs.append(T_stan[d]/(0.5*1.225*V_TASlist2[d]*V_TASlist2[d]))
     Tc.append(T_dyn[d]/(0.5*rholist2[d]*V_TASlist2[d]*V_TASlist2[d]))
     
-#print(Tcs)
-#print(Tc)   
-#print(de_meas)
+print('Tcs = ', Tcs[2])
+print('Tc = ', Tc[2])   
+print('measured elevator deflection = ', de_meas[2])
+print('Cmtc = ', Cmtc)
 
 de_red = []
 de_red = de_star(de_meas, Cmde, Cmtc, Tcs, Tc)
-#print(de_red)
+print('reduced elevator deflection = ', de_red[2])
 
-alpha2 = []
+alpha2 = []     # Angle of attack during second stationary measurements
 for e in range(len(Alpha2)):
     alpha2.append(Alpha2[e][0])
 
-#print(alpha2)
+print('angle of attack = ', alpha2[2])
 #print(de_red)
 if len(Alpha2)==7:
     
@@ -350,7 +353,7 @@ elif len(Alpha2)==5:
     
 
  
-""" Reduced elevator deflection vs Reduced equivalent velocity"""
+""" Reduced elevator deflection vs Reduced equivalent velocity plot"""
 
 #plt.plot(Ve_red_sorted, de_red_sorted)
 #plt.gca().invert_yaxis()
@@ -358,17 +361,18 @@ elif len(Alpha2)==5:
 #plt.xlabel('Reduced equivalent airspeed [m/s]')
 #plt.show()
 
-""" Reduced elevator deflection vs Angle of attack (to determine Cm_alpha) """
+""" Reduced elevator deflection vs Angle of attack plot(to determine Cm_alpha) """
 
-plt.plot(alpha2_sorted, de_red_sorted)
-plt.gca().invert_yaxis()
-plt.ylabel('Reduced elevator deflection [degree]')
-plt.xlabel('Angle of attack [degree]')
-plt.show()
+#plt.plot(alpha2_sorted, de_red_sorted)
+#plt.gca().invert_yaxis()
+#plt.ylabel('Reduced elevator deflection [degree]')
+#plt.xlabel('Angle of attack [degree]')
+#plt.show()
 
 
 """############################################### Cm_lpha (Longitudinal stability) #################################"""
 
 Cma = (np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]) * -Cmde
-print(Cma)
+#print(Cma)
 
+#print(Mlist1)
