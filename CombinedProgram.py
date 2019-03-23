@@ -232,12 +232,9 @@ if ThrustUpdate == True:
 
 Fe_red = Fe_star(Ws, Wlist2, F_meas)      # Returns the reduced elevator control force in a list [N]
 for i in range(len(Fe_red)):
-    Fe_red[i] = Fe_red[i][0]/9.80665 
+    Fe_red[i] = Fe_red[i][0]/9.80665     # Conversion to kg
 
 Ve_red = Ve_thilde(Velist2, Ws, Wlist2)   # Returns the reduced equivalent airspeed [m/s]
-
-Fe_red_sorted = []
-Ve_red_sorted = []
 
 Fe_red.sort()
 Ve_red.sort()
@@ -285,11 +282,13 @@ for d in range(len(rholist2)):
 
 de_red = []
 de_red = de_star(de_meas, Cmde, Cmtc, Tcs, Tc)
-de_red.sort()
 
 alpha2 = []     # Angle of attack during second stationary measurements
 for e in range(len(Alpha2)):
     alpha2.append(Alpha2[e][0])
+
+de_red.sort()
+alpha2.sort(reverse = True)
 
 print('measured elevator deflection = ', de_meas[2])
 print('reduced elevator deflection = ', de_red[2])
@@ -366,16 +365,19 @@ plt.show()
 
 """ Reduced elevator deflection vs Angle of attack plot(to determine Cm_alpha) """
 
-#plt.plot(alpha2_sorted, de_red_sorted)
-#plt.gca().invert_yaxis()
-#plt.ylabel('Reduced elevator deflection [degree]')
-#plt.xlabel('Angle of attack [degree]')
-#plt.show()
+plt.figure()
+plt.plot(alpha2, de_red)
+plt.gca().invert_yaxis()
+plt.ylabel('Reduced elevator deflection [degree]')
+plt.xlabel('Angle of attack [degree]')
+plt.show()
 
 
 """############################################### Cm_lpha (Longitudinal stability) #################################"""
 
-Cma = (np.polyfit(alpha2_sorted, de_red_sorted, 1)[0]) * -Cmde
+Cma = (np.polyfit(alpha2, de_red, 1)[0]) * -Cmde
+
+print()
 print('Cma = ', Cma)
 
 #print(Mlist1)
