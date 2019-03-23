@@ -15,7 +15,7 @@ from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Aper. Roll', 'Dutch Roll', 'Dutch Roll YD', 'Spiral'
 
-name = 'Spiral'
+name = 'Dutch Roll'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1]
@@ -65,13 +65,14 @@ def Asymm_SS():
     
     sys = control.ss(A,B,C,D)
     eigs = np.linalg.eig(sys.A)
-    eigsdim = eigs[0]*(V_TAS/b)
-    print(eigs)
+    eigsdimless = eigs[0]/(V_TAS/b)
     
     print(eigs[0])
-    
-    realpart = eigs[0].real
-    imagpart = eigs[0].imag
+    print(eigsdimless)
+    print(b)
+    print(V_TAS)
+    realpart = eigsdimless.real
+    imagpart = eigsdimless.imag
     Period=[]
     HalfT = []
     Dampratio = []
@@ -79,6 +80,7 @@ def Asymm_SS():
         P= ((2*pi)/(imagpart[i]))*(b/V_TAS)
         Period.append(P)
         Thalf= (log(1/2)/realpart[i])*(b/V_TAS)
+        print(realpart[i])
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
@@ -89,77 +91,135 @@ def Asymm_SS():
         
     rudinput = rudder_int
     aleinput = aileron_int
-    if name == 'Spiral':
-        
-        t1 = np.arange(0, 150, 0.1)
-        U_rudder = np.ones(len(t1))*rudinput 
-        U_aileron = np.ones(len(t1))*aleinput
-        U_tot = np.vstack((U_aileron,U_rudder))
-    if name == 'Aper. Roll' or name == 'Dutch Roll':
-        t1 = np.arange(0, 15, 0.1)
-        U_rudder = np.ones(len(t1))*rudinput 
-        U_aileron = np.ones(len(t1))*aleinput
-        U_tot = np.vstack((U_aileron,U_rudder))
-
     
-    y,t,x = control.lsim(sys, U_tot.T, t1)
+    initial=True
+    
+    if initial==True:
+        
+        beta = radians(2)
+        phi = 0.#radians(2)
+        p = 0.
+        r = 0.#radians(2)
+        
+        X0 = np.array([beta, phi, p ,r])
+        t = np.arange(0, 30, 0.1)
+        y,t = control.initial(sys, t, X0)
 
-    #defining arrays of the different state variables for the short period motion
-    y_aileron = []
-    y_rudder = []
-    y_beta=[]   #sideslip angle
-    y_phi = [] #roll angle
-    y_p = []  #roll rate
-    y_r = [] #yaw rate
         
-    for i in range(len(y)):
-        y_aileron.append(aileron_int[i])
-        y_rudder.append(rudder_int[i])
-        y_beta.append(y[i][0])
-        y_phi.append(y[i][1] + roll_angle)
-        y_p.append(y[i][2] + p_0)
-        y_r.append(y[i][3]+ r_0)
-        
+        y_beta=[]   #sideslip angle
+        y_phi = [] #roll angle
+        y_p = []  #roll rate
+        y_r = [] #yaw rate
             
-    # PLOTTING
+        for i in range(len(y)):
+            y_beta.append(degrees(y[i][0]))
+            y_phi.append(degrees(y[i][1]))
+            y_p.append(degrees(y[i][2]))
+            y_r.append(degrees(y[i][3]))
+            
+                
+        # PLOTTING
+        
+        plt.subplot(4,1,1)
+        plt.plot(t,y_beta, 'b-')
+        plt.title('Side slip angle', fontweight="bold")
+        plt.xlabel('t [sec]')
+        plt.ylabel('\u03B2 [deg]')
+        
+        plt.subplot(4,1,2)
+        plt.plot(t,y_phi, 'b-')
+        plt.title('Roll angle', fontweight="bold")
+        plt.xlabel('t [sec]')
+        plt.ylabel('\u03C6 [deg]')
+        
+        plt.subplot(4,1,3)
+        plt.plot(t,y_p, 'b-')
+        plt.title('Roll rate', fontweight="bold")
+        plt.xlabel('t [sec]')
+        plt.ylabel('p [deg/sec]')
     
-    plt.subplot(5,1,1)
-    plt.plot(t, y_aileron,'g-')
-    plt.plot(t, y_rudder, 'r-')
-    plt.title('Aileron and rudder deflection')
-    plt.xlabel('t[sec]')
-    plt.ylabel('\u03B4 and \u03B4  [Rad]')
+        plt.subplot(4,1,4)
+        plt.plot(t,y_r, 'b-')
+        plt.title('Yaw rate', fontweight="bold")
+        plt.xlabel('t [sec]')
+        plt.ylabel('r [deg/sec]') 
+        
+        plt.show()    
     
-    plt.subplot(5,1,2)
-    plt.plot(t,y_beta)
-    plt.title('Response of side slip angle due to')
-    plt.xlabel('t[sec]')
-    plt.ylabel('beta [Rad]')
+    elif initial ==False:
+        
+        if name == 'Spiral':
+            
+            t1 = np.arange(0, 150, 0.1)
+            U_rudder = np.ones(len(t1))*rudinput 
+            U_aileron = np.ones(len(t1))*aleinput
+            U_tot = np.vstack((U_aileron,U_rudder))
+            
+        if name == 'Aper. Roll' or name == 'Dutch Roll':
+            t1 = np.arange(0, 15, 0.1)
+            U_rudder = np.ones(len(t1))*rudinput 
+            U_aileron = np.ones(len(t1))*aleinput
+            U_tot = np.vstack((U_aileron,U_rudder))
     
-    plt.subplot(5,1,3)
-    plt.plot(t,y_phi, 'b-')
-    plt.plot(t,roll_int, 'r--')
-    plt.title('Response of roll angle due to ')
-    plt.xlabel('t[sec]')
-    plt.ylabel('phi [Rad]')
+        
+        y,t,x = control.lsim(sys, U_tot.T, t1)
     
-    plt.subplot(5,1,4)
-    plt.plot(t,y_p)
-    plt.plot(t, p_int, 'r--')
-    plt.title('Response of roll rate due to ')
-    plt.xlabel('t[sec]')
-    plt.ylabel('p [Rad/sec]')
-
-    plt.subplot(5,1,5)
-    plt.plot(t,y_r)
-    plt.plot(t,r_int, 'r--')
-    plt.title('Response of yaw rate due to ')
-    plt.xlabel('t[sec]')
-    plt.ylabel('r [Rad/sec]') 
+        #defining arrays of the different state variables for the short period motion
+        y_aileron = []
+        y_rudder = []
+        y_beta=[]   #sideslip angle
+        y_phi = [] #roll angle
+        y_p = []  #roll rate
+        y_r = [] #yaw rate
+            
+        for i in range(len(y)):
+            y_aileron.append(degrees(aileron_int[i]))
+            y_rudder.append(degrees(rudder_int[i]))
+            y_beta.append(degrees(y[i][0]))
+            y_phi.append(degrees(y[i][1]) + degrees(roll_angle))
+            y_p.append(degrees(y[i][2]) + degrees(p_0))
+            y_r.append(degrees(y[i][3]) + degrees(r_0))
+            
+                
+        # PLOTTING
+        
+        plt.subplot(5,1,1)
+        plt.plot(t, y_aileron,'g-')
+        plt.plot(t, y_rudder, 'r-')
+        plt.title('Aileron and rudder deflection')
+        plt.xlabel('t[sec]')
+        plt.ylabel('\u03B4 and \u03B4  [Rad]')
+        
+        plt.subplot(5,1,2)
+        plt.plot(t,y_beta)
+        plt.title('Side slip angle', fontweight="bold")
+        plt.xlabel('t [sec]')
+        plt.ylabel('\u03B2 [deg]') 
+        
+        plt.subplot(5,1,3)
+        plt.plot(t,y_phi, 'b-')
+        plt.plot(t,roll_int, 'r--')
+        plt.title('Roll angle', fontweight="bold")
+        plt.xlabel('t [sec]')
+        plt.ylabel('\u03C6 [deg]')
+        
+        plt.subplot(5,1,4)
+        plt.plot(t,y_p)
+        plt.plot(t, p_int, 'r--')
+        plt.title('Roll rate', fontweight="bold")
+        plt.xlabel('t [sec]')
+        plt.ylabel('p [deg/sec]')
     
-    plt.show()    
-          
-    return mub,CL
+        plt.subplot(5,1,5)
+        plt.plot(t,y_r)
+        plt.plot(t,r_int, 'r--')
+        plt.title('Yaw rate', fontweight="bold")
+        plt.xlabel('t [sec]')
+        plt.ylabel('r [deg/sec]') 
+        
+        plt.show()    
+              
+        return mub,CL
 
 #plt.plot(t,y)
 

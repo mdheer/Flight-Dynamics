@@ -7,7 +7,7 @@ from StationaryValues import *
 
 # Importing reference matlab file 'matlab.mat'
 # Importing flight data file 'FTISxprt-20190308_152811.mat'
-matlab_data = sio.loadmat('FTISxprt-20190308_152811.mat')
+matlab_data = sio.loadmat('matlab.mat')
 
 # Getting relevant data from matlab file
 flight_data = matlab_data['flightdata']
@@ -62,7 +62,7 @@ for i in range(len(flight_data[0][0])):
         ref_data[i+1][1] = flight_data[0][0][i][0][0][1][0][0][0]   #unit
         ref_data[i+1][2] = flight_data[0][0][i][0][0][0]            #data
         
-ref_data = np.delete(ref_data,10,0)
+#ref_data = np.delete(ref_data,10,0)
 
 # Calling a certain line from the ref_data to get its values in an array
 def get_data(i):
@@ -84,7 +84,7 @@ def get_data(i):
 # Importing excel data from excel file reference case: 'Post_Flight_Datasheet_08_03_V4.csv'
 # NOTE: Please save file as .csv instead of .xlsx
 # IMPORTANT: must have Numpy version 1.15+
-filename = 'Post_Flight_Datasheet_08_03_V4.csv'
+filename = 'REFERENCE_Post_Flight_Datasheet_Flight.csv'
 excel_data = np.genfromtxt(filename,delimiter=',',dtype='str',encoding='bytes')
 
 if filename == 'REFERENCE_Post_Flight_Datasheet_Flight.csv':
@@ -296,9 +296,8 @@ def get_eigmot(name):
     for j,t in enumerate(time_data):
         if t == total_time:
             jndex = j
-            
     
-    print(jndex)
+    #print(jndex)    
     
     V_TAS = get_data(42)[jndex][0]*0.514444         # [m/s]
     
@@ -342,17 +341,17 @@ def get_eigmot(name):
     
     
     for t in range(time_int*10):
-        alpha_int.append(radians(get_data(1)[jndex+t][0]))
+        alpha_int.append(get_data(1)[jndex+t][0])
         el_defl_int.append(radians(get_data(17)[jndex+t][0]))
         V_TAS_int.append(get_data(42)[jndex+t][0]*0.514444)
-        pitch_int.append(radians(get_data(22)[jndex+t][0]))
-        q_int.append(radians(get_data(27)[jndex+t][0]))
+        pitch_int.append(get_data(22)[jndex+t][0])
+        q_int.append(get_data(27)[jndex+t][0])
         
         rud_defl_int.append(radians(get_data(18)[jndex+t][0]))
         ail_defl_int.append(radians(get_data(16)[jndex+t][0]))
-        roll_int.append(radians(get_data(21)[jndex+t][0]))
-        p_int.append(radians(get_data(26)[jndex+t][0])) # roll rate
-        r_int.append(radians(get_data(28)[jndex+t][0])) # yaw rate
+        roll_int.append(get_data(21)[jndex+t][0])
+        p_int.append(get_data(26)[jndex+t][0]) # roll rate
+        r_int.append(get_data(28)[jndex+t][0]) # yaw rate
 
     return V_TAS,mass,rho,pitch,alpha_0,q_0,el_defl,alpha_int,el_defl_int,\
            V_TAS_int,pitch_int,q_int,roll_0,p_0,r_0,rud_defl_int,ail_defl_int,\

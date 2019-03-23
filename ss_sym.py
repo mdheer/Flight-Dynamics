@@ -12,8 +12,8 @@ from math import *
 import matplotlib.pyplot as plt
 from import_ref_data import show_eigmot_names,get_eigmot
 
-#'Short period','Phugoid'
-name = 'Short period'
+#'Short period','Phugoid', 'initial'
+name = 'Phugoid'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1] 
@@ -25,6 +25,9 @@ q_0= get_eigmot(name)[5] #rad
 alpha_int = get_eigmot(name)[7]
 el_int = np.array(get_eigmot(name)[8])
 el_int = el_int - el_int[0]
+el_int_deg = []
+for i in range(len(el_int)):
+    el_int_deg.append(el_int[i])
     
 
 V_TAS_int = get_eigmot(name)[9]
@@ -112,122 +115,178 @@ def Sym_SS():
         HalfT.append(Thalf)
         Damp = -realpart[i]/(realpart[i]**2 + imagpart[i]**2)**0.5
         Dampratio.append(Damp)
-    print(Period)
-    print(HalfT)
-    print(Dampratio)
+    print("Period=",Period)
+    print("Thalf", HalfT)
+    print("Dampratio",Dampratio)
     
-    if name=='Short period':
+    initial = True 
+    
+    if initial == True:
         
-        t1 = np.arange(0, 10, 0.1)
-        y1,t1,x1 = control.lsim(sys, el_int, t1)
+        u = 0#100
+        a = radians(2)
+        the = 0#0.04
+        q = 0#.04
         
-        # Defining arrays of the different state variables for the short period motion
-        y_ed_1 = []
+        X0 = np.array([u, a ,the , q])
+        t1 = np.arange(0, 150, 0.1)
+        y1,t1 = control.initial(sys, t1, X0)
+        
+        #print(y1)
+        
         y_alpha_1=[]
         y_theta_1 = []
         y_q_1 = []
         y_V_1 = []
         
         for i in range(len(y1)):
-            y_ed_1.append(el_int[i])
-            y_alpha_1.append(y1[i][1] + alpha_0)
-            y_theta_1.append(y1[i][2] + pitch)
-            y_q_1.append(y1[i][3] + q_0)
-            y_V_1.append((y1[i][0]/cos(alpha_int[i])+ V_TAS))
+            y_alpha_1.append(degrees(y1[i][1]))
+            y_theta_1.append(degrees(y1[i][2]))
+            y_q_1.append(degrees(y1[i][3]))
+            y_V_1.append(y1[i][0]/cos(radians(y1[i][1])))
           
         # Plots for the short period motion
-        plt.subplot(5,1,1)
-        plt.plot(t1,y_ed_1,'b-')
-        plt.plot(t1,el_int,'r--')
-        plt.title('Elevator deflection')
-        plt.xlabel('t [sec]')
-        plt.ylabel('\u03B4 [Rad]')
         
-        plt.subplot(5,1,2)
+        plt.subplot(4,1,1)
         plt.plot(t1,y_V_1,'b-')
-        plt.plot(t1,V_TAS_int,'r--')
-        plt.title('Response of the speed due to elevator deflection')
+        plt.title('Speed', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('V [m/sec]')
         
-        plt.subplot(5,1,3)
+        plt.subplot(4,1,2)
         plt.plot(t1,y_alpha_1,'b-')
-        plt.plot(t1,alpha_int,'r--')
-        plt.title('Response of the angle of attack due to elevator deflection')
+        plt.title('Angle of attack', fontweight="bold")
         plt.xlabel('t [sec]')
-        plt.ylabel('\u03B1 [Rad]')
+        plt.ylabel('\u03B1 [deg]')
         
-        plt.subplot(5,1,4)
+        plt.subplot(4,1,3)
         plt.plot(t1,y_theta_1,'b-')
-        plt.plot(t1,pitch_int,'r--')
-        plt.title('Response of \u03B8 due to elevator deflection')
+        plt.title('Pitch angle', fontweight="bold")
         plt.xlabel('t[sec]')
-        plt.ylabel('\u03B8 [Rad]')
+        plt.ylabel('\u03B8 [deg]')
     
-        plt.subplot(5,1,5)
+        plt.subplot(4,1,4)
         plt.plot(t1,y_q_1,'b-')
-        plt.plot(t1,q_int,'r--')
-        plt.title('Response of pitch rate (q) due to elevator deflection')
+        plt.title('Pitch rate', fontweight="bold")
         plt.xlabel('t [sec]')
-        plt.ylabel('q [Rad/sec]') 
+        plt.ylabel('q [deg/sec]') 
         
         plt.show()
-            
-    elif name == 'Phugoid':
-        
-        t2 = np.arange(0, 150, 0.1)    
-        y2,t2,x2 = control.lsim(sys, el_int, t2)
-
-        # Defining arrays of the different state variable for the phugoid motion    
-        y_ed_2 = []
-        y_alpha_2=[]
-        y_theta_2 = []
-        y_q_2 = []
-        y_V_2 = []
-   
-        for i in range(len(y2)):
-            y_ed_2.append(el_int[i])
-            y_alpha_2.append(y2[i][1] + alpha_0)
-            y_theta_2.append(y2[i][2] + pitch)
-            y_q_2.append(y2[i][3] + q_0)
-            y_V_2.append(y2[i][0]/cos(alpha_int[i])+ V_TAS)
-
-        # Plots for the phugoid
-        plt.subplot(5,1,1)
-        plt.plot(t2,y_ed_2,'b-')
-        plt.plot(t2,el_int,'r--')
-        plt.title('Elevator deflection')
-        plt.xlabel('t [sec]')
-        plt.ylabel('\u03B4 [Rad]')
-        
-        plt.subplot(5,1,2)
-        plt.plot(t2,y_V_2,'b-')
-        plt.plot(t2,V_TAS_int,'r--')
-        plt.title('Response of the speed due to elevator deflection')
-        plt.xlabel('t [sec]')
-        plt.ylabel('V [m/sec]')
-        
-        plt.subplot(5,1,3)
-        plt.plot(t2,y_alpha_2,'b-')
-        plt.plot(t2,alpha_int,'r--')
-        plt.title('Response of the angle of attack due to elevator deflection')
-        plt.xlabel('t [sec]')
-        plt.ylabel('\u03B1 [Rad]')
-        
-        plt.subplot(5,1,4)
-        plt.plot(t2,y_theta_2,'b-')
-        plt.plot(t2,pitch_int,'r--')
-        plt.title('Response of $\theta$ due to elevator deflection')
-        plt.xlabel('t [sec]')
-        plt.ylabel('\u03B8 [Rad]')
     
-        plt.subplot(5,1,5)
-        plt.plot(t2,y_q_2,'b-')
-        plt.plot(t2,q_int,'r--')
-        plt.title('Response of pitch rate (q) due to elevator deflection')
-        plt.xlabel('t [sec]')
-        plt.ylabel('q [Rad/sec]') 
-        plt.show()
+    elif initial==False:
+        
+        if name=='Short period':
+            
+            t1 = np.arange(0, 10, 0.1)
+            y1,t1,x1 = control.lsim(sys, el_int, t1)
+            
+            # Defining arrays of the different state variables for the short period motion
+            y_ed_1 = []
+            y_alpha_1=[]
+            y_theta_1 = []
+            y_q_1 = []
+            y_V_1 = []
+            
+            for i in range(len(y1)):
+                y_ed_1.append(el_int_deg[i])
+                y_alpha_1.append(degrees(y1[i][1]) + degrees(alpha_0))
+                y_theta_1.append(degrees(y1[i][2]) + degrees(pitch))
+                y_q_1.append(degrees(y1[i][3]) + degrees(q_0))
+                y_V_1.append((y1[i][0]/cos(radians(alpha_int[i]))+ V_TAS))
+              
+            # Plots for the short period motion
+            plt.subplot(5,1,1)
+            plt.plot(t1,y_ed_1,'b-')
+            plt.plot(t1,el_int_deg,'r--')
+            plt.title('Elevator deflection')
+            plt.xlabel('t [sec]')
+            plt.ylabel('\u03B4 [Rad]')
+            
+            plt.subplot(5,1,2)
+            plt.plot(t1,y_V_1,'b-')
+            plt.plot(t1,V_TAS_int,'r--')
+            plt.title('Speed', fontweight="bold")
+            plt.xlabel('t [sec]')
+            plt.ylabel('V [m/sec]')
+            
+            plt.subplot(5,1,3)
+            plt.plot(t1,y_alpha_1,'b-')
+            plt.plot(t1,alpha_int,'r--')
+            plt.title('Angle of attack', fontweight="bold")
+            plt.xlabel('t [sec]')
+            plt.ylabel('\u03B1 [deg]')
+            
+            plt.subplot(5,1,4)
+            plt.plot(t1,y_theta_1,'b-')
+            plt.plot(t1,pitch_int,'r--')
+            plt.title('Pitch angle', fontweight="bold")
+            plt.xlabel('t[sec]')
+            plt.ylabel('\u03B8 [deg]')
+        
+            plt.subplot(5,1,5)
+            plt.plot(t1,y_q_1,'b-')
+            plt.plot(t1,q_int,'r--')
+            plt.title('Pitch rate', fontweight="bold")
+            plt.xlabel('t [sec]')
+            plt.ylabel('q [deg/sec]') 
+            
+            plt.show()
+                
+        elif name == 'Phugoid':
+            
+            t2 = np.arange(0, 150, 0.1)    
+            y2,t2,x2 = control.lsim(sys, el_int, t2)
+    
+            # Defining arrays of the different state variable for the phugoid motion    
+            y_ed_2 = []
+            y_alpha_2=[]
+            y_theta_2 = []
+            y_q_2 = []
+            y_V_2 = []
+       
+            for i in range(len(y2)):
+                y_ed_2.append(el_int_deg[i])
+                y_alpha_2.append(degrees(y2[i][1]) + degrees(alpha_0))
+                y_theta_2.append(degrees(y2[i][2]) + degrees(pitch))
+                y_q_2.append(degrees(y2[i][3]) + degrees(q_0))
+                y_V_2.append(y2[i][0]/cos(radians(alpha_int[i]))+ V_TAS)
+    
+            # Plots for the phugoid
+            plt.subplot(5,1,1)
+            plt.plot(t2,y_ed_2,'b-')
+            plt.plot(t2,el_int_deg,'r--')
+            plt.title('Elevator deflection')
+            plt.xlabel('t [sec]')
+            plt.ylabel('\u03B4 [Rad]')
+            
+            plt.subplot(5,1,2)
+            plt.plot(t2,y_V_2,'b-')
+            plt.plot(t2,V_TAS_int,'r--')
+            plt.title('Speed', fontweight="bold")
+            plt.xlabel('t [sec]')
+            plt.ylabel('V [m/sec]')
+            
+            plt.subplot(5,1,3)
+            plt.plot(t2,y_alpha_2,'b-')
+            plt.plot(t2,alpha_int,'r--')
+            plt.title('Angle of attack', fontweight="bold")
+            plt.xlabel('t [sec]')
+            plt.ylabel('\u03B1 [deg]')
+            
+            plt.subplot(5,1,4)
+            plt.plot(t2,y_theta_2,'b-')
+            plt.plot(t2,pitch_int,'r--')
+            plt.title('Pitch angle', fontweight="bold")
+            plt.xlabel('t[sec]')
+            plt.ylabel('\u03B8 [deg]')
+        
+            plt.subplot(5,1,5)
+            plt.plot(t2,y_q_2,'b-')
+            plt.plot(t2,q_int,'r--')
+            plt.title('Pitch rate', fontweight="bold")
+            plt.xlabel('t [sec]')
+            plt.ylabel('q [deg/sec]') 
+            plt.show()
 
     return muc, CZ0, CX0
 
