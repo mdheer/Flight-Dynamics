@@ -15,7 +15,7 @@ from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Aper. Roll', 'Dutch Roll', 'Dutch Roll YD', 'Spiral'
 
-name = 'Dutch Roll'
+name = 'Spiral'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1]
@@ -92,14 +92,14 @@ def Asymm_SS():
     rudinput = rudder_int
     aleinput = aileron_int
     
-    initial=True
+    initial=False
     
     if initial==True:
         
         beta = radians(2)
         phi = 0.#radians(2)
         p = 0.
-        r = 0.#radians(2)
+        r = 0#radians(2)
         
         X0 = np.array([beta, phi, p ,r])
         t = np.arange(0, 30, 0.1)
@@ -183,39 +183,50 @@ def Asymm_SS():
                 
         # PLOTTING
         
-        plt.subplot(5,1,1)
-        plt.plot(t, y_aileron,'g-')
-        plt.plot(t, y_rudder, 'r-')
+        # Labels to use in the legend for each line
+        
+#        fig= plt.figure()
+        
+        plt.subplot(4,1,1)
+        l1 = plt.plot(t, y_aileron,'g-', label="Aileron deflection")
+        l2 = plt.plot(t, y_rudder, 'k-', label="Rudder deflection")
         plt.title('Aileron and rudder deflection')
         plt.xlabel('t[sec]')
-        plt.ylabel('\u03B4 and \u03B4  [Rad]')
+        plt.ylabel('\u03B4a and \u03B4r  [Rad]')
+        plt.grid()
+        plt.legend(bbox_to_anchor=(1.0,0.6))
         
-        plt.subplot(5,1,2)
-        plt.plot(t,y_beta)
-        plt.title('Side slip angle', fontweight="bold")
-        plt.xlabel('t [sec]')
-        plt.ylabel('\u03B2 [deg]') 
+#        plt.subplot(5,1,2)
+#        plt.plot(t,y_beta, 'b-',)
+#        plt.title('Side slip angle', fontweight="bold")
+#        plt.xlabel('t [sec]')
+#        plt.ylabel('\u03B2 [deg]') 
+#        plt.grid()
         
-        plt.subplot(5,1,3)
-        plt.plot(t,y_phi, 'b-')
-        plt.plot(t,roll_int, 'r--')
+        plt.subplot(4,1,2)
+        l3 = plt.plot(t,y_phi, 'b-', label="Numerical model")
+        l4 = plt.plot(t,roll_int, 'r--', label="Flight test")
         plt.title('Roll angle', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('\u03C6 [deg]')
+        plt.grid()
+        plt.legend(bbox_to_anchor=(1.0, 0.5))
         
-        plt.subplot(5,1,4)
-        plt.plot(t,y_p)
+        plt.subplot(4,1,3)
+        plt.plot(t,y_p, 'b-')
         plt.plot(t, p_int, 'r--')
         plt.title('Roll rate', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('p [deg/sec]')
-    
-        plt.subplot(5,1,5)
-        plt.plot(t,y_r)
+        plt.grid()
+        
+        plt.subplot(4,1,4)
+        plt.plot(t,y_r,'b-')
         plt.plot(t,r_int, 'r--')
         plt.title('Yaw rate', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('r [deg/sec]') 
+        plt.grid()
         
         plt.show()    
               
