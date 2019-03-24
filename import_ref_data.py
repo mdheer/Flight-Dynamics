@@ -63,8 +63,6 @@ for i in range(len(flight_data[0][0])):
         ref_data[i+1][1] = flight_data[0][0][i][0][0][1][0][0][0]   #unit
         ref_data[i+1][2] = flight_data[0][0][i][0][0][0]            #data
         
-ref_data = np.delete(ref_data,10,0)
-
 if matlab_filename == 'FTISxprt-20190308_152811.mat':
     ref_data = np.delete(ref_data,10,0)
 
