@@ -130,8 +130,6 @@ for i in range(len(stat_2_conv[0][1])):
 
 #calculate these values for first cg position (xcg1)
 p_xcg1, rho_xcg1, M_xcg1, T_xcg1, W_xcg1, V_TAS_xcg1, Ve_xcg1, a_xcg1 = StationaryValues(stat_xcg_conv[0][1][0][0], stat_xcg_conv[9][1][0][0], stat_xcg_conv[1][1][0][0]-2, stat_mass(stat_xcg_conv[8][1][0][0]))
-#calculate these values for second cg position (xcg2)
-p_xcg2, rho_xcg2, M_xcg2, T_xcg2, W_xcg2, V_TAS_xcg2, Ve_xcg2, a_xcg2 = StationaryValues(stat_xcg_conv[0][1][1][0], stat_xcg_conv[9][1][1][0], stat_xcg_conv[1][1][1][0]-2, stat_mass(stat_xcg_conv[8][1][1][0]))
 
 """ ============== V. Make the thrust file ============== """
 

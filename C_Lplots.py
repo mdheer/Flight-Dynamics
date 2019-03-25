@@ -55,9 +55,9 @@ def CL_CD(T, rho, V_TAS, W, alpha, temp, mach):
         
     # PLOT 1
     plt.subplot(2,2,1)
-    plt.title('Lift Curve',fontsize=title_size)
+    plt.title('Lift Curve',fontsize=title_size,fontweight='bold')
     plt.tick_params(labelsize=tick_size)
-    plt.xlabel('alpha [deg]',fontsize=axes_size)
+    plt.xlabel('\u03B1 [deg]',fontsize=axes_size)
     plt.ylabel('CL [-]',fontsize=axes_size)
     plt.grid(b=True,which='both')
     # Calculating the trendline
@@ -69,9 +69,9 @@ def CL_CD(T, rho, V_TAS, W, alpha, temp, mach):
     
     # PLOT 2
     plt.subplot(2,2,2)
-    plt.title('Drag Curve',fontsize=title_size)
+    plt.title('Drag Curve',fontsize=title_size,fontweight='bold')
     plt.tick_params(labelsize=tick_size)
-    plt.xlabel('alpha [deg]',fontsize=axes_size)
+    plt.xlabel('\u03B1 [deg]',fontsize=axes_size)
     plt.ylabel('CD [-]',fontsize=axes_size)
     plt.grid(b=True,which='both')
     # Plotting
@@ -79,7 +79,7 @@ def CL_CD(T, rho, V_TAS, W, alpha, temp, mach):
     
     # PLOT 3
     plt.subplot(2,2,3)
-    plt.title('Lift-Drag Polar',fontsize=title_size)
+    plt.title('Lift-Drag Polar',fontsize=title_size,fontweight='bold')
     plt.tick_params(labelsize=tick_size)
     plt.xlabel('CD [-]',fontsize=axes_size)
     plt.ylabel('CL [-]',fontsize=axes_size)
@@ -89,7 +89,7 @@ def CL_CD(T, rho, V_TAS, W, alpha, temp, mach):
     
     # PLOT 4
     plt.subplot(2,2,4)
-    plt.title('Lift-Squared-Drag Polar',fontsize=title_size)
+    plt.title('Lift-Squared-Drag Polar',fontsize=title_size,fontweight='bold')
     plt.tick_params(labelsize=tick_size)
     plt.xlabel('CD   [-]',fontsize=axes_size)
     plt.ylabel('CL^2 [-]',fontsize=axes_size)

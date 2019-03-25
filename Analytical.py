@@ -38,17 +38,17 @@ eig_dr= (-B_dr + 1j*np.sqrt(4*A_dr*C_dr - B_dr*B_dr))/(2*A_dr)
 
 eigs = [eig_sp, eig_phu, eig_aperiodic, eig_dr, eig_spiral]
 
-realpart = eigs[4].real
-imagpart = eigs[4].imag
+realpart = eigs[0].real
+imagpart = eigs[0].imag
 
 #for the symmetric cases
-#P= ((2*pi)/(imagpart))*(c/V_TAS)
-#Thalf= (log(1/2)/realpart)*(c/V_TAS)
+P= ((2*pi)/(imagpart))*(c/V_TAS)
+Thalf= (log(1/2)/realpart)*(c/V_TAS)
 print(b)
 print(V_TAS)
 #for the asymmetric cases
-P= ((2*pi)/(imagpart))*(b/V_TAS)
-Thalf= (log(1/2)/realpart)*(b/V_TAS)
+#P= ((2*pi)/(imagpart))*(b/V_TAS)
+#Thalf= (log(1/2)/realpart)*(b/V_TAS)
 
 
 Damp = -realpart/(realpart**2 + imagpart**2)**0.5
@@ -58,9 +58,9 @@ print('Period = ', P)
 print('Thalf =', Thalf)
 print('Damping =', Damp)
 
-#print(eig_sp)
+print(eig_sp)
 #print(eig_phu)
 #print(eig_aperiodic) 
 #print(eig_dr)
-print(eig_spiral)
+#print(eig_spiral)
 

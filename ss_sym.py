@@ -43,7 +43,10 @@ def Sym_SS():
     CX0 = W * sin(pitch) / (0.5 * rho * V_TAS ** 2 * S)
     muc =  mass / (rho * S * c)
     CZ0 = -W * cos(pitch) / (0.5 * rho * V_TAS ** 2 * S)
-
+    print(CX0)
+    print(muc)
+    print(CZ0)
+    print(mass)
     # Vector with dimensions
     C1 = np.matrix([[-2*muc*(c/V_TAS**2), 0.,0.,0.],
                      [0., (CZadot - 2*muc)*(c/V_TAS), 0., 0.],
