@@ -7,7 +7,8 @@ from StationaryValues import *
 
 # Importing reference matlab file 'matlab.mat'
 # Importing flight data file 'FTISxprt-20190308_152811.mat'
-matlab_data = sio.loadmat('matlab.mat')
+matlab_filename = 'FTISxprt-20190308_152811.mat'
+matlab_data = sio.loadmat(matlab_filename)
 
 # Getting relevant data from matlab file
 flight_data = matlab_data['flightdata']
@@ -62,7 +63,8 @@ for i in range(len(flight_data[0][0])):
         ref_data[i+1][1] = flight_data[0][0][i][0][0][1][0][0][0]   #unit
         ref_data[i+1][2] = flight_data[0][0][i][0][0][0]            #data
         
-#ref_data = np.delete(ref_data,10,0)
+if matlab_filename == 'FTISxprt-20190308_152811.mat':
+    ref_data = np.delete(ref_data,10,0)
 
 # Calling a certain line from the ref_data to get its values in an array
 def get_data(i):
@@ -84,7 +86,7 @@ def get_data(i):
 # Importing excel data from excel file reference case: 'Post_Flight_Datasheet_08_03_V4.csv'
 # NOTE: Please save file as .csv instead of .xlsx
 # IMPORTANT: must have Numpy version 1.15+
-filename = 'REFERENCE_Post_Flight_Datasheet_Flight.csv'
+filename = 'Post_Flight_Datasheet_08_03_V4.csv'
 excel_data = np.genfromtxt(filename,delimiter=',',dtype='str',encoding='bytes')
 
 if filename == 'REFERENCE_Post_Flight_Datasheet_Flight.csv':
