@@ -293,3 +293,49 @@ def Sym_SS():
     return muc, CZ0, CX0
 
 Symul = Sym_SS()
+
+
+# Average discrepancies Short Period
+
+SP_Vel_discr_tot = 0
+SP_AoA_discr_tot = 0
+SP_Pitch_angle_discr_tot = 0
+SP_Pitch_rate_discr_tot = 0
+i = 0
+
+for i in range(len(t1)):
+    SP_Vel_discr_tot += y_V_1[i] - V_TAS_int[i]
+    SP_AoA_discr_tot += y_alpha_1[i] - alpha_int[i]
+    SP_Pitch_angle_discr_tot += y_theta_1[i] - pitch_int[i]
+    SP_Pitch_rate_discr_tot += y_q_1[i] - q_int[i]
+    i += 1
+
+SP_Vel_discr_av = Vel_discr_tot/len(t1)
+SP_AoA_discr_av = AoA_discr_tot/len(t1) 
+SP_Pitch_angle_discr_av = Pitch_angle_discr_tot/len(t1)
+SP_Pitch_rate_discr_av = Pitch_rate_discr_tot/len(t1)
+
+# Average discrepancies Phugoid
+    
+Phu_Vel_discr_tot = 0
+Phu_AoA_discr_tot = 0
+Phu_Pitch_angle_discr_tot = 0
+Phu_Pitch_rate_discr_tot = 0
+j = 0
+
+for j in range(len(t1)):
+    Phu_Vel_discr_tot += y_V_1[j] - V_TAS_int[j]
+    Phu_AoA_discr_tot += y_alpha_1[j] - alpha_int[j]
+    Phu_Pitch_angle_discr_tot += y_theta_1[j] - pitch_int[j]
+    Phu_Pitch_rate_discr_tot += y_q_1[j] - q_int[j]
+    j += 1
+
+Phu_Vel_discr_av = Vel_discr_tot/len(t1)
+Phu_AoA_discr_av = AoA_discr_tot/len(t1) 
+Phu_Pitch_angle_discr_av = Pitch_angle_discr_tot/len(t1)
+Phu_Pitch_rate_discr_av = Pitch_rate_discr_tot/len(t1)
+
+
+
+
+
