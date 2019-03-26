@@ -123,6 +123,6 @@ xcg1,xcg2 = cg(mass_fuel-fuel_used)
 print()
 print('xcg1 =',xcg1,'[m] wrt LEMAC')
 print('xcg2 =',xcg2,'[m] wrt LEMAC')
-
+print(xcg2-xcg1)
 
 

@@ -66,6 +66,9 @@ for i in range(len(flight_data[0][0])):
 if matlab_filename == 'FTISxprt-20190308_152811.mat':
     ref_data = np.delete(ref_data,10,0)
 
+for i,x in enumerate(ref_data):
+    print(i,x[0])
+
 # Calling a certain line from the ref_data to get its values in an array
 def get_data(i):
     return ref_data[i][2]
@@ -297,13 +300,13 @@ def get_eigmot(name):
     
     for j,t in enumerate(time_data):
         if t == total_time:
-            jndex = j-150
+            jndex = j
     
     #print(jndex)    
     
     V_TAS = get_data(42)[jndex][0]*0.514444         # [m/s]
     
-    mass = total_starting_mass - get_data(14)[jndex][0]*0.000125998 - get_data(15)[jndex][0]*0.000125998    # [kg/s]
+    mass = total_starting_mass - get_data(14)[jndex][0]*0.453592 - get_data(15)[jndex][0]*0.453592    # [kg/s]
     
     hp = get_data(37)[jndex][0]
     Tm = get_data(36)[jndex][0]

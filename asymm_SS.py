@@ -15,7 +15,7 @@ from import_ref_data import show_eigmot_names,get_eigmot
 
 #'Aper. Roll', 'Dutch Roll', 'Dutch Roll YD', 'Spiral'
 
-name = 'Spiral'
+name = 'Aper. Roll'
 
 V_TAS = get_eigmot(name)[0]
 mass = get_eigmot(name)[1]
@@ -96,8 +96,8 @@ def Asymm_SS():
     
     if initial==True:
         
-        beta = radians(2)
-        phi = 0.#radians(2)
+        beta = 0#radians(2)
+        phi = radians(2)
         p = 0.
         r = 0#radians(2)
         
@@ -120,25 +120,25 @@ def Asymm_SS():
                 
         # PLOTTING
         
-        plt.subplot(4,1,1)
+        plt.subplot(2,2,1)
         plt.plot(t,y_beta, 'b-')
         plt.title('Side slip angle', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('\u03B2 [deg]')
         
-        plt.subplot(4,1,2)
+        plt.subplot(2,2,2)
         plt.plot(t,y_phi, 'b-')
         plt.title('Roll angle', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('\u03C6 [deg]')
         
-        plt.subplot(4,1,3)
+        plt.subplot(2,2,3)
         plt.plot(t,y_p, 'b-')
         plt.title('Roll rate', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('p [deg/sec]')
     
-        plt.subplot(4,1,4)
+        plt.subplot(2,2,4)
         plt.plot(t,y_r, 'b-')
         plt.title('Yaw rate', fontweight="bold")
         plt.xlabel('t [sec]')
@@ -175,10 +175,10 @@ def Asymm_SS():
         for i in range(len(y)):
             y_aileron.append(degrees(aileron_int[i]))
             y_rudder.append(degrees(rudder_int[i]))
-            y_beta.append(degrees(y[i][0]))
-            y_phi.append(degrees(y[i][1]) + degrees(roll_angle))
-            y_p.append(degrees(y[i][2]) + degrees(p_0))
-            y_r.append(degrees(y[i][3]) + degrees(r_0))
+            y_beta.append(-degrees(y[i][0]))
+            y_phi.append(-degrees(y[i][1]) + degrees(roll_angle))
+            y_p.append(-degrees(y[i][2]) + degrees(p_0))
+            y_r.append(-degrees(y[i][3]) + degrees(r_0))
             
                 
         # PLOTTING
@@ -188,13 +188,13 @@ def Asymm_SS():
 #        fig= plt.figure()
         
         plt.subplot(4,1,1)
-        l1 = plt.plot(t, y_aileron,'g-', label="Aileron deflection")
-        l2 = plt.plot(t, y_rudder, 'k-', label="Rudder deflection")
+        plt.plot(t, y_aileron,'g-', label="Aileron deflection")
+        plt.plot(t, y_rudder, 'k-', label="Rudder deflection")
         plt.title('Aileron and rudder deflection')
         plt.xlabel('t[sec]')
         plt.ylabel('\u03B4a and \u03B4r  [Rad]')
         plt.grid()
-        plt.legend(bbox_to_anchor=(1.0,0.6))
+        plt.legend(bbox_to_anchor=(1.0,0.5))
         
 #        plt.subplot(5,1,2)
 #        plt.plot(t,y_beta, 'b-',)
@@ -210,7 +210,7 @@ def Asymm_SS():
         plt.xlabel('t [sec]')
         plt.ylabel('\u03C6 [deg]')
         plt.grid()
-        plt.legend(bbox_to_anchor=(1.0, 0.5))
+        plt.legend(bbox_to_anchor=(1.0, 1.0))
         
         plt.subplot(4,1,3)
         plt.plot(t,y_p, 'b-')
@@ -229,6 +229,25 @@ def Asymm_SS():
         plt.grid()
         
         plt.show()    
-              
+        
+        Phi_descre_tot = []
+        P_descre_tot = []
+        R_descre_tot = []
+        
+        for i in range(len(t)):
+            Phi_descre_tot.append(abs(y_phi[i] - roll_int[i]))
+            P_descre_tot.append(abs(y_p[i] - p_int[i]))
+            R_descre_tot.append(abs(y_r[i] - r_int[i]))
+        
+        Phi_descre_av = np.average(Phi_descre_tot)
+        P_descre_av = np.average(P_descre_tot)
+        R_descre_av = np.average(R_descre_tot)
+        
+        print(Phi_descre_av)
+        print(P_descre_av)
+        print(R_descre_av)
+        print(mub)
+        print(mass)
+        print(V_TAS)
         return mub,CL
 

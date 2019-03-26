@@ -23,6 +23,8 @@ def Cmdelta():
     ddelta = delta2-delta1
     CN = 2*W_xcg1/(rho_xcg1*V_TAS_xcg1*V_TAS_xcg1*S)
     Cmde = -(1/(ddelta*pi/180))*CN*(dcg/c)
-    print(cg1)
-    print(cg2)
+    print(W_xcg1)
+    print(rho_xcg1)
+    print(V_TAS_xcg1)
+    print(ddelta)
     return Cmde

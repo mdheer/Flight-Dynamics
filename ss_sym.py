@@ -47,6 +47,7 @@ def Sym_SS():
     print(muc)
     print(CZ0)
     print(mass)
+    print(V_TAS)
     # Vector with dimensions
     C1 = np.matrix([[-2*muc*(c/V_TAS**2), 0.,0.,0.],
                      [0., (CZadot - 2*muc)*(c/V_TAS), 0., 0.],
@@ -96,8 +97,6 @@ def Sym_SS():
     eigs = np.linalg.eig(sys.A)
     eigs2 = np.linalg.eig(sys2.A)
 
-   # print(V_TAS)
-   # print(c)
     
     print("Eigenvalues with dimension", eigs[0])
     print("Dimensionless eigenvectors", eigs2[0])
@@ -119,7 +118,7 @@ def Sym_SS():
     print("Thalf", HalfT)
     print("Dampratio",Dampratio)
     
-    initial = False 
+    initial = False
     
     if initial == True:
         
@@ -129,7 +128,7 @@ def Sym_SS():
         q = 0#.04
         
         X0 = np.array([u, a ,the , q])
-        t1 = np.arange(0, 150, 0.1)
+        t1 = np.arange(0, 100, 0.1)
         y1,t1 = control.initial(sys, t1, X0)
         
         #print(y1)
@@ -144,28 +143,26 @@ def Sym_SS():
             y_theta_1.append(degrees(y1[i][2]))
             y_q_1.append(degrees(y1[i][3]))
             y_V_1.append(y1[i][0]/cos(radians(y1[i][1])))
-          
-        # Plots for the short period motion
         
-        plt.subplot(4,1,1)
+        plt.subplot(2,2,1)
         plt.plot(t1,y_V_1,'b-')
         plt.title('Speed', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('V [m/sec]')
         
-        plt.subplot(4,1,2)
+        plt.subplot(2,2,2)
         plt.plot(t1,y_alpha_1,'b-')
         plt.title('Angle of attack', fontweight="bold")
         plt.xlabel('t [sec]')
         plt.ylabel('\u03B1 [deg]')
         
-        plt.subplot(4,1,3)
+        plt.subplot(2,2,3)
         plt.plot(t1,y_theta_1,'b-')
         plt.title('Pitch angle', fontweight="bold")
         plt.xlabel('t[sec]')
         plt.ylabel('\u03B8 [deg]')
     
-        plt.subplot(4,1,4)
+        plt.subplot(2,2,4)
         plt.plot(t1,y_q_1,'b-')
         plt.title('Pitch rate', fontweight="bold")
         plt.xlabel('t [sec]')
@@ -200,7 +197,7 @@ def Sym_SS():
             plt.title('Elevator deflection')
             plt.xlabel('t [sec]')
             plt.ylabel('\u03B4e [deg]')
-            plt.legend(bbox_to_anchor=(1.0,1))
+            plt.legend(bbox_to_anchor=(1.0,0.5))
             
             plt.subplot(5,1,2)
             plt.plot(t1,y_V_1,'b-', label = "Numerical model")
@@ -208,7 +205,7 @@ def Sym_SS():
             plt.title('Speed', fontweight="bold")
             plt.xlabel('t [sec]')
             plt.ylabel('V [m/sec]')
-            plt.legend(bbox_to_anchor=(1.0,0.5))
+            plt.legend(bbox_to_anchor=(1.0,1.0))
             
             plt.subplot(5,1,3)
             plt.plot(t1,y_alpha_1,'b-')
@@ -235,61 +232,108 @@ def Sym_SS():
                 
         elif name == 'Phugoid':
             
-            t2 = np.arange(0, 150, 0.1)    
-            y2,t2,x2 = control.lsim(sys, el_int, t2)
+            t1 = np.arange(0, 150, 0.1)    
+            y1,t1,x1 = control.lsim(sys, el_int, t1)
     
             # Defining arrays of the different state variable for the phugoid motion    
-            y_ed_2 = []
-            y_alpha_2=[]
-            y_theta_2 = []
-            y_q_2 = []
-            y_V_2 = []
+            y_ed_1 = []
+            y_alpha_1=[]
+            y_theta_1 = []
+            y_q_1 = []
+            y_V_1 = []
        
-            for i in range(len(y2)):
-                y_ed_2.append(el_int_deg[i])
-                y_alpha_2.append(degrees(y2[i][1]) + degrees(alpha_0))
-                y_theta_2.append(degrees(y2[i][2]) + degrees(pitch))
-                y_q_2.append(degrees(y2[i][3]) + degrees(q_0))
-                y_V_2.append(y2[i][0]/cos(radians(alpha_int[i]))+ V_TAS)
+            for i in range(len(y1)):
+                y_ed_1.append(el_int_deg[i])
+                y_alpha_1.append(degrees(y1[i][1]) + degrees(alpha_0))
+                y_theta_1.append(degrees(y1[i][2]) + degrees(pitch))
+                y_q_1.append(degrees(y1[i][3]) + degrees(q_0))
+                y_V_1.append(y1[i][0]/cos(radians(alpha_int[i]))+ V_TAS)
     
             # Plots for the phugoid
             plt.subplot(5,1,1)
-            plt.plot(t2,el_int_deg,'y-', label="Elevator deflection")
+            plt.plot(t1,el_int_deg,'y-', label="Elevator deflection")
             plt.title('Elevator deflection')
             plt.xlabel('t [sec]')
             plt.ylabel('\u03B4e [deg]')
-            plt.legend(bbox_to_anchor=(1.0,1.0))
+            plt.legend(bbox_to_anchor=(1.0,0.5))
             
             plt.subplot(5,1,2)
-            plt.plot(t2,y_V_2,'b-', label = "Numerical model")
-            plt.plot(t2,V_TAS_int,'r--', label="Flight test")
+            plt.plot(t1,y_V_1,'b-', label = "Numerical model")
+            plt.plot(t1,V_TAS_int,'r--', label="Flight test")
             plt.title('Speed', fontweight="bold")
             plt.xlabel('t [sec]')
             plt.ylabel('V [m/sec]')
-            plt.legend(bbox_to_anchor=(1.0,0.5))
+            plt.legend(bbox_to_anchor=(1.0, 1.6))
             
             plt.subplot(5,1,3)
-            plt.plot(t2,y_alpha_2,'b-')
-            plt.plot(t2,alpha_int,'r--')
+            plt.plot(t1,y_alpha_1,'b-')
+            plt.plot(t1,alpha_int,'r--')
             plt.title('Angle of attack', fontweight="bold")
             plt.xlabel('t [sec]')
             plt.ylabel('\u03B1 [deg]')
             
             plt.subplot(5,1,4)
-            plt.plot(t2,y_theta_2,'b-')
-            plt.plot(t2,pitch_int,'r--')
+            plt.plot(t1,y_theta_1,'b-')
+            plt.plot(t1,pitch_int,'r--')
             plt.title('Pitch angle', fontweight="bold")
             plt.xlabel('t[sec]')
             plt.ylabel('\u03B8 [deg]')
         
             plt.subplot(5,1,5)
-            plt.plot(t2,y_q_2,'b-')
-            plt.plot(t2,q_int,'r--')
+            plt.plot(t1,y_q_1,'b-')
+            plt.plot(t1,q_int,'r--')
             plt.title('Pitch rate', fontweight="bold")
             plt.xlabel('t [sec]')
             plt.ylabel('q [deg/sec]') 
             plt.show()
 
-    return muc, CZ0, CX0
+    return muc, CZ0, CX0,V_TAS,mass, \
+            y_V_1,V_TAS_int,y_alpha_1,alpha_int,y_theta_1,pitch_int,y_q_1,q_int,t1
+            
 
-Symul = Sym_SS()
+muc, CZ0, CX0,V_TAS,mass,y_V_1,V_TAS_int,y_alpha_1,alpha_int,y_theta_1,pitch_int,y_q_1,q_int,t1 = Sym_SS()
+
+# Average discrepancies Short Period
+
+SP_Vel_discr_tot = 0
+SP_AoA_discr_tot = 0
+SP_Pitch_angle_discr_tot = 0
+SP_Pitch_rate_discr_tot = 0
+i = 0
+
+for i in range(len(t1)):
+    SP_Vel_discr_tot += abs(y_V_1[i] - V_TAS_int[i])
+    SP_AoA_discr_tot += abs(y_alpha_1[i] - alpha_int[i])
+    SP_Pitch_angle_discr_tot += abs(y_theta_1[i] - pitch_int[i])
+    SP_Pitch_rate_discr_tot += abs(y_q_1[i] - q_int[i])
+    i += 1
+
+SP_Vel_discr_av = SP_Vel_discr_tot/len(t1)
+SP_AoA_discr_av = SP_AoA_discr_tot/len(t1) 
+SP_Pitch_angle_discr_av = SP_Pitch_angle_discr_tot/len(t1)
+SP_Pitch_rate_discr_av = SP_Pitch_rate_discr_tot/len(t1)
+
+# Average discrepancies Phugoid
+    
+Phu_Vel_discr_tot = 0
+Phu_AoA_discr_tot = 0
+Phu_Pitch_angle_discr_tot = 0
+Phu_Pitch_rate_discr_tot = 0
+j = 0
+
+for j in range(len(t1)):
+    Phu_Vel_discr_tot += abs(y_V_1[j] - V_TAS_int[j])
+    Phu_AoA_discr_tot += abs(y_alpha_1[j] - alpha_int[j])
+    Phu_Pitch_angle_discr_tot += abs(y_theta_1[j] - pitch_int[j])
+    Phu_Pitch_rate_discr_tot += abs(y_q_1[j] - q_int[j])
+    j += 1
+
+Phu_Vel_discr_av = Phu_Vel_discr_tot/len(t1)
+Phu_AoA_discr_av = Phu_AoA_discr_tot/len(t1) 
+Phu_Pitch_angle_discr_av = Phu_Pitch_angle_discr_tot/len(t1)
+Phu_Pitch_rate_discr_av = Phu_Pitch_rate_discr_tot/len(t1)
+
+#print the average discrepancy of the short period
+print(SP_Vel_discr_av, SP_AoA_discr_av, SP_Pitch_angle_discr_av, SP_Pitch_rate_discr_av)
+#print the average discrepancy of the phugoid
+#print(Phu_Vel_discr_av, Phu_AoA_discr_av, Phu_Pitch_angle_discr_av, Phu_Pitch_rate_discr_av)
