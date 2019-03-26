@@ -251,3 +251,4 @@ def Asymm_SS():
         print(V_TAS)
         return mub,CL
 
+#Simul = Asymm_SS()
